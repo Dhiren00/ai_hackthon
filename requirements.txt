@@ -1,0 +1,9 @@
+# Python 3.10–3.12; legacy Keras is required for the released HDF5 models.
+tensorflow==2.16.2
+tf-keras==2.16.0
+numpy==1.26.4
+opencv-python-headless==4.10.0.84
+fastapi==0.115.12
+uvicorn==0.34.2
+python-multipart==0.0.20
+h5py==3.16.0
