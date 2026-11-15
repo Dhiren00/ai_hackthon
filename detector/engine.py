@@ -13,7 +13,31 @@ LOCK = Lock()
 @lru_cache(maxsize=2)
 def load_model(name='CelebDF_V2'):
     import tf_keras
-    return tf_keras.models.load_model(str(checkpoint(name)), compile=False)
+    original = tf_keras.models.load_model(str(checkpoint(name)), compile=False)
+    return portable_model(original)
+
+
+def portable_model(original):
+    """Keep upstream NCHW interfaces/weights; execute spatial ops as NHWC.
+
+    Restoring NCHW after each convolution/pool preserves the unusual upstream
+    BatchNorm/Flatten axes exactly, without relying on oneDNN CPU support.
+    """
+    import tf_keras as keras
+    def clone(layer):
+        config = layer.get_config()
+        if isinstance(layer, (keras.layers.Conv2D, keras.layers.AveragePooling2D)) and config.get('data_format') == 'channels_first':
+            config['data_format'] = 'channels_last'
+            config['name'] = 'spatial_op'
+            return keras.Sequential([
+                keras.layers.Permute((2,3,1)),
+                layer.__class__.from_config(config),
+                keras.layers.Permute((3,1,2)),
+            ], name=layer.name)
+        return layer.__class__.from_config(config)
+    portable = keras.models.clone_model(original, clone_function=clone)
+    portable.set_weights(original.get_weights())
+    return portable
 
 def analyze(path, name='CelebDF_V2'):
     crops, indices, fps, coverage, truncated = extract_faces(path)

@@ -1,1 +1,3 @@
 -r requirements-text.txt
+
+Pillow==11.1.0

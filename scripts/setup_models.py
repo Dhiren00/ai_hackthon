@@ -8,4 +8,6 @@ from detector.text_assets import setup as text_setup
 video_setup()
 audio_setup([selection()['model']])
 text_setup()
-print('Video, voice and text models are ready.')
+from setup_ocr import setup as ocr_setup
+ocr_setup()
+print('Video, voice, text and screenshot OCR assets are ready.')

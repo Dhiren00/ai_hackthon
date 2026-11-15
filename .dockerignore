@@ -1,0 +1,7 @@
+.git
+.venv
+external
+__pycache__
+.pytest_cache
+browser-results
+*.zip

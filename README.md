@@ -1,16 +1,16 @@
-# PhysioCheck — Video, Voice and Text
+# PhysioCheck — One input for text, screenshots, voice and video
 
-A simple one-page HTML interface with three options:
+A minimal, mobile-friendly page with one input area. The app identifies the content automatically:
 
 - **Video** — upload a face video; run the actual BiDAlab DeepFakesON-Phys model.
 - **Voice** — upload speech; run an acoustic anti-spoofing model locally, without transcription.
-- **Text** — paste English prose; run an experimental GPT-2-era RoBERTa detector locally.
+- **Text / screenshots** — paste prose or upload a screenshot for OCR and an experimental GPT-2-era text assessment.
 
 **Accuracy limits:** the four voice models tested performed poorly on the held-out public recordings. The integrated Inc-TSSDNet model is an experimental demo, not a reliable authenticity check. The text model is old and not validated for modern ChatGPT output. These limitations appear before input and alongside results. See [measured comparisons](reports/README.md).
 
 ## Run the website
 
-Use Python **3.10–3.12**, Git and **FFmpeg** (the `ffmpeg` command must be on PATH). Linux CPU / WSL2 is the tested environment. Native Windows/macOS inference has not been verified. Models run locally after download; no API keys, paid services or cloud inference accounts are required.
+Use Python **3.10–3.12**, Git, **Tesseract OCR** and **FFmpeg** (the `ffmpeg` command must be on PATH). Linux CPU / WSL2 is the tested environment. Native Windows/macOS inference has not been verified. Models run locally after download; no API keys, paid services or cloud inference accounts are required.
 
 ```bash
 git clone https://github.com/Dhiren00/ai_hackthon.git
@@ -29,7 +29,7 @@ Open **http://127.0.0.1:8000**. A public deployment must run the Python backend 
 
 ## Easy design changes
 
-The page is one readable file: **`static/index.html`**. Change the colours in `:root`, labels in the `settings` object, and the HTML layout in that file. No frontend build tools are required. `app.py` serves the page and exposes:
+The page is one readable file: **`static/index.html`**. Change the colours in `:root` and the HTML layout in that file. Edit `static/i18n.json` for English/Hindi/Telugu interface labels and result messages. No frontend build tools are required. `app.py` serves the page and exposes:
 
 | Route | Input | Output |
 |---|---|---|
@@ -62,3 +62,17 @@ python scripts/smoke_video.py
 The tests use actual selected audio/text model inference, invalid input cases, static/black preprocessing checks, temporal pairing checks and both video checkpoints. The video smoke test creates a moving-face fixture from an upstream illustration and checks the full upload pipeline. It proves execution only, not accuracy. GitHub Actions runs these checks on Ubuntu.
 
 To reproduce the small voice comparison, install `requirements-benchmark.txt` and run `python scripts/benchmark_audio.py`. For the text sanity check, run `python scripts/benchmark_text.py`. Original evaluation media and model files are not committed. Reports include the exact scope and known failures.
+
+## Unified input update
+
+The current page has **one input area**, not separate media tabs. Paste text, attach/drop a file, or paste a clipboard screenshot. The server identifies the content and follows the [local analysis workflow](workflow/README.md). It reports actual progress and then the result. The language selector translates the interface and result messages into English, Hindi or Telugu.
+
+Screenshots use local Tesseract OCR in all three languages. **This does not make the text detector multilingual**: Hindi/Telugu writing can be extracted, but receives an unsupported-language assessment instead of a misleading AI score. Translation into English before detection would change the evidence, so it is not done. General translation of arbitrary user content is not included.
+
+Install the Tesseract executable as well as FFmpeg (`sudo apt-get install ffmpeg tesseract-ocr` on Ubuntu/WSL). `python scripts/setup_models.py` now also fetches pinned, checksum-verified English/Hindi/Telugu OCR packs from `tesseract-ocr/tessdata_fast`. This avoids requiring system-wide OCR-language installation. `python scripts/setup_ocr.py` installs just those packs. Optional `PHYSIOCHECK_TESSDATA` points to a directory containing all three packs.
+
+The new `POST /api/jobs` route accepts multipart `text` or `file`, and returns a job ID; `GET /api/jobs/{id}` reports status and result. Original endpoints are retained for compatibility. Maximum four queued/running jobs, a single worker, 15-minute result expiry and bounded file/analysis limits keep the demo predictable. Restart loses in-memory jobs. Always run Uvicorn with `--workers 1`.
+
+The Dockerfile packages the backend, FFmpeg, Tesseract and all models. Build with `docker build -t physiocheck .`, then run `docker run --rm -p 8000:8000 physiocheck`. This is packaging for deployment, not an already deployed public website. The full multi-model demo needs substantially more memory than a basic static site; Render Free compatibility is not claimed.
+
+The video model now executes spatial operations in NHWC internally while retaining upstream NCHW interfaces, BatchNorm/Flatten axes and all learned weights. This fixes the CPU error seen in the first GitHub Actions run without requiring oneDNN. CI disables oneDNN to exercise that portable path.

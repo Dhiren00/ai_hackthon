@@ -1,13 +1,24 @@
 from pathlib import Path
 import tempfile
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Request
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 from detector.engine import analyze
 from detector.assets import checkpoint
 from detector.video import VideoError
 
-app = FastAPI(title='PhysioCheck — Video and Voice Assessment')
+from contextlib import asynccontextmanager
+from detector.workflow import JobManager, BusyError, SPEC
+
+@asynccontextmanager
+async def lifespan(app):
+    app.state.jobs=JobManager()
+    yield
+    await run_in_threadpool(app.state.jobs.shutdown)
+
+app = FastAPI(title='PhysioCheck — Unified media assessment',lifespan=lifespan)
+app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
 
 @app.get('/')
@@ -90,3 +101,68 @@ async def analyze_writing(body: TextInput):
         raise HTTPException(422,str(exc)) from exc
     except (FileNotFoundError,ValueError,RuntimeError) as exc:
         raise HTTPException(503,str(exc)) from exc
+
+
+@app.post('/api/jobs',status_code=202)
+async def create_job(request: Request, text: str = Form(''), file: UploadFile | None = File(None)):
+    text=text.strip()
+    folder=None
+    try:
+        if bool(text)==bool(file):
+            raise HTTPException(422,detail={'code':'choose_one'})
+        if len(text)>20000:
+            raise HTTPException(422,detail={'code':'text_large'})
+        path=None
+        if file:
+            folder=tempfile.mkdtemp(prefix='physiocheck-job-')
+            suffix=Path(file.filename or '').suffix.lower()
+            allowed={'.txt','.png','.jpg','.jpeg','.webp','.gif','.bmp','.mp4','.mov','.avi','.mkv','.webm','.wav','.mp3','.flac','.m4a','.aac','.ogg'}
+            path=Path(folder)/('input'+(suffix if suffix in allowed else '.bin'))
+            size=0
+            with path.open('wb') as target:
+                while chunk:=await file.read(1024*1024):
+                    size+=len(chunk)
+                    if size>MAX_BYTES:
+                        raise HTTPException(413,detail={'code':'file_large'})
+                    target.write(chunk)
+            if not size:
+                raise HTTPException(422,detail={'code':'empty_file'})
+        key=request.app.state.jobs.submit(path,text,folder)
+        folder=None  # The worker owns cleanup after successful submission.
+        return {'id':key,'status':'queued','poll_url':'/api/jobs/'+key}
+    except BusyError as exc:
+        raise HTTPException(429,detail={'code':'queue_full'}) from exc
+    finally:
+        if file:await file.close()
+        if folder:
+            import shutil
+            shutil.rmtree(folder,ignore_errors=True)
+
+@app.get('/api/jobs/{key}')
+def get_job(key: str,request: Request):
+    result=request.app.state.jobs.get(key)
+    if result is None:
+        raise HTTPException(404,detail={'code':'job_expired'})
+    return result
+
+@app.get('/api/workflow')
+def workflow_definition():
+    return SPEC
+
+@app.get('/api/health')
+def readiness():
+    import shutil
+    from detector.assets import ROOT
+    from detector.audio_assets import selection
+    from detector.text_assets import REGISTRY_PATH
+    import json
+    components={
+        'ffmpeg':bool(shutil.which('ffmpeg') and shutil.which('ffprobe')),
+        'tesseract':bool(shutil.which('tesseract')),
+        'video':(ROOT/'external'/'DeepFakesON-Phys'/'pretrained models'/'DeepFakesON-Phys_CelebDF_V2.h5').is_file(),
+        'voice':(ROOT/'external'/'audio_weights'/(selection()['model']+'.pth')).is_file(),
+        'text':all((ROOT/'external'/'text_model'/name).is_file() for name in json.loads(REGISTRY_PATH.read_text())),
+        'ocr_packs':all((ROOT/'external'/'tessdata'/(lang+'.traineddata')).is_file() for lang in ['eng','hin','tel']),
+    }
+    return {'status':'files_present' if all(components.values()) else 'setup_required','components':components,
+            'note':'File presence check only; inference is verified by tests.'}

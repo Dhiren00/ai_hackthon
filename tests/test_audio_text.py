@@ -50,7 +50,9 @@ def test_text_actual_checkpoint():
     assert 0<=data['model_ai_score']<=1
     assert data['tokens_analyzed']>0 and 'GPT-2' in data['notice']
 
-def test_home_has_all_three_options():
+def test_home_has_one_unified_input():
     html=client.get('/').text
-    for mode in ['video','audio','text']:
-        assert f'data-mode="{mode}"' in html
+    assert html.count('<textarea')==1
+    assert 'id="file"' in html
+    assert 'id="language"' in html
+    assert 'data-mode=' not in html
