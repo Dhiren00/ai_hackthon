@@ -72,7 +72,7 @@ try:
         page.locator('#file').set_input_files(str(screenshot))
         page.locator('#submit').click()
         page.locator('#result').wait_for(state='visible',timeout=120000)
-        assert 'Screenshot' in page.locator('#kind').inner_text()
+        assert 'screenshot' in page.locator('#kind').inner_text().lower()
         assert 'observations' in page.locator('#ocr-text').text_content().lower()
         page.screenshot(path=str(OUTPUT/'mobile-screenshot.png'),full_page=True)
         page.locator('#again').click()
@@ -82,7 +82,7 @@ try:
             wav.writeframes(b''.join(struct.pack('<h',int(4000*math.sin(i*2*math.pi*250/16000))) for i in range(64000)))
         page.locator('#file').set_input_files(str(voice));page.locator('#submit').click()
         page.locator('#result').wait_for(state='visible',timeout=120000)
-        assert 'Voice' in page.locator('#kind').inner_text()
+        assert 'voice' in page.locator('#kind').inner_text().lower()
         assert 'performed poorly' in page.locator('#notice').inner_text()
         page.locator('#again').click()
         # A corrupt upload must show an error, then allow a new check.

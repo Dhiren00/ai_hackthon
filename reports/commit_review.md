@@ -17,3 +17,5 @@ The workflow runs these checks again in GitHub Actions and adds real Chromium ch
 Execution checks are not accuracy claims. Voice detection remains poor on the small held-out sample, text detection is a GPT-2-era experimental estimate, and video detection accuracy has not been established on a labelled benchmark here. The demo has no autonomous future code-repair service; Actions detects regressions, while runtime failures receive explicit error states.
 
 The first unified run (`43758070822`, commit `30911f2`) passed all 27 tests and the video smoke check. Browser installation failed because `ubuntu-latest` had moved to Ubuntu 26.04, unsupported by the pinned Playwright 1.58. CI is now pinned to Ubuntu 24.04 so browser dependencies and the Python stack run on a known supported image.
+
+The Ubuntu 24.04 run (`43758429684`, commit `ae28c87`) passed the 27 tests, video upload, browser installation, text UI, Hindi/Telugu switching and mobile-overflow check. Browser checks then hit a case-sensitive assertion against a CSS-uppercase result label. The screenshot/voice label assertions now normalise case; no detector result is changed by this test correction.
