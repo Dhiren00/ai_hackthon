@@ -1,13 +1,176 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PhysioCheck | Video assessment</title>
-<style>body{font:17px system-ui;background:#101825;color:#e6edf7;margin:0}main{max-width:740px;margin:70px auto;padding:24px}h1{font-size:44px;margin:10px 0}p{line-height:1.6;color:#bac7da}.tag{color:#81e3c9}form,section{background:#1b283b;padding:28px;border-radius:16px;margin-top:24px}input{display:block;margin:20px 0;width:100%}button{background:#81e3c9;color:#10241d;padding:13px 23px;border:0;border-radius:8px;font:inherit;cursor:pointer}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px monospace}#status{min-height:30px}canvas{width:100%;height:160px}small{color:#bac7da}</style>
-<main><span class="tag">PHYSIOLOGICAL VIDEO ANALYSIS</span><h1>PhysioCheck</h1>
-<p>Assess a face video with DeepFakesON-Phys, a research model using physiological cues related to facial blood flow.</p>
-<form id="form"><label for="video">Choose a video of one clearly visible face</label><input id="video" name="file" type="file" accept="video/*" required><small>50 MB maximum. Analyses up to the first 20 seconds / 600 frames. Uploads are deleted after processing.</small><p><button id="submit">Analyse video</button></p><div id="status" role="status" aria-live="polite"></div></form>
-<section id="result" hidden><h2 id="assessment"></h2><p id="score"></p><canvas id="chart" width="680" height="160" aria-label="Genuine model score over time"></canvas><p id="limits"></p><details><summary>Analysis details</summary><pre id="details"></pre></details></section>
-<p><small>Experimental assessment, not proof of authenticity. A visible pulse does not guarantee a genuine video. No audio analysis.</small></p></main>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PhysioCheck — Video, Voice & Text</title>
+  <style>
+    /* Change these colours to customise the whole page. */
+    :root { --background:#f3f6fa; --ink:#17263b; --muted:#58677b; --accent:#166b60; --line:#dce4ed; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--background); color:var(--ink); font:16px/1.6 system-ui,sans-serif; }
+    main { max-width:840px; margin:48px auto; padding:0 20px; }
+    .eyebrow { color:var(--accent); font-size:13px; font-weight:700; letter-spacing:2px; }
+    h1 { font-size:clamp(32px,6vw,48px); line-height:1.15; margin:10px 0; }
+    .intro,small { color:var(--muted); }
+    nav { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:28px 0; }
+    button { font:inherit; cursor:pointer; border-radius:10px; }
+    .tab { border:1px solid var(--line); padding:18px 10px; background:white; color:var(--ink); font-weight:650; }
+    .tab[aria-pressed="true"] { border:2px solid var(--accent); background:#e8f5f0; color:var(--accent); }
+    .panel { padding:28px; border:1px solid var(--line); border-radius:16px; background:white; margin-bottom:20px; }
+    h2 { font-size:23px; margin:0 0 10px; }
+    label { display:block; font-weight:600; margin-bottom:10px; }
+    input,textarea { width:100%; border:1px solid var(--line); border-radius:9px; padding:14px; background:#fafbfd; font:inherit; }
+    textarea { resize:vertical; min-height:220px; }
+    .help { margin:10px 0 20px; font-size:14px; color:var(--muted); }
+    .notice { background:#fff6df; color:#6b4b09; padding:14px; border-radius:9px; font-size:14px; margin-bottom:20px; }
+    .primary { background:var(--accent); color:white; border:0; padding:13px 24px; font-weight:600; }
+    button:disabled { opacity:.55; cursor:wait; }
+    button:focus-visible,input:focus-visible,textarea:focus-visible { outline:3px solid #70b6ef; outline-offset:3px; }
+    #status { margin-top:14px; overflow-wrap:anywhere; }
+    #verdict { font-size:28px; margin:10px 0; }
+    #summary { color:var(--muted); }
+    pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:13px; }
+    canvas { width:100%; height:150px; }
+    footer { text-align:center; font-size:13px; color:var(--muted); padding:12px 0 30px; }
+    [hidden] { display:none!important; }
+    @media(max-width:520px) { main { margin-top:28px; } .panel { padding:20px; } nav { gap:7px; } .tab { padding:14px 5px; font-size:14px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="eyebrow">MEDIA ASSESSMENT DEMO</span>
+    <h1>PhysioCheck</h1>
+    <p class="intro">Choose what you want to check. Upload a video or voice recording, or paste some text.</p>
+  </header>
+  <nav aria-label="Choose assessment type">
+    <button class="tab" data-mode="video" aria-pressed="true">Video</button>
+    <button class="tab" data-mode="audio" aria-pressed="false">Voice</button>
+    <button class="tab" data-mode="text" aria-pressed="false">Text</button>
+  </nav>
+  <section class="panel">
+    <h2 id="heading">Check a video</h2>
+    <div class="notice" id="notice">Experimental face-video assessment. A result cannot prove that a video is genuine or fake.</div>
+    <form id="form">
+      <div id="file-fields">
+        <label id="file-label" for="media">Choose a video containing one visible face</label>
+        <input id="media" name="file" type="file" accept="video/*" required aria-describedby="help">
+      </div>
+      <div id="text-fields" hidden>
+        <label for="writing">Paste English prose</label>
+        <textarea id="writing" placeholder="Paste at least 50 words here…" maxlength="20000" aria-describedby="help"></textarea>
+      </div>
+      <p class="help" id="help">Maximum 50 MB. Checks up to 20 seconds / 600 frames. Use a well-lit, frontal face.</p>
+      <button id="submit" class="primary" type="submit">Analyse video</button>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+  <section id="result" class="panel" hidden aria-labelledby="result-heading">
+    <small id="result-heading">EXPERIMENTAL ASSESSMENT</small>
+    <h2 id="verdict"></h2>
+    <p id="summary"></p>
+    <canvas id="chart" width="720" height="150" aria-label="Video model score over time"></canvas>
+    <p id="limitations" class="notice"></p>
+    <details><summary>Analysis details</summary><pre id="details"></pre></details>
+  </section>
+  <footer>Runs on the server hosting this app. Uploads are deleted after analysis. Text is not saved. No API keys required.</footer>
+</main>
 <script>
-const form=document.querySelector('#form'),button=document.querySelector('#submit'),status=document.querySelector('#status');
-form.addEventListener('submit',async e=>{e.preventDefault();document.querySelector('#result').hidden=true;const file=document.querySelector('#video').files[0];if(file.size>50*1024*1024){status.textContent='Maximum upload size is 50 MB.';return;}button.disabled=true;status.textContent='Analysing facial frames… The first run also loads the model.';try{const r=await fetch('/analyze',{method:'POST',body:new FormData(form)});const d=await r.json();if(!r.ok)throw Error(typeof d.detail==='string'?d.detail:'Unable to analyse this video.');document.querySelector('#assessment').textContent=d.assessment;document.querySelector('#score').textContent=`Genuine model score: ${d.genuine_model_score.toFixed(3)} / 1 · ${d.frames_analyzed} frame pairs · ${d.analyzed_seconds}s analysed`;document.querySelector('#limits').textContent=d.limitations;document.querySelector('#details').textContent=JSON.stringify(d,null,2);document.querySelector('#result').hidden=false;const c=document.querySelector('#chart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='#81e3c9';ctx.beginPath();d.timeline.forEach((p,i)=>{const x=i/Math.max(1,d.timeline.length-1)*c.width,y=10+(1-p.genuine_model_score)*140;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();status.textContent='Analysis complete.';}catch(err){status.textContent=err.message;}finally{button.disabled=false;}});
-</script></html>
+  // Each option has its own endpoint. Keep styling above and behaviour here.
+  const settings = {
+    video: {
+      heading:'Check a video', label:'Choose a video containing one visible face', accept:'video/*',
+      help:'Maximum 50 MB. Checks up to 20 seconds / 600 frames. Use a well-lit, frontal face.',
+      notice:'Experimental face-video assessment. A result cannot prove that a video is genuine or fake.',
+      button:'Analyse video', endpoint:'/analyze'
+    },
+    audio: {
+      heading:'Check a voice recording', label:'Choose a recording with clear speech', accept:'audio/*,.mp4,.webm',
+      help:'Maximum 50 MB. At least 2 seconds of speech. Checks up to 30 seconds. No transcription.',
+      notice:'Experimental demo only: this voice model performed poorly on held-out test recordings. Do not rely on its verdict to verify a person or a recording.',
+      button:'Analyse voice', endpoint:'/analyze/audio'
+    },
+    text: {
+      heading:'Check a piece of text',
+      help:'50 words minimum; 20,000 characters maximum. Analyses up to the first 510 text tokens.',
+      notice:'Experimental older detector trained on GPT-2. It is not validated for modern ChatGPT writing and may flag human writing.',
+      button:'Analyse text', endpoint:'/analyze/text'
+    }
+  };
+  const $ = id => document.getElementById(id);
+  const tabs = [...document.querySelectorAll('[data-mode]')];
+  let mode='video';
+  function choose(next) {
+    mode=next;
+    const s=settings[mode];
+    tabs.forEach(tab=>tab.setAttribute('aria-pressed',String(tab.dataset.mode===mode)));
+    $('heading').textContent=s.heading;
+    $('help').textContent=s.help;
+    $('notice').textContent=s.notice;
+    $('submit').textContent=s.button;
+    $('file-fields').hidden=mode==='text';
+    $('text-fields').hidden=mode!=='text';
+    $('media').required=mode!=='text';
+    $('writing').required=mode==='text';
+    if(s.accept) $('media').accept=s.accept;
+    if(s.label) $('file-label').textContent=s.label;
+    $('form').reset();
+    $('status').textContent='';
+    $('result').hidden=true;
+  }
+  tabs.forEach(tab=>tab.addEventListener('click',()=>choose(tab.dataset.mode)));
+  function show(data) {
+    $('verdict').textContent=data.verdict || data.assessment;
+    $('limitations').textContent=data.notice || data.limitations;
+    $('details').textContent=JSON.stringify(data,null,2);
+    $('summary').textContent=mode==='text'
+      ? `${data.tokens_analyzed} tokens analysed · ${data.model}`
+      : `${data.analyzed_seconds} seconds analysed · ${data.model}`;
+    if(data.analysis_limit_reached) $('summary').textContent+=' · Input exceeded the analysis limit.';
+    $('chart').hidden=mode!=='video';
+    if(mode==='video') {
+      const canvas=$('chart'),ctx=canvas.getContext('2d'),points=data.timeline||[];
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.strokeStyle='#166b60';ctx.lineWidth=2;ctx.beginPath();
+      points.forEach((point,i)=>{
+        const x=10+i/Math.max(1,points.length-1)*(canvas.width-20);
+        const y=10+(1-point.genuine_model_score)*(canvas.height-20);
+        if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);
+      });
+      ctx.stroke();
+    }
+    $('result').hidden=false;
+  }
+  $('form').addEventListener('submit',async event=>{
+    event.preventDefault();
+    $('result').hidden=true;
+    let body,headers;
+    if(mode==='text') {
+      if($('writing').value.trim().split(/\s+/).length<50) {
+        $('status').textContent='Please paste at least 50 words.';return;
+      }
+      body=JSON.stringify({text:$('writing').value});
+      headers={'Content-Type':'application/json'};
+    } else {
+      const file=$('media').files[0];
+      if(!file){$('status').textContent='Choose a file first.';return;}
+      if(file.size>50*1024*1024){$('status').textContent='Maximum upload size is 50 MB.';return;}
+      body=new FormData();body.append('file',file);
+    }
+    $('submit').disabled=true;tabs.forEach(tab=>tab.disabled=true);
+    $('status').textContent='Analysing… The first request may take longer while the model loads.';
+    try {
+      const response=await fetch(settings[mode].endpoint,{method:'POST',body,headers});
+      const data=await response.json();
+      if(!response.ok)throw Error(typeof data.detail==='string'?data.detail:'Unable to analyse this input.');
+      show(data);$('status').textContent='Analysis complete.';
+    } catch(error) {
+      $('status').textContent=error.message || 'Request failed. Check that the server is running.';
+    } finally {
+      $('submit').disabled=false;tabs.forEach(tab=>tab.disabled=false);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+  "AASIST": {
+    "repository": "https://github.com/clovaai/aasist.git",
+    "revision": "a04c9863f63d44471dde8a6abcb3b082b07cd1d1",
+    "file": "models/weights/AASIST.pth",
+    "sha256": "51d2d9cf0738172f61e2a384ec50a54a55363240f67c971ed55a92435bc1a1c0",
+    "length": 64600,
+    "genuine_index": 1,
+    "config": {
+      "architecture": "AASIST",
+      "nb_samp": 64600,
+      "first_conv": 128,
+      "filts": [
+        70,
+        [
+          1,
+          32
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          64,
+          64
+        ]
+      ],
+      "gat_dims": [
+        64,
+        32
+      ],
+      "pool_ratios": [
+        0.5,
+        0.7,
+        0.5,
+        0.5
+      ],
+      "temperatures": [
+        2.0,
+        2.0,
+        100.0,
+        100.0
+      ]
+    },
+    "license": "MIT"
+  },
+  "AASIST-L": {
+    "repository": "https://github.com/clovaai/aasist.git",
+    "revision": "a04c9863f63d44471dde8a6abcb3b082b07cd1d1",
+    "file": "models/weights/AASIST-L.pth",
+    "sha256": "814331d088032bb4c3fa61cc014789eadeed464209dd094ab3a2dd6ffbdce27a",
+    "length": 64600,
+    "genuine_index": 1,
+    "config": {
+      "architecture": "AASIST",
+      "nb_samp": 64600,
+      "first_conv": 128,
+      "filts": [
+        70,
+        [
+          1,
+          32
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          32,
+          24
+        ],
+        [
+          24,
+          24
+        ]
+      ],
+      "gat_dims": [
+        24,
+        32
+      ],
+      "pool_ratios": [
+        0.4,
+        0.5,
+        0.7,
+        0.5
+      ],
+      "temperatures": [
+        2.0,
+        2.0,
+        100.0,
+        100.0
+      ]
+    },
+    "license": "MIT"
+  },
+  "Res-TSSDNet": {
+    "repository": "https://github.com/ghua-ac/end-to-end-synthetic-speech-detection.git",
+    "revision": "36c9705a5bdbb68d01fae484f1b758dd673d9f43",
+    "file": "pretrained/Res_TSSDNet_time_frame_61_ASVspoof2019_LA_Loss_0.0017_dEER_0.74%_eEER_1.64%.pth",
+    "sha256": "056a65fc241a94b4a72e8842278509fdf0421c090da72bb5085b97ff3a1772ba",
+    "length": 96000,
+    "genuine_index": 0,
+    "license": "GPL-3.0"
+  },
+  "Inc-TSSDNet": {
+    "repository": "https://github.com/ghua-ac/end-to-end-synthetic-speech-detection.git",
+    "revision": "36c9705a5bdbb68d01fae484f1b758dd673d9f43",
+    "file": "pretrained/Inc_TSSDNet_time_frame_28_ASVspoof2019_LA_Loss_0.0043_dEER_1.09%_eEER_4.04%.pth",
+    "sha256": "a8c22443e23778baacbe894b32de97c733411539e50714e57d22772b70127611",
+    "length": 96000,
+    "genuine_index": 0,
+    "license": "GPL-3.0"
+  }
+}

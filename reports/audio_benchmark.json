@@ -1,0 +1,186 @@
+{
+  "AASIST": {
+    "threshold": 0.2543773055076599,
+    "median_seconds_inference": 1.0070727274996898,
+    "calibration": {
+      "n": 96,
+      "balanced_accuracy": 0.513888888888889,
+      "accuracy": 0.2916666666666667,
+      "auc": 0.37094907407407407,
+      "human_flagged_as_ai": 1,
+      "human_count": 24,
+      "ai_missed": 67,
+      "ai_count": 72
+    },
+    "test": {
+      "clean": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.25,
+        "auc": 0.19791666666666669,
+        "human_flagged_as_ai": 0,
+        "human_count": 8,
+        "ai_missed": 24,
+        "ai_count": 24
+      },
+      "noise20db": {
+        "n": 32,
+        "balanced_accuracy": 0.3958333333333333,
+        "accuracy": 0.21875,
+        "auc": 0.20833333333333334,
+        "human_flagged_as_ai": 2,
+        "human_count": 8,
+        "ai_missed": 23,
+        "ai_count": 24
+      },
+      "telephone_band": {
+        "n": 32,
+        "balanced_accuracy": 0.4583333333333333,
+        "accuracy": 0.25,
+        "auc": 0.21875,
+        "human_flagged_as_ai": 1,
+        "human_count": 8,
+        "ai_missed": 23,
+        "ai_count": 24
+      }
+    }
+  },
+  "AASIST-L": {
+    "threshold": 2.2236218452453613,
+    "median_seconds_inference": 0.845479738999984,
+    "calibration": {
+      "n": 96,
+      "balanced_accuracy": 0.5,
+      "accuracy": 0.2708333333333333,
+      "auc": 0.4033564814814815,
+      "human_flagged_as_ai": 1,
+      "human_count": 24,
+      "ai_missed": 69,
+      "ai_count": 72
+    },
+    "test": {
+      "clean": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.25,
+        "auc": 0.5677083333333333,
+        "human_flagged_as_ai": 0,
+        "human_count": 8,
+        "ai_missed": 24,
+        "ai_count": 24
+      },
+      "noise20db": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.25,
+        "auc": 0.38020833333333337,
+        "human_flagged_as_ai": 0,
+        "human_count": 8,
+        "ai_missed": 24,
+        "ai_count": 24
+      },
+      "telephone_band": {
+        "n": 32,
+        "balanced_accuracy": 0.4583333333333333,
+        "accuracy": 0.25,
+        "auc": 0.484375,
+        "human_flagged_as_ai": 1,
+        "human_count": 8,
+        "ai_missed": 23,
+        "ai_count": 24
+      }
+    }
+  },
+  "Res-TSSDNet": {
+    "threshold": 13.56155014038086,
+    "median_seconds_inference": 0.02195753199976025,
+    "calibration": {
+      "n": 96,
+      "balanced_accuracy": 0.625,
+      "accuracy": 0.5,
+      "auc": 0.6215277777777778,
+      "human_flagged_as_ai": 3,
+      "human_count": 24,
+      "ai_missed": 45,
+      "ai_count": 72
+    },
+    "test": {
+      "clean": {
+        "n": 32,
+        "balanced_accuracy": 0.5208333333333334,
+        "accuracy": 0.34375,
+        "auc": 0.3697916666666667,
+        "human_flagged_as_ai": 1,
+        "human_count": 8,
+        "ai_missed": 20,
+        "ai_count": 24
+      },
+      "noise20db": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.25,
+        "auc": 0.5364583333333333,
+        "human_flagged_as_ai": 0,
+        "human_count": 8,
+        "ai_missed": 24,
+        "ai_count": 24
+      },
+      "telephone_band": {
+        "n": 32,
+        "balanced_accuracy": 0.4583333333333333,
+        "accuracy": 0.3125,
+        "auc": 0.4583333333333333,
+        "human_flagged_as_ai": 2,
+        "human_count": 8,
+        "ai_missed": 20,
+        "ai_count": 24
+      }
+    }
+  },
+  "Inc-TSSDNet": {
+    "threshold": 8.569128036499023,
+    "median_seconds_inference": 0.006582031000107236,
+    "calibration": {
+      "n": 96,
+      "balanced_accuracy": 0.7361111111111112,
+      "accuracy": 0.6041666666666666,
+      "auc": 0.7326388888888888,
+      "human_flagged_as_ai": 0,
+      "human_count": 24,
+      "ai_missed": 38,
+      "ai_count": 72
+    },
+    "test": {
+      "clean": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.375,
+        "auc": 0.546875,
+        "human_flagged_as_ai": 2,
+        "human_count": 8,
+        "ai_missed": 18,
+        "ai_count": 24
+      },
+      "noise20db": {
+        "n": 32,
+        "balanced_accuracy": 0.5,
+        "accuracy": 0.375,
+        "auc": 0.5520833333333333,
+        "human_flagged_as_ai": 2,
+        "human_count": 8,
+        "ai_missed": 18,
+        "ai_count": 24
+      },
+      "telephone_band": {
+        "n": 32,
+        "balanced_accuracy": 0.4375,
+        "accuracy": 0.28125,
+        "auc": 0.4322916666666667,
+        "human_flagged_as_ai": 2,
+        "human_count": 8,
+        "ai_missed": 21,
+        "ai_count": 24
+      }
+    }
+  }
+}

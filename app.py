@@ -7,7 +7,7 @@ from detector.engine import analyze
 from detector.assets import checkpoint
 from detector.video import VideoError
 
-app = FastAPI(title='PhysioCheck — DeepFakesON-Phys demo')
+app = FastAPI(title='PhysioCheck — Video and Voice Assessment')
 MAX_BYTES = 50 * 1024 * 1024
 
 @app.get('/')
@@ -47,3 +47,46 @@ async def analyze_video(file: UploadFile = File(...)):
         raise HTTPException(503,str(exc)) from exc
     finally:
         await file.close()
+
+
+@app.post('/analyze/audio')
+async def analyze_recording(file: UploadFile = File(...)):
+    from detector.audio import analyze_audio, AudioError
+    suffix = Path(file.filename or '').suffix.lower()
+    try:
+        if suffix not in {'.wav','.mp3','.flac','.ogg','.m4a','.aac','.webm','.mp4'}:
+            raise HTTPException(400,'Upload a WAV, MP3, FLAC, OGG, M4A, AAC, WebM or MP4 recording.')
+        with tempfile.TemporaryDirectory(prefix='physiocheck-audio-') as folder:
+            path = Path(folder) / ('upload'+suffix)
+            size = 0
+            with path.open('wb') as output:
+                while chunk := await file.read(1024*1024):
+                    size += len(chunk)
+                    if size > MAX_BYTES:
+                        raise HTTPException(413,'Maximum upload size is 50 MB.')
+                    output.write(chunk)
+            if not size:
+                raise HTTPException(400,'The uploaded file is empty.')
+            return await run_in_threadpool(analyze_audio,path)
+    except AudioError as exc:
+        raise HTTPException(422,str(exc)) from exc
+    except (FileNotFoundError,ValueError,RuntimeError) as exc:
+        raise HTTPException(503,str(exc)) from exc
+    finally:
+        await file.close()
+
+
+from pydantic import BaseModel, Field
+
+class TextInput(BaseModel):
+    text: str = Field(min_length=1, max_length=20000)
+
+@app.post('/analyze/text')
+async def analyze_writing(body: TextInput):
+    from detector.text import analyze_text, TextError
+    try:
+        return await run_in_threadpool(analyze_text,body.text)
+    except TextError as exc:
+        raise HTTPException(422,str(exc)) from exc
+    except (FileNotFoundError,ValueError,RuntimeError) as exc:
+        raise HTTPException(503,str(exc)) from exc

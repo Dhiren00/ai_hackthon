@@ -1,0 +1,5 @@
+{
+  "model": "Inc-TSSDNet",
+  "threshold": 8.569128036499023,
+  "selection_basis": "Calibration balanced accuracy; CPU runtime breaks ties. Held-out performance was poor; experimental demo only."
+}

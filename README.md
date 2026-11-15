@@ -1,66 +1,64 @@
-# PhysioCheck — DeepFakesON-Phys video demo
+# PhysioCheck — Video, Voice and Text
 
-A local video-upload application and CLI using the **actual released BiDAlab DeepFakesON-Phys checkpoints**. This is not Intel FakeCatcher and does not recreate Intel's proprietary platform.
+A simple one-page HTML interface with three options:
 
-## Start the demo
+- **Video** — upload a face video; run the actual BiDAlab DeepFakesON-Phys model.
+- **Voice** — upload speech; run an acoustic anti-spoofing model locally, without transcription.
+- **Text** — paste English prose; run an experimental GPT-2-era RoBERTa detector locally.
 
-Use Python **3.10–3.12** and Git. Linux/WSL2 CPU execution has been tested. Native Windows and macOS have not been verified; the upstream model uses channels-first convolutions, which depend on TensorFlow backend support. On a Windows laptop, use WSL2 if the native backend reports NCHW errors.
+**Accuracy limits:** the four voice models tested performed poorly on the held-out public recordings. The integrated Inc-TSSDNet model is an experimental demo, not a reliable authenticity check. The text model is old and not validated for modern ChatGPT output. These limitations appear before input and alongside results. See [measured comparisons](reports/README.md).
+
+## Run the website
+
+Use Python **3.10–3.12**, Git and **FFmpeg** (the `ffmpeg` command must be on PATH). Linux CPU / WSL2 is the tested environment. Native Windows/macOS inference has not been verified. Models run locally after download; no API keys, paid services or cloud inference accounts are required.
 
 ```bash
 git clone https://github.com/Dhiren00/ai_hackthon.git
 cd ai_hackthon
 python -m venv .venv
-# Linux / WSL2:
 source .venv/bin/activate
 # Windows PowerShell alternative: .venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python -m detector.assets
+python -m pip install -r requirements-full.txt
+python scripts/setup_models.py
 python -m uvicorn app:app --host 127.0.0.1 --port 8000
 ```
 
-Open http://127.0.0.1:8000. Upload a 3–20 second clip with one well-lit, frontal face. The app does not use a cloud inference API. TensorFlow runs locally. No GPU is required on the tested Linux CPU setup. Network access is needed for the initial dependency and checkpoint downloads.
+On Ubuntu/WSL, install FFmpeg with `sudo apt-get install ffmpeg`. On Windows, install FFmpeg and add its `bin` folder to PATH before starting. All required models are fetched from public original sources and SHA-256 verified. The text checkpoint alone is about 478 MB. Setup needs internet access; inference does not. The first request loads its model and takes longer. In a freshly created environment, dependencies can take several minutes to install.
 
-CLI:
+Open **http://127.0.0.1:8000**. A public deployment must run the Python backend as well as serving the HTML. GitHub hosts the code; GitHub Pages alone cannot run these models. This full app has not been tested within Render Free's 512 MB memory limit.
 
-```bash
-python -m detector path/to/video.mp4
-python -m detector path/to/video.mp4 --model DFDC_Preview
-```
+## Easy design changes
 
-## What is implemented
+The page is one readable file: **`static/index.html`**. Change the colours in `:root`, labels in the `settings` object, and the HTML layout in that file. No frontend build tools are required. `app.py` serves the page and exposes:
 
-- Video upload, face detection, preprocessing, pretrained inference and result timeline.
-- Both CelebDF_V2 and DFDC_Preview checkpoints, verified with SHA-256 checksums.
-- Immutable upstream revision `941a4b42842039f8c0cc709990ba0fa7f0c35833`.
-- Legacy `tf-keras` loader for the older HDF5 format; no retraining or fabricated predictions.
-- Temporary uploads deleted after the request; 50 MB upload limit, first 20 seconds / 600 frames maximum, face detection at bounded resolution, serialized inference.
-- Clear rejection of invalid videos, inadequate face visibility and multiple detected faces.
+| Route | Input | Output |
+|---|---|---|
+| `POST /analyze` | Multipart `file`: video | Face-video model assessment and timeline |
+| `POST /analyze/audio` | Multipart `file`: recording | Binary experimental voice estimate, raw score, limits |
+| `POST /analyze/text` | JSON `{"text":"..."}` | Experimental AI-like / human-like text estimate |
+| `GET /health` | None | Existing video checkpoint file readiness; not a full inference health check |
 
-## Interpretation and preprocessing
+No inputs are saved as application records. Uploads use temporary directories removed after requests. No transcripts are generated. Default web server access logs contain request routes/status, not uploaded content or text bodies. API scores are raw model outputs, not calibrated probabilities.
 
-The model uses physiological cues related to rPPG. It does **not** output a measured heart rate, a blood-flow proof or an authenticated identity. High raw outputs correspond to genuine examples in upstream `images/cases_scores.png`; the API reports `genuine_model_score`, never a fake probability. Scores are uncalibrated. Demo labels use a conservative 0.3–0.7 inconclusive band; those cutoffs are not validated decision thresholds.
+Limits: 50 MB upload; video first 20 seconds / 600 frames and one frontal face; voice 2 seconds minimum and first 30 seconds; text 50 words minimum / 20,000 characters maximum, with the first 510 tokens assessed. The result states when an input exceeds the analysis limit. Silence and invalid inputs return an error. The voice detector does not establish the speaker's identity, and neither voice nor text output is proof of AI generation.
 
-The original scripts contain dataset-specific Windows paths, uninitialized frame slots, division-by-zero risks and independent unsorted file reads. The wrapper removes those problems. It retains the upstream 36×36 BGR, channels-first two-stream representation, temporal per-pixel normalization and normalized-to-uint8 representation used by the released PNG/inference workflow. Only consecutive detected frames become motion pairs. Correcting undefined preprocessing means this is **not a bit-for-bit reproduction of the authors' benchmark**. Temporal normalization is performed over the analysed clip; no benchmark performance is claimed.
+## Models and licences
 
-A detectable pulse does not prove a video is real. Compression, lighting, motion, cropping, skin appearance, generator changes and face-detection jitter can affect outputs. Multiple people and audio-only manipulations are not supported. Face tracking across identity changes is not implemented. Run locally for demonstrations; this is not a production hosting service.
+Model sources, pinned revisions, licences and data attribution are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). AASIST is MIT; TSSDNet is GPL-3.0; the GPT-2 detector is MIT. The new integration code is GPL-3.0. Upstream source licences and notices are preserved. BiDAlab's DeepFakesON-Phys has no explicit licence in the inspected revision; it is fetched from its original repository into ignored `external/`, not redistributed or relicensed here.
+
+Voice setup only: `python -m detector.audio_assets` (or `--all` for all four benchmark checkpoints). Text setup only: `python -m detector.text_assets`. Video setup only: `python -m detector.assets`. Missing or changed checkpoints produce a clear setup error rather than fabricated results.
+
+The video wrapper retains upstream 36×36 BGR, channels-first input and normalized-to-uint8 PNG representation. It fixes uninitialized frame arrays, undefined divisions, hard-coded dataset paths and unsorted pairing. It never creates a motion pair across a missing-face gap. Correcting undefined behaviour means it does not claim bit-identical reproduction of the paper's benchmark. A visible pulse does not prove a genuine video.
 
 ## Verification
 
 ```bash
 python -m pip install -r requirements-dev.txt
-python -m detector.assets
+python scripts/setup_models.py
 python -m pytest -q
 python scripts/smoke_video.py
 ```
 
-Tests exercise real checkpoint loading/inference for both models, finite preprocessing of black/static clips, PNG representation equivalence, temporal gaps, invalid/empty inputs and no-face rejection. The smoke test sends a generated moving-face AVI through the actual upload endpoint, face detector, preprocessing and checkpoint. It uses a crop of the upstream illustration, fetched during setup. It tests **execution, not detection accuracy**. No evaluation media is committed.
+The tests use actual selected audio/text model inference, invalid input cases, static/black preprocessing checks, temporal pairing checks and both video checkpoints. The video smoke test creates a moving-face fixture from an upstream illustration and checks the full upload pipeline. It proves execution only, not accuracy. GitHub Actions runs these checks on Ubuntu.
 
-**Not yet verified:** accuracy on an independent labelled set of real and deepfake videos; real-time calling integration; native Windows/macOS execution; visual browser interaction. A functioning pipeline does not guarantee correct classifications.
-
-## Attribution and upstream terms
-
-Source: https://github.com/BiDAlab/DeepFakesON-Phys
-
-Hernandez-Ortega, Javier; Tolosana, Ruben; Fierrez, Julian; Morales, Aythami. *DeepFakesON-Phys: DeepFakes Detection based on Heart Rate Estimation* (2020), https://arxiv.org/abs/2010.00400.
-
-The inspected upstream revision provides no explicit LICENSE file. Its public availability is not a general redistribution licence. This repository therefore **does not vendor or redistribute its source, weights or images**. Setup fetches the original repository into ignored `external/`. Upstream assets remain subject to their owners' terms; contact the authors to clarify your intended reuse/distribution. No permissions are implied by this wrapper. This integration does not claim authorship of the model.
+To reproduce the small voice comparison, install `requirements-benchmark.txt` and run `python scripts/benchmark_audio.py`. For the text sanity check, run `python scripts/benchmark_text.py`. Original evaluation media and model files are not committed. Reports include the exact scope and known failures.

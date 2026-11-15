@@ -1,0 +1,2 @@
+-r requirements-audio.txt
+transformers==4.46.3
