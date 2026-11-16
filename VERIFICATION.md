@@ -6,13 +6,13 @@ The latest Actions run is authoritative for the exact commit tested. It runs act
 
 Local checks for the upgrade:
 
-- 13 safety-specific tests passed through the actual API and classifier. They cover short requests, genuine safety reminders, unsupported languages, secret-pattern errors, recovery, original-byte fingerprints, dataset separation and UI reference/translation integrity.
+- Safety-specific tests passed through the actual API and classifier. They cover short requests, genuine safety reminders, unsupported languages, secret-pattern errors, recovery, dataset separation and UI reference/translation integrity.
 - The model training script reproduced the portable runtime's predictions against scikit-learn. Runtime uses standard Python and the committed JSON weights.
 - The 60-case synthetic benchmark produced 23 true positives, 2 false positives, 7 false negatives and 28 true negatives at the fixed 0.65 threshold. Both training and holdout were written during the same development session. This is a small controlled evaluation, not independent real-world validation.
 - Python compilation, JavaScript syntax, JSON parsing and Git whitespace checks passed.
 - Vendored AASIST/TSSD source files were compared to their pinned upstream revisions and matched byte for byte.
 
-The full CI suite additionally checks existing media/OCR models, desktop/mobile layout, English/Hindi/Telugu interface switching, interrupted polling, error recovery, independent verification, downloaded evidence content, a matching and changed-file fingerprint check, local-only complaint preparation and secret-number export rejection. Screenshots are saved in the run's `demo-browser-screenshots` artifact. Passing local checks alone does not establish that full CI passed.
+The full CI suite additionally checks existing media/OCR models, desktop/mobile layout, English/Hindi/Telugu interface switching, interrupted polling, error recovery, independent verification, downloaded report content, local-only complaint preparation and secret-number export rejection. Screenshots are saved in the run's `demo-browser-screenshots` artifact. Passing local checks alone does not establish that full CI passed.
 
 ## Accuracy and usage boundaries
 
