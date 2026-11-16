@@ -150,7 +150,7 @@
     "fingerprint_choose": "Choose both files first.",
     "fingerprint_match": "Fingerprint matches the saved summary.",
     "fingerprint_mismatch": "Fingerprint differs. This input does not match the saved summary.",
-    "fingerprint_invalid": "Could not compare. Use an original PhysioCheck summary and a supported input file."
+    "fingerprint_invalid": "Could not compare. Use an original Mana Kavacham summary and a supported input file."
   },
   "hi": {
     "title": "एक इनपुट। आगे का रास्ता साफ़।",
@@ -303,7 +303,7 @@
     "fingerprint_choose": "पहले दोनों फ़ाइलें चुनें।",
     "fingerprint_match": "फिंगरप्रिंट सहेजे सार से मेल खाता है।",
     "fingerprint_mismatch": "फिंगरप्रिंट अलग है। यह इनपुट सहेजे सार से मेल नहीं खाता।",
-    "fingerprint_invalid": "तुलना नहीं हो सकी। मूल PhysioCheck सार और समर्थित फ़ाइल दें।"
+    "fingerprint_invalid": "तुलना नहीं हो सकी। मूल Mana Kavacham सार और समर्थित फ़ाइल दें।"
   },
   "te": {
     "title": "ఒక ఇన్‌పుట్. స్పష్టమైన తదుపరి దశ.",
@@ -456,6 +456,6 @@
     "fingerprint_choose": "ముందుగా రెండు ఫైళ్లు ఎంచుకోండి.",
     "fingerprint_match": "వేలిముద్ర భద్రపరిచిన సారాంశంతో సరిపోలింది.",
     "fingerprint_mismatch": "వేలిముద్ర వేరుగా ఉంది. ఈ ఇన్‌పుట్ భద్రపరిచిన సారాంశంతో సరిపోలలేదు.",
-    "fingerprint_invalid": "పోల్చలేకపోయాము. అసలు PhysioCheck సారాంశం, మద్దతు ఉన్న ఫైల్ ఇవ్వండి."
+    "fingerprint_invalid": "పోల్చలేకపోయాము. అసలు Mana Kavacham సారాంశం, మద్దతు ఉన్న ఫైల్ ఇవ్వండి."
   }
 }

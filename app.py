@@ -18,7 +18,7 @@ async def lifespan(app):
     finally:
         await run_in_threadpool(app.state.jobs.shutdown)
 
-app = FastAPI(title='PhysioCheck — Unified media assessment',lifespan=lifespan)
+app = FastAPI(title='Mana Kavacham — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
 

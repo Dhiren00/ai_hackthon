@@ -1,4 +1,4 @@
-# PhysioCheck — impersonation request triage
+# Mana Kavacham — impersonation request triage
 
 A single input for text, screenshots, audio and video, with a local English message-warning classifier, independent contact verification, and a downloadable evidence/recovery summary. The jury-facing focus is impersonation requests targeting students and families.
 
@@ -10,7 +10,7 @@ A single input for text, screenshots, audio and video, with a local English mess
 - The lightweight message model is included. Reproduce it with `pip install -r requirements-training.txt`, `python scripts/train_scam.py`, then `python scripts/benchmark_scam.py`. No additional inference package is required.
 - Full media model setup and limitations are below. Full-model inference within Render Free's 512 MB remains unverified.
 
-# PhysioCheck — One input for text, screenshots, voice and video
+# Mana Kavacham — One input for text, screenshots, voice and video
 
 A minimal, mobile-friendly page with one input area. The app identifies the content automatically:
 

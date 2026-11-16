@@ -1,4 +1,4 @@
-# PhysioCheck — verify the request, preserve the evidence
+# Mana Kavacham — verify the request, preserve the evidence
 
 ## 1. Problem and threat model
 
