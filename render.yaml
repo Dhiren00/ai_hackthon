@@ -1,0 +1,29 @@
+# Free-tier deployment candidate. Full-model inference memory is not yet
+# verified within Render Free's 512 MB RAM; do not silently upgrade the plan.
+services:
+  - type: web
+    name: physiocheck-demo
+    runtime: docker
+    repo: https://github.com/Dhiren00/ai_hackthon
+    branch: main
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    numInstances: 1
+    autoDeployTrigger: checksPass
+    healthCheckPath: /api/health
+    maxShutdownDelaySeconds: 120
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: TF_NUM_INTRAOP_THREADS
+        value: "1"
+      - key: TF_NUM_INTEROP_THREADS
+        value: "1"
+      - key: TF_ENABLE_ONEDNN_OPTS
+        value: "0"
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: "3"
