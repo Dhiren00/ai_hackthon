@@ -1,10 +1,8 @@
 /* Verification and recovery stay in the browser. No complaint fields are sent. */
 let evidenceTime = null;
 let completedActions = new Set();
-let fingerprintStatus = null;
 
 function renderSafetyLanguage() {
-  if (fingerprintStatus) $('fingerprint-result').textContent = t(fingerprintStatus);
   if (!$('complaint-error').hidden) $('complaint-error').textContent = t('secret_detected');
 }
 const demoMessages = {
@@ -93,10 +91,10 @@ function downloadLocal(name, content, mime) {
 function evidenceSummary() {
   const result = lastResult;
   return {
-    format: 'physiocheck-evidence-v1',
+    format: 'shield-report-v1',
     created_at: evidenceTime,
     exported_at: new Date().toISOString(),
-    input: {kind: result.kind, sha256: result.input_sha256, source: result.input_source, encoding: result.input_source === 'pasted_text' ? 'UTF-8 of trimmed submitted text' : 'original uploaded bytes'},
+    input: {kind: result.kind, source: result.input_source},
     assessment: {
       model: result.model || null,
       ai_generation_estimate: result.is_ai ?? null,
@@ -112,7 +110,7 @@ function evidenceSummary() {
       completed_steps: [...completedActions]
     },
     action_plan: planKeys().map(key => ({step: key, instruction: t(key), done: completedActions.has(key)})),
-    limitations: [t('evidence_integrity'), t('score_limit')],
+    limitations: [t('score_limit')],
     official_sources: ['https://cybercrime.gov.in/', 'https://cybercrime.gov.in/webform/FAQ.aspx'],
     complaint_submitted: false
   };
@@ -121,9 +119,8 @@ function evidenceSummary() {
 $('verification').addEventListener('change', () => { if (lastResult) renderSafety(lastResult); });
 $('exposure').addEventListener('change', () => { if (lastResult) renderSafety(lastResult); });
 $('evidence').addEventListener('click', () => {
-  if (lastResult) downloadLocal('shield-evidence.json', JSON.stringify(evidenceSummary(), null, 2), 'application/json');
+  if (lastResult) downloadLocal('shield-report.json', JSON.stringify(evidenceSummary(), null, 2), 'application/json');
 });
-
 function openComplaint() {
   $('complaint-dialog').showModal();
   $('incident').focus();
@@ -180,27 +177,4 @@ document.querySelectorAll('[data-demo]').forEach(button => {
     $('input').value = demoMessages[button.dataset.demo];
     $('input').focus();
   });
-});
-
-$('verify-fingerprint').addEventListener('click', async () => {
-  const summary = $('summary-file').files[0];
-  const original = $('original-file').files[0];
-  const showFingerprint = key => { fingerprintStatus = key; renderSafetyLanguage(); };
-  if (!summary || !original) { showFingerprint('fingerprint_choose'); return; }
-  if (summary.size > 1024 * 1024 || original.size > 50 * 1024 * 1024) {
-    showFingerprint('file_large'); return;
-  }
-  try {
-    const record = JSON.parse(await summary.text());
-    if (record.format !== 'physiocheck-evidence-v1' || !/^[a-f0-9]{64}$/.test(record.input?.sha256)
-      || !['file_bytes', 'pasted_text'].includes(record.input.source)) throw new Error('Invalid summary');
-    let bytes = await original.arrayBuffer();
-    if (record.input.source === 'pasted_text') {
-      const text = new TextDecoder('utf-8', {fatal: true}).decode(bytes).trim();
-      bytes = new TextEncoder().encode(text);
-    }
-    const digest = await crypto.subtle.digest('SHA-256', bytes);
-    const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-    showFingerprint(hex === record.input.sha256 ? 'fingerprint_match' : 'fingerprint_mismatch');
-  } catch { showFingerprint('fingerprint_invalid'); }
 });
