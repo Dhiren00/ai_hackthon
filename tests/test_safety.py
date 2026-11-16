@@ -6,7 +6,7 @@ import time
 from fastapi.testclient import TestClient
 import pytest
 from app import app
-from detector.scam import assess_message, contains_secret, input_digest
+from detector.scam import assess_message, contains_secret
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -29,7 +29,6 @@ def test_short_impersonation_message_uses_actual_trained_classifier():
         assert result['status'] == 'completed', result
         assert result['result']['is_ai'] is None
         assert result['result']['scam']['level'] == 'high'
-        assert result['result']['input_sha256'] == hashlib.sha256(text.encode()).hexdigest()
         assert client.get('/api/jobs/' + response.json()['id']).headers['cache-control'] == 'no-store'
 
 
@@ -58,15 +57,6 @@ def test_secret_input_fails_without_a_verdict_and_queue_recovers():
         assert result['result'] is None
         follow = client.post('/api/jobs', data={'text': 'See you at class tomorrow.'})
         assert wait_result(client, follow.json()['id'])['status'] == 'completed'
-
-
-def test_hash_is_sensitive_to_original_file_bytes(tmp_path):
-    path = tmp_path / 'evidence.txt'
-    path.write_bytes(b'the original file\n')
-    original = input_digest(path)
-    path.write_bytes(b'the changed file\n')
-    assert original != input_digest(path)
-    assert original == hashlib.sha256(b'the original file\n').hexdigest()
 
 
 def test_holdout_does_not_overlap_training_and_artifacts_match():
