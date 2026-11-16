@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T13:32:36.022920+00:00",
+  "updated_at": "2026-11-16T13:34:36.073322+00:00",
   "max_age_days": 365,
   "languages": {
     "en": {
@@ -90,10 +90,11 @@
       "sources_checked": [
         "Google News — తెలుగు",
         "TV9 Telugu",
-        "ABP Desam",
+        "ABP Desam"
+      ],
+      "sources_unavailable": [
         "Sakshi"
       ],
-      "sources_unavailable": [],
       "using_previous": false,
       "articles": [
         {
