@@ -5,7 +5,6 @@ training corpus. Output is a model score, never a probability of fraud.
 """
 from collections import Counter
 from functools import lru_cache
-import hashlib
 import json
 import math
 from pathlib import Path
@@ -56,14 +55,3 @@ def assess_message(text, language):
     return {'status': 'assessed', 'model': model['name'], 'level': level,
             'score': round(score, 6), 'terms': terms, 'word_count': len(text.split()),
             'notice_key': 'scam_model_limit'}
-
-
-def input_digest(path=None, text=''):
-    digest = hashlib.sha256()
-    if path:
-        with path.open('rb') as source:
-            for chunk in iter(lambda: source.read(1024 * 1024), b''):
-                digest.update(chunk)
-    else:
-        digest.update(text.encode('utf-8'))
-    return digest.hexdigest()
