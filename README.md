@@ -1,100 +1,73 @@
-# S.H.I.E.L.D. — impersonation request triage
+# S.H.I.E.L.D.
 
-A single input for text, screenshots, audio and video, with a local English message-warning classifier, independent contact verification, and a simple downloadable safety report. The jury-facing focus is impersonation requests targeting students and families.
+**Check suspicious requests, verify who sent them, and decide what to do next.**
 
-- **Start here:** [hackathon audit](docs/hackathon-audit.md), [five-section submission document](docs/submission.md).
-- Short English messages now receive an actual learned warning assessment. Authorship needs at least 50 words. Hindi/Telugu interface and OCR are supported; automatic message scoring remains English-only.
-- **Measured demo result:** 23/30 synthetic attacks caught, 7 missed, 2/30 genuine messages flagged. See [the complete report](reports/scam_benchmark.json). No real-world accuracy claim.
-- The verification/recovery flow keeps model output separate from checks reported by the user. A simple report can be downloaded without a technical evidence-verification workflow.
-- Complaint descriptions stay in the browser, with copy/download and a link to the official reporting portal. Actual official submission is a separate user action.
-- The lightweight message model is included. Reproduce it with `pip install -r requirements-training.txt`, `python scripts/train_scam.py`, then `python scripts/benchmark_scam.py`. No additional inference package is required.
-- On Render, text authorship checks are off by default, including for manually configured services. Screenshot OCR and scam screening still run. Set `SHIELD_TEXT_PROVENANCE=1` only on a host with sufficient memory to enable authorship checks. Full-media inference within Render Free's 512 MB remains unverified.
+S.H.I.E.L.D. is an AI-FEST 2026 hackathon project for students and families facing impersonation scams. Paste a message or attach a screenshot, voice recording, or video. The app identifies the input and runs the appropriate check. For suspicious requests, it guides you through verifying the sender via a saved number or official app, then helps you decide what to do based on what you’ve already shared.
 
-# S.H.I.E.L.D. — One input for text, screenshots, voice and video
+**[Try the live demo](https://ai-hackthon-apo9.onrender.com/)** · [Hackathon submission](docs/submission.md)
 
-A minimal, mobile-friendly page with one input area. The app identifies the content automatically:
+## Try it in three steps
 
-- **Video** — upload a face video; run the actual BiDAlab DeepFakesON-Phys model.
-- **Voice** — upload speech; run an acoustic anti-spoofing model locally, without transcription.
-- **Text / screenshots** — paste prose or upload a screenshot for OCR and an experimental GPT-2-era text assessment.
+1. Open **Try a fictional example**, choose **Urgent family request**, and select **Check input**.
+2. Review the warning. Under **Check who is really asking**, record what happened when you contacted the person independently. If you’ve already sent money or shared access, select that too to see the relevant recovery steps.
+3. Download the safety report, or use **Prepare a complaint** to draft a description in your browser. You can review and submit it yourself through India’s official cybercrime portal.
 
-**Accuracy limits:** the four voice models tested performed poorly on the held-out public recordings. The integrated Inc-TSSDNet model is an experimental demo, not a reliable authenticity check. The text model is old and not validated for modern ChatGPT output. These limitations appear before input and alongside results. See [measured comparisons](reports/README.md).
+## What you can check
 
-## Run the website
+| Input | What S.H.I.E.L.D. gives you |
+| --- | --- |
+| Message or text file | An English scam warning score based on patterns learned from fictional requests, with terms that contributed to the warning. |
+| Screenshot | Text extraction in English, Hindi, and Telugu. Extracted English messages can also be screened for scam patterns. |
+| Voice recording | An experimental Inc-TSSDNet assessment of acoustic spoofing signals. |
+| Face video | An experimental DeepFakesON-Phys assessment with a score timeline for a single visible face. |
 
-Use Python **3.10–3.12**, Git, **Tesseract OCR** and **FFmpeg** (the `ffmpeg` command must be on PATH). Linux CPU / WSL2 is the tested environment. Native Windows/macOS inference has not been verified. Models run locally after download; no API keys, paid services or cloud inference accounts are required.
+The interface is available in English, Hindi, and Telugu. **Scam watch** shows source-linked reports in the selected language. The experimental text authorship model can assess English passages of at least 50 words on a host where it is enabled.
+
+The app removes uploaded files after processing, and server results expire after 15 minutes. Complaint drafts stay in the browser. Verification answers are recorded separately from model estimates in the downloadable report.
+
+## What we measured
+
+The English scam classifier uses TF-IDF and logistic regression trained on **100 fictional messages**. We evaluated it at a fixed warning threshold on **60 separate fictional messages**:
+
+| Outcome | Result |
+| --- | ---: |
+| Scam requests flagged | 23 / 30 |
+| Scam requests missed | 7 / 30 |
+| Genuine requests flagged | 2 / 30 |
+| Genuine requests left unflagged | 28 / 30 |
+
+That is **92% precision** and **76.7% recall** on this dataset. Both sets were written during the same development session, so the results describe this controlled test. A low score leaves risk unknown. Check the sender independently before acting on a request. [Read the benchmark](reports/scam_benchmark.json).
+
+The voice, video, and authorship models are research demonstrations. The voice comparison found unreliable detection on the held-out sample, video accuracy has yet to be benchmarked on labelled real and fake clips, and the authorship model was developed for GPT-2-era text. [Read the model comparison and limitations](reports/README.md).
+
+## Run locally
+
+Use **Python 3.10–3.12**, Git, FFmpeg, and Tesseract. Linux and WSL2 are the tested setup paths. On Ubuntu, install the system tools with `sudo apt-get install ffmpeg tesseract-ocr`.
 
 ```bash
 git clone https://github.com/Dhiren00/ai_hackthon.git
 cd ai_hackthon
 python -m venv .venv
 source .venv/bin/activate
-# Windows PowerShell alternative: .venv\Scripts\Activate.ps1
 python -m pip install -r requirements-full.txt
 python scripts/setup_models.py
-python -m uvicorn app:app --host 127.0.0.1 --port 8000
+python -m uvicorn app:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-On Ubuntu/WSL, install FFmpeg with `sudo apt-get install ffmpeg`. On Windows, install FFmpeg and add its `bin` folder to PATH before starting. All required models are fetched from public original sources and SHA-256 verified. The text checkpoint alone is about 478 MB. Setup needs internet access; inference does not. The first request loads its model and takes longer. In a freshly created environment, dependencies can take several minutes to install.
+Open [localhost:8000](http://127.0.0.1:8000). Setup downloads and verifies the model and OCR files. Inference runs on the server hosting the app and requires no external inference API or API key. Uploads are limited to 50 MB.
 
-Open **http://127.0.0.1:8000**. A public deployment must run the Python backend as well as serving the HTML. GitHub hosts the code; GitHub Pages alone cannot run these models. This full app has not been tested within Render Free's 512 MB memory limit.
+The [Dockerfile](Dockerfile) packages the full app. The [Render configuration](render.yaml) uses one worker for its in-memory jobs. The current code defaults to disabling text authorship on Render so screenshot OCR and scam screening can run without loading that model. Use `SHIELD_TEXT_PROVENANCE=1` on a host with enough memory if you need authorship checks. Full media inference on Render Free is unverified. `GET /api/health` reports the deployed release and, on the current code, whether the authorship model is enabled.
 
-## Easy design changes
+## How the repository fits together
 
-Screenshot processing release `screenshot-safe-default-v4` bounds the OCR pixel count, uses a single OCR thread, caches language availability and retries a timed-out extraction once at lower resolution. The 50 MB upload limit is separate from image dimensions and server processing capacity. Errors now identify OCR startup, OCR extraction or media inspection instead of blaming every timeout on upload size.
+| Path | Purpose |
+| --- | --- |
+| [App and API](app.py) | FastAPI serves the site, starts checks at `POST /api/jobs`, and returns progress and results at `GET /api/jobs/{id}`. |
+| [Analysis workflow](workflow/README.md) | Content identification, OCR and model routing, progress, retries, and cleanup. |
+| [Web interface](static/) | The unified input, translations, independent verification, recovery checklist, and complaint drafting. |
+| [Data and reports](reports/) | Model comparisons and benchmark results. The message classifier’s fictional examples are in [data/](data/). |
+| [Checks](VERIFICATION.md) | Test coverage for model execution, OCR, upload routing, browser behavior, and recovery. |
 
-After deployment, `GET /api/health` includes `"release": "screenshot-safe-default-v4"`; responses also include `X-SHIELD-Release: screenshot-safe-default-v4`. The health response also includes `text_provenance_enabled`, which should be `false` on Render Free. Check both fields before retesting. It identifies deployed code, not model readiness or a promise that every input completes on every server. Workflow logs include failed stage and error code without recording submitted text or filenames.
+To run the automated checks after setup, install `requirements-dev.txt` and run `python -m pytest -q`. The [GitHub Actions workflow](.github/workflows/test.yml) also exercises uploads and the Chromium demo.
 
-The page is one readable file: **`static/index.html`**. Change the colours in `:root` and the HTML layout in that file. Edit `static/i18n.json` for English/Hindi/Telugu interface labels and result messages. No frontend build tools are required. `app.py` serves the page and exposes:
-
-| Route | Input | Output |
-|---|---|---|
-| `POST /analyze` | Multipart `file`: video | Face-video model assessment and timeline |
-| `POST /analyze/audio` | Multipart `file`: recording | Binary experimental voice estimate, raw score, limits |
-| `POST /analyze/text` | JSON `{"text":"..."}` | Experimental AI-like / human-like text estimate |
-| `GET /health` | None | Existing video checkpoint file readiness; not a full inference health check |
-
-No inputs are saved as application records. Uploads use temporary directories removed after requests. No transcripts are generated. Default web server access logs contain request routes/status, not uploaded content or text bodies. API scores are raw model outputs, not calibrated probabilities.
-
-Limits: 50 MB upload; video first 20 seconds / 600 frames and one frontal face; voice 2 seconds minimum and first 30 seconds; text 50 words minimum / 20,000 characters maximum, with the first 510 tokens assessed. The result states when an input exceeds the analysis limit. Silence and invalid inputs return an error. The voice detector does not establish the speaker's identity, and neither voice nor text output is proof of AI generation.
-
-## Models and licences
-
-Model sources, pinned revisions, licences and data attribution are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). AASIST is MIT; TSSDNet is GPL-3.0; the GPT-2 detector is MIT. The new integration code is GPL-3.0. Upstream source licences and notices are preserved. BiDAlab's DeepFakesON-Phys has no explicit licence in the inspected revision; it is fetched from its original repository into ignored `external/`, not redistributed or relicensed here.
-
-Voice setup only: `python -m detector.audio_assets` (or `--all` for all four benchmark checkpoints). Text setup only: `python -m detector.text_assets`. Video setup only: `python -m detector.assets`. Missing or changed checkpoints produce a clear setup error rather than fabricated results.
-
-The video wrapper retains upstream 36×36 BGR, channels-first input and normalized-to-uint8 PNG representation. It fixes uninitialized frame arrays, undefined divisions, hard-coded dataset paths and unsorted pairing. It never creates a motion pair across a missing-face gap. Correcting undefined behaviour means it does not claim bit-identical reproduction of the paper's benchmark. A visible pulse does not prove a genuine video.
-
-## Verification
-
-```bash
-python -m pip install -r requirements-dev.txt
-python scripts/setup_models.py
-python -m pytest -q
-python scripts/smoke_video.py
-```
-
-The tests use actual selected audio/text model inference, invalid input cases, static/black preprocessing checks, temporal pairing checks and both video checkpoints. The video smoke test creates a moving-face fixture from an upstream illustration and checks the full upload pipeline. It proves execution only, not accuracy. GitHub Actions runs these checks on Ubuntu.
-
-To reproduce the small voice comparison, install `requirements-benchmark.txt` and run `python scripts/benchmark_audio.py`. For the text sanity check, run `python scripts/benchmark_text.py`. Original evaluation media and model files are not committed. Reports include the exact scope and known failures.
-
-## Unified input update
-
-The current page has **one input area**, not separate media tabs. Paste text, attach/drop a file, or paste a clipboard screenshot. The server identifies the content and follows the [local analysis workflow](workflow/README.md). It reports actual progress and then the result. The language selector translates the interface and result messages into English, Hindi or Telugu.
-
-Screenshots use local Tesseract OCR in all three languages. **This does not make the text detector multilingual**: Hindi/Telugu writing can be extracted, but receives an unsupported-language assessment instead of a misleading AI score. Translation into English before detection would change the evidence, so it is not done. General translation of arbitrary user content is not included.
-
-Install the Tesseract executable as well as FFmpeg (`sudo apt-get install ffmpeg tesseract-ocr` on Ubuntu/WSL). `python scripts/setup_models.py` now also fetches pinned, checksum-verified English/Hindi/Telugu OCR packs from `tesseract-ocr/tessdata_fast`. This avoids requiring system-wide OCR-language installation. `python scripts/setup_ocr.py` installs just those packs. Optional `PHYSIOCHECK_TESSDATA` points to a directory containing all three packs.
-
-The new `POST /api/jobs` route accepts multipart `text` or `file`, and returns a job ID; `GET /api/jobs/{id}` reports status and result. Original endpoints are retained for compatibility. Maximum four queued/running jobs, a single worker, 15-minute result expiry and bounded file/analysis limits keep the demo predictable. Restart loses in-memory jobs. Always run Uvicorn with `--workers 1`.
-
-The Dockerfile packages the backend, FFmpeg, Tesseract and all models. Build with `docker build -t physiocheck .`, then run `docker run --rm -p 8000:8000 physiocheck`. This is packaging for deployment, not an already deployed public website. The full multi-model demo needs substantially more memory than a basic static site; Render Free compatibility is not claimed.
-
-The video model now executes spatial operations in NHWC internally while retaining upstream NCHW interfaces, BatchNorm/Flatten axes and all learned weights. This fixes the CPU error seen in the first GitHub Actions run without requiring oneDNN. CI disables oneDNN to exercise that portable path.
-
-## Scam watch
-
-The caution box follows the selected interface language. English uses BleepingComputer and The Hacker News; Hindi uses approved Hindi publishers and Live Hindustan's cyber-crime feed; Telugu uses approved regional publishers such as Sakshi, TV9 Telugu, ABP Desam and Samayam Telugu. Source-linked RSS/search results are filtered for AI, cyber-fraud and impersonation terms. When there is no fresh match, the last saved relevant report is retained for up to one year instead of filling the panel with unrelated news. Ranking is automated; it does not verify publishers' claims or generate a free-form summary.
-
-`.github/workflows/cautions.yml` runs daily at 02:30 UTC and can be run manually in GitHub Actions. It commits the latest snapshot, then triggers demo checks for the updated revision. Scheduled GitHub jobs can be delayed; the box shows its last check, partial source failures and a warning after 48 hours. If every source fails, the previous snapshot is retained and the scheduled job fails visibly. The first snapshot appears after the first successful refresh. Deployments must update from `main` for the box to reflect refreshed data. No API key is required.
+The application integration is [GPL-3.0](LICENSE). Model credits, upstream terms, and dataset attribution are in [Third-party notices](THIRD_PARTY_NOTICES.md).
