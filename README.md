@@ -1,11 +1,11 @@
 # S.H.I.E.L.D. — impersonation request triage
 
-A single input for text, screenshots, audio and video, with a local English message-warning classifier, independent contact verification, and a downloadable evidence/recovery summary. The jury-facing focus is impersonation requests targeting students and families.
+A single input for text, screenshots, audio and video, with a local English message-warning classifier, independent contact verification, and a simple downloadable safety report. The jury-facing focus is impersonation requests targeting students and families.
 
 - **Start here:** [hackathon audit](docs/hackathon-audit.md), [five-section submission document](docs/submission.md).
 - Short English messages now receive an actual learned warning assessment. Authorship needs at least 50 words. Hindi/Telugu interface and OCR are supported; automatic message scoring remains English-only.
 - **Measured demo result:** 23/30 synthetic attacks caught, 7 missed, 2/30 genuine messages flagged. See [the complete report](reports/scam_benchmark.json). No real-world accuracy claim.
-- The verification/recovery flow keeps model evidence separate from user-reported identity checks. Download a fingerprinted summary and compare the original file later, locally in the browser.
+- The verification/recovery flow keeps model output separate from checks reported by the user. A simple report can be downloaded without a technical evidence-verification workflow.
 - Complaint descriptions stay in the browser, with copy/download and a link to the official reporting portal. Actual official submission is a separate user action.
 - The lightweight message model is included. Reproduce it with `pip install -r requirements-training.txt`, `python scripts/train_scam.py`, then `python scripts/benchmark_scam.py`. No additional inference package is required.
 - Full media model setup and limitations are below. Full-model inference within Render Free's 512 MB remains unverified.
