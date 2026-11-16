@@ -7,7 +7,7 @@ import shutil
 from threading import Event, RLock, Thread
 import time
 from uuid import uuid4
-from .scam import assess_message, contains_secret, input_digest
+from .scam import assess_message, contains_secret
 from .assets import ROOT
 from .ingest import InputError, identify, read_text, text_language, extract_screenshot
 
@@ -39,7 +39,6 @@ def text_result(text):
 
 def run_flow(path=None,text='',progress=lambda stage:None):
     progress('identify')
-    digest = input_digest(path, text)
     kind=identify(path) if path else 'text'
     extracted=None
     if kind=='screenshot':
@@ -65,7 +64,6 @@ def run_flow(path=None,text='',progress=lambda stage:None):
         verdict={'more consistent with genuine':'video_human','suspicious manipulation signals':'video_ai','inconclusive':'inconclusive'}[result['assessment']]
         result.update(verdict_key=verdict,notice_key='video_limit')
     result['input_source'] = 'file_bytes' if path else 'pasted_text'
-    result['input_sha256'] = digest
     result['kind']=kind
     progress('complete')
     return result
