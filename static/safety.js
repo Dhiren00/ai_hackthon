@@ -1,6 +1,12 @@
 /* Verification and recovery stay in the browser. No complaint fields are sent. */
 let evidenceTime = null;
 let completedActions = new Set();
+let fingerprintStatus = null;
+
+function renderSafetyLanguage() {
+  if (fingerprintStatus) $('fingerprint-result').textContent = t(fingerprintStatus);
+  if (!$('complaint-error').hidden) $('complaint-error').textContent = t('secret_detected');
+}
 const demoMessages = {
   family: "Hi mom this is my new number. My phone broke. Send money to my friend's account urgently and don't call.",
   college: 'I am the college finance officer. Pay examination charges into my private account today.',
@@ -39,6 +45,7 @@ function renderSafety(result) {
   $('risk-label').textContent = t('risk_' + level);
   $('risk-label').className = 'risk-label risk-' + level;
   $('risk-meter').hidden = !hasScore;
+  $('risk-meter').dataset.level = assessment?.level || 'unknown';
   if (hasScore) $('risk-meter').value = score;
   $('risk-meter').setAttribute('aria-label', t('warning_score'));
   $('score-caption').textContent = hasScore
@@ -178,10 +185,10 @@ document.querySelectorAll('[data-demo]').forEach(button => {
 $('verify-fingerprint').addEventListener('click', async () => {
   const summary = $('summary-file').files[0];
   const original = $('original-file').files[0];
-  const output = $('fingerprint-result');
-  if (!summary || !original) { output.textContent = t('fingerprint_choose'); return; }
+  const showFingerprint = key => { fingerprintStatus = key; renderSafetyLanguage(); };
+  if (!summary || !original) { showFingerprint('fingerprint_choose'); return; }
   if (summary.size > 1024 * 1024 || original.size > 50 * 1024 * 1024) {
-    output.textContent = t('file_large'); return;
+    showFingerprint('file_large'); return;
   }
   try {
     const record = JSON.parse(await summary.text());
@@ -194,6 +201,6 @@ $('verify-fingerprint').addEventListener('click', async () => {
     }
     const digest = await crypto.subtle.digest('SHA-256', bytes);
     const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-    output.textContent = t(hex === record.input.sha256 ? 'fingerprint_match' : 'fingerprint_mismatch');
-  } catch { output.textContent = t('fingerprint_invalid'); }
+    showFingerprint(hex === record.input.sha256 ? 'fingerprint_match' : 'fingerprint_mismatch');
+  } catch { showFingerprint('fingerprint_invalid'); }
 });

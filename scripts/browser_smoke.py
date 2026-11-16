@@ -124,6 +124,7 @@ try:
         assert 'extracted_text' not in exported
         page.locator('#language').select_option('te')
         assert 'ఖాతాలను' in page.locator('#risk-label').inner_text()
+        assert 'వేరుగా' in page.locator('#fingerprint-result').inner_text()
         assert page.locator('#plan_bank').is_checked()
         page.screenshot(path=str(OUTPUT/'mobile-verification-telugu.png'),full_page=True)
         page.locator('#language').select_option('en')
