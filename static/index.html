@@ -32,11 +32,32 @@ main{max-width:740px;margin:38px auto;padding:0 20px}header{display:flex;align-i
 <ol class="steps" id="steps"><li data-stage="identify" data-i18n="identify">Identify</li><li data-stage="extract" data-i18n="extract">Read screenshot</li><li data-stage="analyse" data-i18n="analyse">Analyse</li><li data-stage="complete" data-i18n="complete">Finish</li></ol>
 <small id="elapsed"></small><button type="button" id="resume" class="button secondary" data-i18n="resume" hidden>Reconnect</button>
 </section>
-<section class="result" id="result" hidden aria-labelledby="verdict"><p class="tag" id="kind"></p><h2 id="verdict"></h2><p id="summary"></p><p class="notice" id="notice"></p>
+<section class="result" id="result" hidden aria-labelledby="verdict"><p class="tag" id="kind"></p><h2 id="verdict"></h2><meter id="ai-meter" aria-label="AI text model score" min="0" max="1" hidden></meter><span id="ai-label"></span><p id="summary"></p><p class="notice" id="notice"></p>
 <details id="extracted" hidden><summary data-i18n="extracted">Text read from screenshot</summary><pre id="ocr-text"></pre></details>
 <details><summary data-i18n="details">Analysis details</summary><pre id="raw"></pre></details>
 <div class="result-actions"><button type="button" id="again" class="button secondary" data-i18n="again">Check another</button></div>
 </section>
+<section class="composer" lang="en" aria-label="Scam help">
+<details><summary>Check scam warning signs</summary>
+<p>Select what the sender asked you to do.</p>
+<div id="warning-signs"><label><input type="checkbox"> Share a password, PIN or OTP</label><br>
+<label><input type="checkbox"> Pay a fee to receive a prize or release money</label><br>
+<label><input type="checkbox"> Install remote access software so they can control your device</label></div>
+<p><meter id="risk-meter" min="0" max="3" value="0" aria-label="Selected warning signs"></meter> <output id="risk-label" aria-live="polite">0 of 3 selected. Risk is unknown.</output></p>
+</details>
+<details><summary class="button secondary">Get help filing a cybercrime complaint</summary>
+<p>If money was taken in India, call <a href="tel:1930">1930</a> promptly.</p>
+<form id="complaint" autocomplete="off">
+<p><label>What happened? Describe it in your own words.<textarea name="incident" required maxlength="3000"></textarea></label></p>
+<p><label>When did it happen? <input type="date" name="date"></label></p>
+<p><label>Suspect’s phone number, handle or website (if known) <input name="contact" maxlength="250"></label></p>
+<p><label>Amount lost and transaction reference (if applicable) <input name="payment" maxlength="250"></label></p>
+<p>Keep screenshots and receipts ready. Leave out passwords, PINs and OTPs. These details stay in this tab.</p>
+<button class="button secondary">Prepare my complaint</button></form>
+<div id="handoff" hidden><label>Review and edit your complaint<textarea id="draft" rows="6"></textarea></label>
+<button id="copy" class="button secondary" type="button">Copy complaint</button><output id="copied" aria-live="polite"></output>
+<p>Open the official portal, sign in, paste your description, attach evidence and submit. Save the acknowledgement number.</p>
+<a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer">Open India’s cybercrime reporting portal ↗</a></div></details></section>
 <footer data-i18n="footer">Experimental assessments, not proof of authenticity.</footer>
 </main>
 <script>
@@ -57,10 +78,31 @@ function renderLanguage(){
 }
 function renderStage(stage,history){lastStage=stage;$('status').textContent=t(stage);document.querySelectorAll('[data-stage]').forEach(node=>{node.className=history.includes(node.dataset.stage)?'done':'';if(node.dataset.stage===stage)node.className='active';});}
 function showResult(result){
+ const score=result.model_ai_score;
+ $('ai-meter').hidden=!Number.isFinite(score);
+ $('ai-label').textContent=Number.isFinite(score)?Math.round(score*100)+'% · AI text model score':'';
+ if(Number.isFinite(score))$('ai-meter').value=score;
  lastResult=result;$('kind').textContent=t(result.kind);$('verdict').textContent=t(result.verdict_key);$('notice').textContent=t(result.notice_key);
  $('summary').textContent=result.analysis_limit_reached?t('limited'):t('assessment_done');
  $('raw').textContent=JSON.stringify(result,null,2);$('extracted').hidden=!result.extracted_text;$('ocr-text').textContent=result.extracted_text||'';$('result').hidden=false;
 }
+$('warning-signs').onchange=()=>{
+ const count=$('warning-signs').querySelectorAll(':checked').length;
+ $('risk-meter').value=count;
+ $('risk-label').textContent=count?count+' of 3 selected. High risk. Pause and verify independently.':'0 of 3 selected. Risk is unknown.';
+};
+$('complaint').oninput=()=>{$('handoff').hidden=true;$('copied').textContent='';};
+$('complaint').onsubmit=event=>{
+ event.preventDefault();
+ const data=new FormData(event.currentTarget);
+ const fields=[['incident','What happened'],['date','Incident date'],['contact','Suspect contact'],['payment','Transaction details']];
+ $('draft').value=fields.filter(([key])=>data.get(key).trim()).map(([key,label])=>label+': '+data.get(key).trim()).join('\n');
+ $('handoff').hidden=false;$('draft').focus();
+};
+$('copy').onclick=async()=>{
+ try{await navigator.clipboard.writeText($('draft').value);$('copied').textContent=' Copied.';}
+ catch{$('draft').select();$('copied').textContent=' Copy the selected text.';}
+};
 function stop(){clearInterval(timer);timer=null;setBusy(false);}
 async function poll(){
  let failures=0;$('resume').hidden=true;setBusy(true);
