@@ -1,25 +1,110 @@
 {
-  "updated_at": "2026-11-16T06:58:31.994757+00:00",
-  "window_days": 14,
-  "sources_checked": [
-    "BleepingComputer",
-    "The Hacker News"
-  ],
-  "sources_unavailable": [],
-  "articles": [
-    {
-      "title": "186 Fake AI Domains Redirect Users to ClickFix Lures, Browser Malware, and Search Hijackers",
-      "url": "https://thehackernews.com/2026/11/186-fake-ai-domains-redirect-users-to.html",
-      "publisher": "The Hacker News",
-      "published_at": "2026-11-12T15:15:40+00:00",
-      "summary": "Cybersecurity researchers have found that lookalike domains masquerading as artificial intelligence (AI) tools are being used to serve ClickFix-style lures, browser-hijacking…"
+  "updated_at": "2026-11-16T13:32:36.022920+00:00",
+  "max_age_days": 365,
+  "languages": {
+    "en": {
+      "sources_checked": [
+        "BleepingComputer",
+        "The Hacker News"
+      ],
+      "sources_unavailable": [],
+      "using_previous": false,
+      "articles": [
+        {
+          "title": "186 Fake AI Domains Redirect Users to ClickFix Lures, Browser Malware, and Search Hijackers",
+          "url": "https://thehackernews.com/2026/11/186-fake-ai-domains-redirect-users-to.html",
+          "publisher": "The Hacker News",
+          "language": "en",
+          "published_at": "2026-11-12T15:15:40+00:00",
+          "summary": "Cybersecurity researchers have found that lookalike domains masquerading as artificial intelligence (AI) tools are being used to serve ClickFix-style lures, browser-hijacking…"
+        },
+        {
+          "title": "FBI Says North Korean Hackers Stole Over $400 Million in Crypto Using Deepfake Video Calls",
+          "url": "https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html",
+          "publisher": "The Hacker News",
+          "language": "en",
+          "published_at": "2026-11-13T14:28:58+00:00",
+          "summary": "Federal Bureau of Investigation (FBI) has established that threat actors tied to the Democratic People's Republic of Korea (DPRK aka North Korea) have stolen more than $400…"
+        }
+      ]
     },
-    {
-      "title": "FBI Says North Korean Hackers Stole Over $400 Million in Crypto Using Deepfake Video Calls",
-      "url": "https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html",
-      "publisher": "The Hacker News",
-      "published_at": "2026-11-13T14:28:58+00:00",
-      "summary": "Federal Bureau of Investigation (FBI) has established that threat actors tied to the Democratic People's Republic of Korea (DPRK aka North Korea) have stolen more than $400…"
+    "hi": {
+      "sources_checked": [
+        "Google News — हिन्दी",
+        "Live Hindustan — Cyber Crime"
+      ],
+      "sources_unavailable": [],
+      "using_previous": false,
+      "articles": [
+        {
+          "title": "Rewari News: एआई से आवाज की नकल कर ठगी कर रहे साइबर अपराधी, सतर्क रहें लोग - Amar Ujala",
+          "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxPc3NmYUpKVGo2MFNkal92LXNhTW9KMHppRHgzVjYwMzFQTzlrR1cwamJnb1lWaUJlNkNldnNLZk9wVFotam16NHJrY2lqUWVUMHduVzZHa0tUMmlSMkZMNnhBX2hQeEs5QjRZQzF4a1dQdU90QlJfMUM1NFB6M2RELW9fTHBEXzdWWHZSYVlzcEUtb1UtTjdjZGZiLTdoU2RhTDh1NnVvMURVaDRhUFkzU0lnMlRUd0FtRGlWeW4yNUd6UXB1NWNSUzY1cnZ6RzNQWjVmZzhUQ0pjS3NUZGVURGExRm4tUlUyWFU5R1NYWm90aXpPQllINGFFT2VCRTjSAYQCQVVfeXFMT2JxX1VCaGlGeTFRemlBM2xrNEk3RmRfVjlNNGt1empCWUZjbHJkbkM3NXdWcDQzbnpiZ1JaWU9lbWREaHhJNEhCaFY5WmhqYV9VaHdBZUhXS1JoX19rdUNWVy13NU5QRlFxWjN4MGU3dXpZRHNCY0hCUlM4SHVta0FIOS0ycTh1NkdFcW9xd3pVY2tGQ1paSWpMc3pVOW5DMFByTFBBSzlnSFJqa294STkxcC1IZWJ1SHNCeG83bnBlcExXOU1PWFVzVDdmZWQtbE10dnQtSUlRZkZzRnRrWktOeTM1UlRBMC1mSFVSMnV6cUVVT2NfTUtfRXNjcUx2dEI4Y0E?oc=5",
+          "publisher": "Amar Ujala",
+          "language": "hi",
+          "published_at": "2026-11-15T18:34:30+00:00",
+          "summary": "Rewari News: एआई से आवाज की नकल कर ठगी कर रहे साइबर अपराधी, सतर्क रहें लोग Amar Ujala"
+        },
+        {
+          "title": "एआई वॉइस स्कैम अलर्ट: कैसे अपनों की आवाज में बात कर हो रही ठगी? सरकार ने जारी की चेतावनी - Amar Ujala",
+          "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQR0I1cUNiQlJGTmVucmE1U0Z4V2xTeTRyZURFODBSQWZxWmZIanVJWTVvOWZBSTVxcnQwZEpwZlRoWXhNTzcwZFJya3lPbWdjU1FCOTRQS0dyNVFiRE5jR01qcThXV1pZaW9NeUp6YWVtLVZiZ3M5YjFTVk4tLXhwV3l0Q0NyeXo1UUdJRUFCN1pTR3ZkV3U3NEFiT05GemNnZ1ZxWm9HaVZxdmNQdmFIYVpLYmViZ0M3Z0k4d3BPMWpnUDBDaG1pWi05VFNpZ0ZuQ1RxbU5ySG5MeGl0aUkw?oc=5",
+          "publisher": "Amar Ujala",
+          "language": "hi",
+          "published_at": "2026-10-17T07:00:00+00:00",
+          "summary": "एआई वॉइस स्कैम अलर्ट: कैसे अपनों की आवाज में बात कर हो रही ठगी?"
+        },
+        {
+          "title": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका - Amar Ujala",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOS3NkNS1mc2N6RkZxdmFyYkNrdjAyTXZDNVYzaE5LcldJTzc2MEFFQzhkNGR4UWZaMU1UWDB3cDVLb1lNTmhMbDZtZS01cXRfTUc3ZjVlV0VTcENaelBrRzBpdjBpRDJLVnpPVUl3d3VjSVJmOTh0b1hvSDhadUNKbmhXRnpiNV94dVo4QlMzUjRQbzBPb2lpb3A0T0lQZlBBSUtyQ1hRVGJTSmpCQkJLeUFnVGJxa0xDYXcyag?oc=5",
+          "publisher": "Amar Ujala",
+          "language": "hi",
+          "published_at": "2026-10-11T07:00:00+00:00",
+          "summary": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका Amar Ujala"
+        },
+        {
+          "title": "बीमा लोकपाल और IRDAI अफसर बन ठगने वाले गैंग का खुलासा, दिल्ली में पति-पत्नी और साली समेत 4 दबोचे",
+          "url": "https://www.livehindustan.com/ncr/insurance-ombudsman-and-irdai-fake-officers-gang-busted-delhi-police-arrest-four-people-husband-wife-and-sisterinlaw-201765251991716.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2025-12-09T04:47:33+00:00",
+          "summary": "दिल्ली पुलिस ने बीमा लोकपाल और आईआरडीएआई के फर्जी अधिकारी बन लोगों को ठगने वाले एक साइबर फ्रॉड सिंडिकेट का भंडाफोड़ कर पति-पत्नी और साली समेत 4 लोगों को गिरफ्तार किया है।"
+        },
+        {
+          "title": "पुलिस का इन 5 तकनीकों से अपराधियों पर प्रहार, गृह मंत्रालय का I4C बना वरदान; क्या-क्या फायदे",
+          "url": "https://www.livehindustan.com/ncr/police-strikes-at-criminals-using-these-5-techniques-mhas-i4c-proves-to-be-boon-what-are-the-benefits-201782695156890.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2026-06-29T01:36:17+00:00",
+          "summary": "डिजिटल सपोर्ट और एआई के यूज ने पुलिस को साइबर अपराध से निपटने के लिए और मजबूती दी है।"
+        },
+        {
+          "title": "Deepfake Scam: अब कॉल नहीं, AI से हो रही नई साइबर ठगी, जानें डीप फेक स्कैम पहचानने का आसान तरीका - ABP News",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPNEdvWVZFNkZLWjVwTU5fQVRFWmxEeWgyel94U0k2cFpJN0l2RmJPUnRtR3NGVUM3WWFTUmZ3bGVkeGhTTlpXVmVrY2FxSjJweUd4SXhtcFhOa2w3NmVtTlhOYjM4aE5Odl9uV2FBLXd5U3U4OGNNQS1qT0thc1Jpcmd3V2JELVVSczhDZTd6c2trYTJRbTctempuakVLY1FwX056UUhYb1dXQlotalJlQ0RnR1o?oc=5",
+          "publisher": "ABP News",
+          "language": "hi",
+          "published_at": "2026-07-06T07:00:00+00:00",
+          "summary": "Deepfake Scam: अब कॉल नहीं, AI से हो रही नई साइबर ठगी, जानें डीप फेक स्कैम पहचानने का आसान तरीका ABP News"
+        }
+      ]
+    },
+    "te": {
+      "sources_checked": [
+        "Google News — తెలుగు",
+        "TV9 Telugu",
+        "ABP Desam",
+        "Sakshi"
+      ],
+      "sources_unavailable": [],
+      "using_previous": false,
+      "articles": [
+        {
+          "title": "విదేశాల్లో ముఠాగా ఏర్పడి ఏఐ సాయంతో కెనడా బ్యాంకులను మోసం చేసిన భారత్- పాకిస్థానీలు! - Samayam Telugu",
+          "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPX3FvbDJRTHoyVU5tTlFBUG41dVpTMUVUT1Nfc3FFdTJLVjVMaC1TN1l3VFEySEdGNWNnNEhPcjlKbUxzQ3dXaVNMUXNSR2VtbXFpdHZOcHlhOEJzNXpER1VSSWlxSDExZmxUVW9oaHZnaXUycjA1eUZ2OThENnFqdTlQdW5wVFl6akNtQXpiSXZUUWpla2ZvaTJpR2lobVBpN3M5Z21NMmdLWVhTSi1HNWMxV0F6WlRFeXNwWXpvYkE4X2xydW5RRzJ5Z0JNTjV4c1I1V1VHbmJEM1JBa3k1N09WTmtHYnBlZjJsaXZn?oc=5",
+          "publisher": "Samayam Telugu",
+          "language": "te",
+          "published_at": "2026-10-21T07:00:00+00:00",
+          "summary": "విదేశాల్లో ముఠాగా ఏర్పడి ఏఐ సాయంతో కెనడా బ్యాంకులను మోసం చేసిన భారత్- పాకిస్థానీలు!"
+        }
+      ]
     }
-  ]
+  }
 }
