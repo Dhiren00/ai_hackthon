@@ -18,7 +18,7 @@ Removing the trained models removes the automatic assessment and learned explana
 
 The result remains useful when the detector is uncertain. A user checks the claimed identity through a saved contact or official app, records whether the contact confirmed or denied the request, and indicates whether money or access was already shared. These user-reported facts update the action plan without being presented as model observations.
 
-An evidence summary records the original input's SHA-256 fingerprint, model limits, verification outcome and completed recovery steps. Users can later compare the original input with that summary entirely inside the browser. Changing the input causes a mismatch. The summary is unsigned and can itself be edited; the hash is a byte-comparison aid.
+A simple downloadable report records the model limits, verification outcome and completed recovery steps. It is meant to help the user remember what happened and what to do next; it is not a legal evidence certificate.
 
 Complaint fields stay in the browser. Users review and download a draft, then open the official cybercrime portal to complete reporting.
 
@@ -46,7 +46,7 @@ Third-party software and checkpoints are credited in `THIRD_PARTY_NOTICES.md`. T
 
 1. Open **Try a fictional example → Urgent family request** and run the check. Show the learned message warning and its limitations.
 2. Explain that the user calls a saved contact. Select **The known contact denied the request**. Then select **I sent money**. The plan now prioritises the bank and 1930. Tick a completed action.
-3. Download the evidence summary. Compare it with a text file containing the submitted message. Append a word to the file and compare again to show the fingerprint mismatch.
+3. Download the simple report to show the result, verification outcome and completed recovery steps.
 4. Open **Prepare a complaint**, enter a fictional account of the incident, and download the editable draft. Show that official submission remains on the government portal.
 5. Reset and try the genuine placement reminder. It remains **Risk unknown**, with no claim that a low model score proves safety. Switch to Hindi or Telugu to demonstrate the recovery interface.
 
