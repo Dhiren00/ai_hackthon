@@ -20,7 +20,7 @@ FEEDS = {
     'The Hacker News': ('https://feeds.feedburner.com/TheHackersNews', 'thehackernews.com'),
 }
 AI = re.compile(r'\b(?:ai|artificial intelligence|deepfake|deepfakes|voice clon\w*|synthetic voice|generative)\b', re.I)
-FRAUD = re.compile(r'\b(?:scam\w*|fraud\w*|phish\w*|impersonat\w*|clon\w*|deceiv\w*|theft|stolen|fake|deepfake\w*)\b', re.I)
+FRAUD = re.compile(r'\b(?:scam\w*|fraud\w*|phish\w*|impersonat\w*|clon\w*|deceiv\w*|fake|deepfake\w*)\b', re.I)
 
 class PlainText(HTMLParser):
     def __init__(self):
@@ -55,14 +55,15 @@ def parse_feed(payload, publisher, allowed_host, now):
         if not (now - timedelta(days=14) <= published <= now + timedelta(minutes=10)):
             continue
         content = title + ' ' + description
-        if not AI.search(content) or not FRAUD.search(content):
+        if not AI.search(content) or not FRAUD.search(content) or title.lower().startswith('threatsday:'):
             continue
         # The compact local classifier ranks selected reports. It is not a
         # fact-checker or a probability that the article is true.
         score = assess_message(content[:3000], 'en').get('score') or 0
         # Source's first sentence is an extract, not an invented model summary.
-        sentences = [s for s in re.split(r'(?<=[.!?])\s+', description) if len(s) >= 25][:4]
-        sentence = max(sentences, key=lambda s: assess_message(s, 'en').get('score') or 0, default='')
+        sentences = [s for s in re.split(r'(?<=[.!?])\s+', description) if len(s) >= 50][:4]
+        relevant = [s for s in sentences if AI.search(s) or FRAUD.search(s)]
+        sentence = max(relevant, key=lambda s: assess_message(s, 'en').get('score') or 0, default=(sentences[0] if sentences else description if len(description) >= 25 else ''))
         if len(sentence) > 180:
             sentence = sentence[:177].rsplit(' ', 1)[0] + '…'
         articles.append({'title': title[:200], 'url': url, 'publisher': publisher,
