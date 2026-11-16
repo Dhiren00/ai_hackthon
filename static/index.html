@@ -12,7 +12,7 @@ main{max-width:740px;margin:38px auto;padding:0 20px}header{display:flex;align-i
 h3{font-size:18px;margin:24px 0 12px}.risk-label{font-size:22px;font-weight:650;margin-bottom:8px}meter{width:100%;height:18px;accent-color:var(--accent)}.risk-high{color:#9a351d}.risk-review{color:#725200}.verification{border-top:1px solid var(--line);margin-top:20px}.verification label,dialog label{display:block;font-weight:600;font-size:14px;margin:18px 0 7px}.verification select{max-width:100%;width:100%;white-space:normal;font-size:14px}.verification p{margin-top:14px}.result-actions{flex-wrap:wrap}.result-actions .button{white-space:normal}.demo-options{margin:16px 0}.demo-options small{display:block;margin-top:8px}.help-entry{text-align:center;margin-top:26px}dialog{border:1px solid var(--line);border-radius:18px;padding:24px;max-width:620px;width:calc(100% - 24px);max-height:90dvh;overflow:auto;color:var(--ink)}dialog::backdrop{background:#102c3380}.close-dialog{position:sticky;top:0;z-index:1;float:right;margin:0 0 12px 12px}dialog textarea{border:1px solid var(--line);min-height:130px;border-radius:9px;padding:12px}dialog input{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:12px;font:inherit}dialog a{color:var(--accent)}.action-check{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}.action-check input{margin-top:6px}.action-check label{margin:0;font-weight:400}#action-plan{padding-left:22px}#score-caption{margin-top:8px}#verification-note{color:var(--muted)}
 meter{--meter-color:#697e85}meter[data-level="high"]{--meter-color:#c44725}meter[data-level="review"]{--meter-color:#aa7c15}meter::-webkit-meter-optimum-value,meter::-webkit-meter-suboptimum-value,meter::-webkit-meter-even-less-good-value{background:var(--meter-color)}meter::-moz-meter-bar{background:var(--meter-color)}
 #caution-feed{margin:0 0 24px;background:#fffaf0;box-shadow:none}#caution-feed h2{font-size:19px}#caution-items{max-height:260px;overflow:auto}#caution-feed article{border-top:1px solid #eadfc9;padding:12px 0}#caution-feed a{color:#14584b;font-weight:600}#caution-feed article p{margin:5px 0}#caution-status{font-size:13px;color:var(--muted)}
-#progress,#result{scroll-margin-top:110px}
+#progress,#result,#error{scroll-margin-top:110px}
 .help-entry{text-align:left;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.help-entry .button{max-width:100%;white-space:normal;text-align:left;background:#edf4ff;color:var(--navy)}.help-entry p{margin:10px 0 0;font-size:14px;line-height:1.65;color:var(--muted)}
 
 /* Warm, accessible Tiranga-inspired product surface. */
@@ -124,7 +124,7 @@ function scrollToDashboard(id){
   panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
  });
 }
-function error(code){lastError=code;$('error').textContent=t(code);$('error').hidden=false;}
+function error(code){lastError=code;$('error').textContent=t(code);$('error').hidden=false;scrollToDashboard('error');}
 function setBusy(value){busy=value;for(const id of ['submit','attach','remove'])$(id).disabled=value;$('input').disabled=value||!!selectedFile;}
 function attachFile(file){
  if(busy)return;if(file.size>50*1024*1024){error('file_large');return;}

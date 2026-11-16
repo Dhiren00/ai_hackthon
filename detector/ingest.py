@@ -1,5 +1,6 @@
 """Identify uploaded content and extract screenshot text using local tools."""
 import json
+from functools import lru_cache
 import os
 from pathlib import Path
 import shutil
@@ -41,7 +42,7 @@ def identify(path):
     try:
         response=subprocess.run([ffprobe,'-v','error','-show_streams','-of','json',str(path)],capture_output=True,timeout=20)
     except subprocess.TimeoutExpired as exc:
-        raise InputError('timed_out','File inspection timed out. Try a smaller file.') from exc
+        raise InputError('media_inspection_timeout','Media inspection timed out on the server.') from exc
     if response.returncode:
         raise InputError('unsupported_file','Use text, a screenshot, an audio recording or a video.')
     try:
@@ -97,34 +98,69 @@ def ocr_config():
     return []
 
 
+def _ocr_environment():
+    return {**os.environ, 'OMP_THREAD_LIMIT': '1', 'OMP_NUM_THREADS': '1'}
+
+
+@lru_cache(maxsize=4)
+def _check_ocr_languages(executable, config):
+    # The pinned local packs can be inspected without starting a subprocess.
+    if '--tessdata-dir' in config:
+        directory = Path(config[config.index('--tessdata-dir') + 1])
+        available = {name for name in ('eng', 'hin', 'tel') if (directory / (name + '.traineddata')).is_file()}
+    else:
+        try:
+            response = subprocess.run([executable, '--list-langs', *config],
+                capture_output=True, text=True, timeout=30, env=_ocr_environment())
+        except subprocess.TimeoutExpired as exc:
+            raise InputError('ocr_setup_timeout', 'OCR language inspection timed out.') from exc
+        if response.returncode:
+            raise InputError('tools_missing', 'Tesseract language inspection failed.')
+        available = set(response.stdout.split())
+    if not {'eng', 'hin', 'tel'}.issubset(available):
+        raise InputError('ocr_languages_missing', 'Install English, Hindi and Telugu OCR packs, or run python scripts/setup_ocr.py.')
+
+
+def _prepare_ocr_image(original, max_pixels=1_200_000, max_side=1600, upscale=True):
+    image = ImageOps.exif_transpose(original)
+    scale = min(1.0, max_side / max(image.size), (max_pixels / (image.width * image.height)) ** .5)
+    if scale < 1:
+        image = image.resize((max(1, int(image.width * scale)), max(1, int(image.height * scale))), Image.Resampling.LANCZOS)
+    # Upscale genuinely tiny screenshots only, without exceeding the budget.
+    elif upscale and image.width < 640 and image.width * image.height * 4 <= max_pixels:
+        image = image.resize((image.width * 2, image.height * 2), Image.Resampling.LANCZOS)
+    # Composite only after resizing, avoiding several full-resolution RGBA
+    # copies in the memory-limited server. Transparent screenshots use white.
+    image = image.convert('RGBA')
+    background = Image.new('RGBA', image.size, 'white')
+    background.alpha_composite(image)
+    return background.convert('L')
+
+
 def extract_screenshot(path):
     executable=shutil.which('tesseract')
     if not executable:
         raise InputError('tools_missing','Tesseract is missing. Run the documented setup.')
     config=ocr_config()
-    try:
-        languages=subprocess.run([executable,'--list-langs',*config],capture_output=True,text=True,timeout=10)
-    except subprocess.TimeoutExpired as exc:
-        raise InputError('timed_out', 'OCR language inspection timed out.') from exc
-    available=set(languages.stdout.split())
-    required={'eng','hin','tel'}
-    if not required.issubset(available):
-        raise InputError('ocr_languages_missing','Install English, Hindi and Telugu OCR packs, or run python scripts/setup_ocr.py.')
-    try:
-        with Image.open(path) as original:
-            image=ImageOps.exif_transpose(original).convert('RGB')
-            # Bound OCR work on large phone screenshots before upscaling.
-            image.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
-            if image.width<900 and image.width*image.height*4<=3_240_000:
-                image=image.resize((image.width*2,image.height*2))
-            with tempfile.TemporaryDirectory(prefix='physiocheck-ocr-') as folder:
-                clean=Path(folder)/'screenshot.png'
-                image.save(clean)
-                # A single OCR thread avoids OpenMP contention on small CPUs.
-                ocr_env = {**os.environ, 'OMP_THREAD_LIMIT': '1'}
-                response=subprocess.run([executable,str(clean),'stdout',*config,'-l','eng+hin+tel','--psm','3'],capture_output=True,text=True,timeout=120,env=ocr_env)
-    except subprocess.TimeoutExpired as exc:
-        raise InputError('timed_out','Screenshot text extraction timed out.') from exc
+    _check_ocr_languages(executable, tuple(config))
+    with Image.open(path) as original:
+        image = _prepare_ocr_image(original)
+    with tempfile.TemporaryDirectory(prefix='physiocheck-ocr-') as folder:
+        clean = Path(folder) / 'screenshot.png'
+        # Retry only OCR, with less pixel work and a simple block layout. Never
+        # turn an OCR failure into an invented text or scam classification.
+        for attempt, (pixels, side, psm, seconds) in enumerate([
+                (1_200_000, 1600, '11', 90), (600_000, 1100, '6', 60)]):
+            prepared = image if attempt == 0 else _prepare_ocr_image(image, pixels, side, upscale=False)
+            prepared.save(clean)
+            try:
+                response = subprocess.run([executable, str(clean), 'stdout', *config,
+                    '-l', 'eng+hin+tel', '--psm', psm], capture_output=True, text=True,
+                    timeout=seconds, env=_ocr_environment())
+                break
+            except subprocess.TimeoutExpired as exc:
+                if attempt == 1:
+                    raise InputError('ocr_timed_out', 'Both bounded OCR attempts timed out on the server.') from exc
     if response.returncode:
         raise InputError('ocr_failed','Text extraction failed. Try a clearer screenshot.')
     text=response.stdout.strip()

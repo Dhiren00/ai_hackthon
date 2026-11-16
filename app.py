@@ -21,6 +21,7 @@ async def lifespan(app):
 app = FastAPI(title='S.H.I.E.L.D. — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
+RELEASE = 'ocr-retry-v2'
 
 @app.middleware('http')
 async def privacy_headers(request, call_next):
@@ -28,6 +29,7 @@ async def privacy_headers(request, call_next):
     response.headers['Cache-Control'] = 'no-store'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['Referrer-Policy'] = 'no-referrer'
+    response.headers['X-SHIELD-Release'] = RELEASE
     return response
 
 
@@ -176,5 +178,5 @@ def readiness():
         'text':all((ROOT/'external'/'text_model'/name).is_file() for name in json.loads(REGISTRY_PATH.read_text())),
         'ocr_packs':all((ROOT/'external'/'tessdata'/(lang+'.traineddata')).is_file() for lang in ['eng','hin','tel']),
     }
-    return {'status':'files_present' if all(components.values()) else 'setup_required','components':components,
+    return {'status':'files_present' if all(components.values()) else 'setup_required','components':components,'release':RELEASE,
             'note':'File presence check only; inference is verified by tests.'}

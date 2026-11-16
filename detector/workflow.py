@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 import json
+import logging
 from pathlib import Path
 import shutil
 from threading import Event, RLock, Thread
@@ -12,6 +13,7 @@ from .assets import ROOT
 from .ingest import InputError, identify, read_text, text_language, extract_screenshot
 
 SPEC=json.loads((ROOT/'workflow'/'analysis.json').read_text())
+LOGGER = logging.getLogger('shield.workflow')
 
 
 def text_result(text):
@@ -140,6 +142,8 @@ class JobManager:
             else:
                 code='analysis_failed'
             with self.lock:
+                LOGGER.warning('Analysis failed: stage=%s code=%s exception=%s',
+                    self.jobs[key]['stage'], code, type(exc).__name__)
                 self.jobs[key].update(status='failed',stage='failed',error={'code':code},_updated=time.monotonic())
                 self.jobs[key]['history'].append('failed')
         finally:
