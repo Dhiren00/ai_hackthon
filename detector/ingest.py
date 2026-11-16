@@ -113,13 +113,16 @@ def extract_screenshot(path):
     try:
         with Image.open(path) as original:
             image=ImageOps.exif_transpose(original).convert('RGB')
-            # Upscale small screenshots; keep large screenshots bounded.
-            if image.width<1200 and image.width*image.height*4<=16_000_000:
+            # Bound OCR work on large phone screenshots before upscaling.
+            image.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
+            if image.width<900 and image.width*image.height*4<=3_240_000:
                 image=image.resize((image.width*2,image.height*2))
             with tempfile.TemporaryDirectory(prefix='physiocheck-ocr-') as folder:
                 clean=Path(folder)/'screenshot.png'
                 image.save(clean)
-                response=subprocess.run([executable,str(clean),'stdout',*config,'-l','eng+hin+tel','--psm','3'],capture_output=True,text=True,timeout=40)
+                # A single OCR thread avoids OpenMP contention on small CPUs.
+                ocr_env = {**os.environ, 'OMP_THREAD_LIMIT': '1'}
+                response=subprocess.run([executable,str(clean),'stdout',*config,'-l','eng+hin+tel','--psm','3'],capture_output=True,text=True,timeout=120,env=ocr_env)
     except subprocess.TimeoutExpired as exc:
         raise InputError('timed_out','Screenshot text extraction timed out.') from exc
     if response.returncode:
