@@ -45,7 +45,19 @@ try:
         page.route('**/api/jobs/*',interrupted_poll)
         page.locator('#input').fill(TEXT)
         page.locator('#submit').click()
+        # The dashboard must enter the viewport without another user scroll.
+        page.wait_for_function("""() => {
+            const panel = document.getElementById('progress');
+            const box = panel.getBoundingClientRect();
+            return !panel.hidden && box.top >= document.querySelector('header').getBoundingClientRect().bottom
+                && box.top < innerHeight - 80;
+        }""")
         page.locator('#result').wait_for(state='visible',timeout=120000)
+        page.wait_for_function("""() => {
+            const box = document.getElementById('result').getBoundingClientRect();
+            return box.top >= document.querySelector('header').getBoundingClientRect().bottom
+                && box.top < innerHeight - 80;
+        }""")
         assert 'text' in page.locator('#kind').inner_text().lower()
         page.screenshot(path=str(OUTPUT/'desktop-text.png'),full_page=True)
         page.locator('#language').select_option('hi')
@@ -60,6 +72,11 @@ try:
         page.locator('#input').fill('ఇది తెలుగులో రాసిన వాక్యం. భాషను సరిగ్గా గుర్తించాలి.')
         page.locator('#submit').click()
         page.locator('#result').wait_for(state='visible',timeout=30000)
+        page.wait_for_function("""() => {
+            const box = document.getElementById('result').getBoundingClientRect();
+            return box.top >= document.querySelector('header').getBoundingClientRect().bottom
+                && box.top < innerHeight - 80;
+        }""")
         assert 'ఈ భాషలో' in page.locator('#verdict').inner_text()
         page.locator('#language').select_option('en')
         page.locator('#again').click()
