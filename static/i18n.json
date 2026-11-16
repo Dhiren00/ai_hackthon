@@ -150,7 +150,18 @@
     "fingerprint_choose": "Choose both files first.",
     "fingerprint_match": "Fingerprint matches the saved summary.",
     "fingerprint_mismatch": "Fingerprint differs. This input does not match the saved summary.",
-    "fingerprint_invalid": "Could not compare. Use an original S.H.I.E.L.D. summary and a supported input file."
+    "fingerprint_invalid": "Could not compare. Use an original S.H.I.E.L.D. summary and a supported input file.",
+    "caution_title": "Scam watch",
+    "caution_intro": "Recent reports about AI-enabled scams, with practical precautions.",
+    "caution_advice": "Pause before paying or sharing codes. Verify unusual requests using a number or app you already trust.",
+    "caution_method": "An automated model helps rank source reports. Briefs use short source extracts; check the original report for context. Coverage is limited.",
+    "caution_failed": "The caution feed is unavailable. Try again later.",
+    "caution_loading": "Loading safety reports…",
+    "caution_waiting": "The first daily update has not run yet.",
+    "caution_updated": "Last checked",
+    "caution_stale": "This update is over 48 hours old",
+    "caution_partial": "Some sources could not be reached",
+    "caution_empty": "No matching reports were found in the last 14 days."
   },
   "hi": {
     "title": "एक इनपुट। आगे का रास्ता साफ़।",
@@ -303,7 +314,18 @@
     "fingerprint_choose": "पहले दोनों फ़ाइलें चुनें।",
     "fingerprint_match": "फिंगरप्रिंट सहेजे सार से मेल खाता है।",
     "fingerprint_mismatch": "फिंगरप्रिंट अलग है। यह इनपुट सहेजे सार से मेल नहीं खाता।",
-    "fingerprint_invalid": "तुलना नहीं हो सकी। मूल S.H.I.E.L.D. सार और समर्थित फ़ाइल दें।"
+    "fingerprint_invalid": "तुलना नहीं हो सकी। मूल S.H.I.E.L.D. सार और समर्थित फ़ाइल दें।",
+    "caution_title": "धोखाधड़ी से सावधान",
+    "caution_intro": "AI की मदद से होने वाली धोखाधड़ी की हाल की खबरें और सावधानियाँ।",
+    "caution_advice": "पैसे या कोड देने से पहले रुकें। असामान्य अनुरोध की पुष्टि अपने भरोसेमंद नंबर या ऐप से करें।",
+    "caution_method": "एक स्वचालित मॉडल खबरों को क्रम देता है। सार में स्रोत के छोटे अंश हैं; पूरी जानकारी के लिए मूल खबर देखें। कवरेज सीमित है।",
+    "caution_failed": "सावधानी फ़ीड उपलब्ध नहीं है। बाद में फिर कोशिश करें।",
+    "caution_loading": "सुरक्षा खबरें लोड हो रही हैं…",
+    "caution_waiting": "पहला दैनिक अपडेट अभी नहीं हुआ है।",
+    "caution_updated": "आखिरी जाँच",
+    "caution_stale": "यह अपडेट 48 घंटे से पुराना है",
+    "caution_partial": "कुछ स्रोत उपलब्ध नहीं थे",
+    "caution_empty": "पिछले 14 दिनों में ऐसी कोई खबर नहीं मिली।"
   },
   "te": {
     "title": "ఒక ఇన్‌పుట్. స్పష్టమైన తదుపరి దశ.",
@@ -456,6 +478,17 @@
     "fingerprint_choose": "ముందుగా రెండు ఫైళ్లు ఎంచుకోండి.",
     "fingerprint_match": "వేలిముద్ర భద్రపరిచిన సారాంశంతో సరిపోలింది.",
     "fingerprint_mismatch": "వేలిముద్ర వేరుగా ఉంది. ఈ ఇన్‌పుట్ భద్రపరిచిన సారాంశంతో సరిపోలలేదు.",
-    "fingerprint_invalid": "పోల్చలేకపోయాము. అసలు S.H.I.E.L.D. సారాంశం, మద్దతు ఉన్న ఫైల్ ఇవ్వండి."
+    "fingerprint_invalid": "పోల్చలేకపోయాము. అసలు S.H.I.E.L.D. సారాంశం, మద్దతు ఉన్న ఫైల్ ఇవ్వండి.",
+    "caution_title": "మోసాల హెచ్చరిక",
+    "caution_intro": "AI ఆధారిత మోసాల తాజా వార్తలు, తీసుకోవాల్సిన జాగ్రత్తలు.",
+    "caution_advice": "డబ్బు లేదా కోడ్ పంచుకునే ముందు ఆగండి. మీకు తెలిసిన నంబర్ లేదా యాప్ ద్వారా అభ్యర్థనను నిర్ధారించండి.",
+    "caution_method": "స్వయంచాలిత మోడల్ వార్తలను క్రమబద్ధం చేస్తుంది. సారాంశంలో మూలంలోని చిన్న భాగం ఉంటుంది; పూర్తి సమాచారం కోసం అసలు వార్త చదవండి. పరిధి పరిమితమైనది.",
+    "caution_failed": "హెచ్చరికల ఫీడ్ అందుబాటులో లేదు. తర్వాత ప్రయత్నించండి.",
+    "caution_loading": "భద్రతా వార్తలు లోడ్ అవుతున్నాయి…",
+    "caution_waiting": "మొదటి రోజువారీ నవీకరణ ఇంకా జరగలేదు.",
+    "caution_updated": "చివరిగా తనిఖీ",
+    "caution_stale": "ఈ నవీకరణ 48 గంటల కంటే పాతది",
+    "caution_partial": "కొన్ని మూలాలను చేరుకోలేకపోయాము",
+    "caution_empty": "గత 14 రోజుల్లో సరిపోలిన వార్తలు లేవు."
   }
 }

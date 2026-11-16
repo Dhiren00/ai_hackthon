@@ -1,0 +1,36 @@
+name: Daily scam caution feed
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  push:
+    branches: [main]
+    paths: ['scripts/update_cautions.py', '.github/workflows/cautions.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: caution-feed
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh safety brief
+        run: python scripts/update_cautions.py
+      - name: Commit updated brief
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/cautions.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh daily safety brief'
+            git pull --rebase origin main
+            git push origin HEAD:main
+            GH_TOKEN="${{ github.token }}" gh workflow run test.yml --ref main
+          fi

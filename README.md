@@ -88,3 +88,9 @@ The new `POST /api/jobs` route accepts multipart `text` or `file`, and returns a
 The Dockerfile packages the backend, FFmpeg, Tesseract and all models. Build with `docker build -t physiocheck .`, then run `docker run --rm -p 8000:8000 physiocheck`. This is packaging for deployment, not an already deployed public website. The full multi-model demo needs substantially more memory than a basic static site; Render Free compatibility is not claimed.
 
 The video model now executes spatial operations in NHWC internally while retaining upstream NCHW interfaces, BatchNorm/Flatten axes and all learned weights. This fixes the CPU error seen in the first GitHub Actions run without requiring oneDNN. CI disables oneDNN to exercise that portable path.
+
+## Scam watch
+
+The caution box uses short extracts from BleepingComputer and The Hacker News RSS feeds. A local experimental classifier helps select one extractive sentence per article and rank articles after an AI/scam relevance filter; it does not verify claims or generate a free-form summary. Only linked source reports from the last 14 days appear. General precaution guidance is displayed alongside them. Articles remain in English, while controls and guidance support English, Hindi and Telugu.
+
+`.github/workflows/cautions.yml` runs daily at 02:30 UTC and can be run manually in GitHub Actions. It commits the latest snapshot, then triggers demo checks for the updated revision. Scheduled GitHub jobs can be delayed; the box shows its last check, partial source failures and a warning after 48 hours. If every source fails, the previous snapshot is retained and the scheduled job fails visibly. The first snapshot appears after the first successful refresh. Deployments must update from `main` for the box to reflect refreshed data. No API key is required.
