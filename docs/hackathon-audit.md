@@ -44,6 +44,7 @@ Reviewed against the supplied 10-page **AI-FEST 2026 CSE Stream Track Guide**, D
 - Results previously expired only when another job was accessed. A background cleanup worker now prunes completed jobs every 30 seconds. They stop being retrievable at the 15-minute TTL. Memory release can lag by up to 30 seconds.
 - OCR language-list timeout now maps to a useful input error.
 - Complaint UI is now translated, supports local draft download, and checks common secret-number patterns before copying/exporting.
+- The added training step initially allowed a newer SciPy to replace NumPy 1.26 with NumPy 2, breaking TensorFlow. Training now pins compatible NumPy/SciPy versions and CI checks dependency consistency.
 - API responses include no-store, nosniff and no-referrer headers. User-entered strings render with textContent or textarea values.
 - Evidence exports distinguish uploaded file bytes from trimmed pasted text, and include the actual input hash. The local checker can detect a changed input relative to a saved summary.
 

@@ -13,8 +13,10 @@ from detector.workflow import JobManager, BusyError, SPEC
 @asynccontextmanager
 async def lifespan(app):
     app.state.jobs=JobManager()
-    yield
-    await run_in_threadpool(app.state.jobs.shutdown)
+    try:
+        yield
+    finally:
+        await run_in_threadpool(app.state.jobs.shutdown)
 
 app = FastAPI(title='PhysioCheck — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')

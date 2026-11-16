@@ -1,1 +1,4 @@
+# Keep training compatible with the legacy TensorFlow runtime in the same env.
+numpy==1.26.4
+scipy==1.17.0
 scikit-learn==1.6.1

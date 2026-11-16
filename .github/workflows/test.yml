@@ -29,6 +29,7 @@ jobs:
       - name: Reproduce message classifier and benchmark
         run: |
           python -m pip install -r requirements-training.txt
+          python -m pip check
           python scripts/train_scam.py
           python scripts/benchmark_scam.py
           git diff --exit-code -- detector/scam_model.json reports/scam_benchmark.json

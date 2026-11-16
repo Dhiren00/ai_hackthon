@@ -1,22 +1,31 @@
-# Verification record
+# Verification and limits
 
-Environment: Linux x86_64 CPU, Python 3.12.14, TensorFlow 2.16.2, tf-keras 2.16.0, OpenCV 4.10.0, NumPy 1.26.4.
+## Current request-triage upgrade, 16 November 2026
 
-- `python -m detector.assets`: both upstream model SHA-256 checks passed.
-- `python -m pytest -q`: 7 passed. Both actual checkpoints executed with finite outputs.
-- `python scripts/smoke_video.py`: HTTP 200; 99 consecutive frame pairs, 30 fps, 100% face coverage, 3.33 seconds. Generated fixture from upstream illustration; not a genuine/deepfake accuracy test.
-- `python -m compileall -q app.py detector scripts tests`: passed.
+The latest Actions run is authoritative for the exact commit tested. It runs actual neural model checkpoints, OCR, routing/failure checks, a full video upload and Chromium UI interactions. See the repository's Actions tab.
 
-Two legacy protobuf deprecation warnings occur under Python 3.12. TensorFlow may print CUDA registration messages in environments containing both CPU/GPU packages; execution here used CPU successfully.
+Local checks for the upgrade:
 
-No labelled-video detection-accuracy claim is made. Browser interaction and native Windows/macOS execution were not tested.
+- 13 safety-specific tests passed through the actual API and classifier. They cover short requests, genuine safety reminders, unsupported languages, secret-pattern errors, recovery, original-byte fingerprints, dataset separation and UI reference/translation integrity.
+- The model training script reproduced the portable runtime's predictions against scikit-learn. Runtime uses standard Python and the committed JSON weights.
+- The 60-case synthetic benchmark produced 23 true positives, 2 false positives, 7 false negatives and 28 true negatives at the fixed 0.65 threshold. Both training and holdout were written during the same development session. This is a small controlled evaluation, not independent real-world validation.
+- Python compilation, JavaScript syntax, JSON parsing and Git whitespace checks passed.
+- Vendored AASIST/TSSD source files were compared to their pinned upstream revisions and matched byte for byte.
 
-## Video / Voice / Text integration verification
+The full CI suite additionally checks existing media/OCR models, desktop/mobile layout, English/Hindi/Telugu interface switching, interrupted polling, error recovery, independent verification, downloaded evidence content, a matching and changed-file fingerprint check, local-only complaint preparation and secret-number export rejection. Screenshots are saved in the run's `demo-browser-screenshots` artifact. Passing local checks alone does not establish that full CI passed.
 
-- Four free GitHub audio model checkpoints were executed on the public sample comparison documented in `reports/README.md`. No API keys or paid services were used. The selected voice model did not generalize reliably and is explicitly labelled experimental.
-- The real OpenAI GPT-2-era text checkpoint executed on 19 eligible published passages (16 correct), with one short passage excluded. This does not validate modern AI-text detection.
-- Final regression run: **14 tests passed**, covering new audio/text inputs and actual model inference, existing video preprocessing and both video checkpoints.
-- Full video upload smoke test: HTTP 200, 99 frame pairs, 30 fps, complete face coverage, raw genuine model score 0.818583. This is execution verification on a generated fixture, not an accuracy benchmark.
-- Full voice upload smoke test: HTTP 200 on a decoded public speech sample, actual selected checkpoint inference and binary estimate returned. Execution is verified; the sample's verdict is not treated as an accuracy assertion.
-- JavaScript syntax and Python compilation checks passed. Automated browser rendering could not be verified because the browser runtime download failed. The page is a single responsive HTML file with three mode controls; HTTP content and mode declarations are checked in the tests.
-- Final integration inference tests used CPU PyTorch 2.5.1, NumPy 1.26.4, Transformers 4.46.3, TensorFlow CPU 2.16.2 and tf-keras 2.16.0 on Python 3.12 / Linux.
+## Accuracy and usage boundaries
+
+- **Message risk:** 100 synthetic training / 60 separate synthetic evaluation cases. English-only learned TF-IDF/logistic classifier. A low model score stays unknown risk.
+- **Voice:** four free GitHub checkpoints were compared as recorded in `reports/README.md`. Selected Inc-TSSDNet held-out clean balanced accuracy was 50%; it missed 18/24 AI clips and flagged 2/8 genuine clips. It is unreliable for real decisions.
+- **Text authorship:** the real GPT-2-era model classified 16/19 eligible published in-domain passages correctly. It is not validated for modern generative models. Authorship assessment requires 50 English words.
+- **Video:** both released checkpoints have executed under CPU. The upload smoke fixture processes 99 frame pairs at 30 fps with complete face coverage. It is a synthetic clip derived from an upstream illustration, not a labelled accuracy benchmark. No reliable blood-flow/heart-rate measurement claim is made.
+- **Evidence:** hashes compare an input to a user-controlled saved record. Records are unsigned and editable, and do not prove identity, truth or legal admissibility.
+- **Complaint:** copy/download and official portal handoff are implemented. Autonomous government submission is not implemented or tested.
+- **Hosting:** no Render URL or full-model inference on a 512 MB instance has been verified. Use a suitable laptop for the complete live demo if server resources are insufficient.
+
+## Earlier CI findings
+
+The initial video run failed on NCHW CPU operations. Spatial layers now run as NHWC internally while preserving original interfaces and weights. An integration run lacked FFmpeg, now installed in CI. Browser installation required pinning Ubuntu 24.04. Later UI checks were corrected for CSS uppercase labels. The immediate baseline `4e1c345` passed 26 tests and failed one obsolete all-textareas count; the test now checks the main detection form and separately exercises the complaint form.
+
+The full requirement mapping and outstanding eligibility/licensing questions are in `docs/hackathon-audit.md`. Test success establishes execution on tested cases, not perfect code or detector accuracy.
