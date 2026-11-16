@@ -13,7 +13,7 @@ Reviewed against the supplied 10-page **AI-FEST 2026 CSE Stream Track Guide**, D
 | Goal | Money, credentials or remote account access |
 | Method | A message or a fabricated recording asks for a payment, secrecy or access |
 | Signals | Learned request-language patterns; experimental acoustic/video manipulation estimates; independently reported identity mismatch |
-| Defence | Assess the submitted input, explain uncertainty, verify the contact through an independent channel, preserve a fingerprinted record and prepare a complaint |
+| Defence | Assess the submitted input, explain uncertainty, verify the contact through an independent channel, save a simple report and prepare a complaint |
 
 ## Requirement mapping
 
@@ -25,10 +25,10 @@ Reviewed against the supplied 10-page **AI-FEST 2026 CSE Stream Track Guide**, D
 | Working live app, p2/9 | Unified upload → identification → OCR if needed → inference → result → identity check → evidence/draft export | Automated execution/browser checks required on final commit. Hosting is optional under p10. Render live inference remains unverified. |
 | Measure catches and false alarms, p5/8/9 | `data/scam_holdout.tsv`, `reports/scam_benchmark.json`, public audio/text results | Message test has 60 separate synthetic cases. Voice generalization is poor. Labelled video accuracy and modern AI-text accuracy are still missing. |
 | At least 50 labelled examples suggested, p8 | 100 synthetic training cases plus 60 separate synthetic evaluation cases | Implemented for message risk. Same author/session, not a blind external benchmark. |
-| Risk levels, explanations, correction, p5 | High / review / unknown / urgent; feature contributions; correction saved locally in evidence summary | Implemented. Model scores never establish that an incident is a scam. |
+| Risk levels, explanations, correction, p5 | High / review / unknown / urgent; feature contributions; correction saved locally in the downloadable report | Implemented. Model scores never establish that an incident is a scam. |
 | Privacy and misuse protection, p4/5 | No API keys, no external inference, no URL visits, bounded worker queue, secret-pattern checks, no-store headers, expiry worker, local complaint fields | Implemented controls. Public production needs gateway request/body rate limits and process isolation. Model scores can still be probed. Secret detection is best-effort. |
 | Phone-friendly plain-language demo, p5/9 | Single detection composer, translated recovery panels, fictional demo buttons, progressive disclosure | English/Hindi/Telugu interface. Automatic message and AI-writing classifiers are English-only (Latin-script heuristic). |
-| Original approach, p5/10 | Independent verification recorded with model uncertainty, exportable input fingerprint, local re-check of evidence and recovery progress | Working product differentiation. No claim of scientific novelty or that this is the first system of its kind. |
+| Original approach, p5/10 | Independent verification recorded with model uncertainty, a simple downloadable report and recovery progress | Working product differentiation. No claim of scientific novelty or that this is the first system of its kind. |
 | 4–5 slides or short document, p2/9 | `docs/submission.md`, five sections, with threat model and measured results | Ready as a short submission document. Rehearse with the team. |
 | Third-party attribution, p2/9 | `THIRD_PARTY_NOTICES.md`, pinned registries, licences in `third_party/` | Credited. DeepFakesON-Phys has no explicit upstream licence. Its availability is not a redistribution licence. |
 | Synthetic, public or consented data, p2/4/8 | New fictional text cases, existing public sample benchmarks | No real victim data committed. Team must obtain consent for any demonstration voices/faces. |
@@ -59,7 +59,7 @@ The video model estimates physiological manipulation signals through the release
 1. Message evaluation is 23/30 attacks caught, 7 missed, 2/30 genuine cases flagged, 28 correctly unflagged at the fixed 0.65 threshold. Precision 92%, recall 76.7%, false-positive rate 6.7% on this synthetic set only. Unflagged is not a safe verdict.
 2. Voice model held-out clean balanced accuracy was 50%. It is an execution demo, not a dependable voice-clone defence.
 3. Video has no labelled attack/genuine evaluation here. GPT-2 authorship results do not validate current generative models.
-4. A SHA-256 fingerprint detects a changed input relative to a saved record. The record itself is unsigned and editable. It does not establish a real identity, time, truth or legal admissibility.
+4. The downloadable report is a user aid, not proof of identity, truth, creation time or legal admissibility.
 5. Complaint assistance prepares a reviewed draft and official handoff. There is no implemented government submission API or autonomous filing integration. Authentication, verification, evidence attachments and submission happen on the official portal.
 6. Full TensorFlow/PyTorch/RoBERTa inference has not been demonstrated within Render Free's 512 MB. The lightweight message route avoids those heavyweight imports, but the whole app still needs a suitable laptop/server.
 7. New local model and synthetic data are project work under GPL-3.0. The upstream physiology model lacks an explicit licence, so full redistribution/commercial permission remains unresolved.
@@ -72,7 +72,7 @@ The video model estimates physiological manipulation signals through the release
 | Universal AI/scam percentage | A single number would combine unrelated and uncalibrated tasks. It would be difficult to defend to judges. |
 | Fully autonomous government filing | No supported submission integration established. Incorrect filing and authentication make this an unreliable demo dependency. |
 | Generic scam chatbot | Easy to confuse with the brief's examples and difficult to ground its advice without more infrastructure. |
-| Verification plus fingerprinted recovery record | Selected. Works with uncertain model outputs, shows the source of each fact, supports a changed-file demonstration, keeps sensitive complaint fields local, and connects detection to action. |
+| Verification plus simple recovery report | Selected. Works with uncertain model outputs, keeps sensitive complaint fields local, and connects detection to action without adding a confusing technical verification step. |
 
 ## Official recovery sources checked
 
