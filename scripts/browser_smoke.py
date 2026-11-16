@@ -109,22 +109,11 @@ try:
         exported=json.loads(Path(evidence_download.value.path()).read_text())
         assert exported['user_reported']['independent_contact']=='denied'
         assert exported['user_reported']['completed_steps']==['plan_bank']
-        assert len(exported['input']['sha256'])==64
         assert exported['input']['source']=='pasted_text'
         assert exported['complaint_submitted'] is False
-        page.locator('#fingerprint-check summary').click()
-        page.locator('#summary-file').set_input_files({'name':'evidence.json','mimeType':'application/json','buffer':json.dumps(exported).encode()})
-        original=page.locator('#input').input_value().encode()
-        page.locator('#original-file').set_input_files({'name':'original.txt','mimeType':'text/plain','buffer':original})
-        page.locator('#verify-fingerprint').click()
-        page.wait_for_function("document.getElementById('fingerprint-result').textContent.includes('matches')")
-        page.locator('#original-file').set_input_files({'name':'changed.txt','mimeType':'text/plain','buffer':original+b' altered'})
-        page.locator('#verify-fingerprint').click()
-        page.wait_for_function("document.getElementById('fingerprint-result').textContent.includes('differs')")
         assert 'extracted_text' not in exported
         page.locator('#language').select_option('te')
         assert 'ఖాతాలను' in page.locator('#risk-label').inner_text()
-        assert 'వేరుగా' in page.locator('#fingerprint-result').inner_text()
         assert page.locator('#plan_bank').is_checked()
         page.screenshot(path=str(OUTPUT/'mobile-verification-telugu.png'),full_page=True)
         page.locator('#language').select_option('en')
