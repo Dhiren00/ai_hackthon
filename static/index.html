@@ -13,6 +13,7 @@ h3{font-size:18px;margin:24px 0 12px}.risk-label{font-size:22px;font-weight:650;
 meter{--meter-color:#697e85}meter[data-level="high"]{--meter-color:#c44725}meter[data-level="review"]{--meter-color:#aa7c15}meter::-webkit-meter-optimum-value,meter::-webkit-meter-suboptimum-value,meter::-webkit-meter-even-less-good-value{background:var(--meter-color)}meter::-moz-meter-bar{background:var(--meter-color)}
 #caution-feed{margin:0 0 24px;background:#fffaf0;box-shadow:none}#caution-feed h2{font-size:19px}#caution-items{max-height:260px;overflow:auto}#caution-feed article{border-top:1px solid #eadfc9;padding:12px 0}#caution-feed a{color:#14584b;font-weight:600}#caution-feed article p{margin:5px 0}#caution-status{font-size:13px;color:var(--muted)}
 #progress,#result{scroll-margin-top:110px}
+.help-entry{text-align:left;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.help-entry .button{max-width:100%;white-space:normal;text-align:left;background:#edf4ff;color:var(--navy)}.help-entry p{margin:10px 0 0;font-size:14px;line-height:1.65;color:var(--muted)}
 
 /* Warm, accessible Tiranga-inspired product surface. */
 :root{--saffron:#ff8a2a;--green:#138a58;--navy:#173b68;--sky:#e9f4ff;--ink:#142438;--muted:#607080;--accent:#087f5b;--line:#dce6e2;--page:#f6faf8;--card:#fff}
@@ -47,6 +48,10 @@ main{max-width:1160px;margin:0 auto;padding:26px 28px 48px}header{position:stick
 <textarea id="input" maxlength="20000" placeholder="Paste text here, or attach a file…"></textarea>
 <div id="file-chip" class="file" hidden><span id="filename"></span><button type="button" id="remove" class="remove" aria-label="Remove file">×</button></div>
 <div class="toolbar"><button type="button" id="attach" class="button secondary attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 12 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l8-8"/></svg><span data-i18n="attach">Attach file</span></button><button type="submit" id="submit" class="button primary" data-i18n="check">Check input</button></div>
+<div class="help-entry">
+<button type="button" class="button secondary" id="help-open" aria-describedby="help-description" data-i18n="help_open">I need help reporting an incident</button>
+<p id="help-description" data-i18n="help_description">Lost money or think someone has cheated you? Tap here and tell us what happened. We’ll help you prepare a complaint. You can check it and send it on India’s official cybercrime website.</p>
+</div>
 <input type="file" id="file" accept=".txt,.png,.jpg,.jpeg,.webp,audio/*,video/*" hidden>
 </div>
 <details class="demo-options"><summary data-i18n="try_demo">Try a fictional example</summary><div class="result-actions"><button type="button" class="button secondary" data-demo="family" data-i18n="demo_family">Urgent family request</button><button type="button" class="button secondary" data-demo="college" data-i18n="demo_college">Fake college payment</button><button type="button" class="button secondary" data-demo="genuine" data-i18n="demo_genuine">Genuine reminder</button></div><small data-i18n="demo_note">English synthetic cases for demonstration.</small></details>
@@ -85,7 +90,6 @@ main{max-width:1160px;margin:0 auto;padding:26px 28px 48px}header{position:stick
 <details><summary data-i18n="details">Analysis details</summary><pre id="raw"></pre></details>
 <div class="result-actions"><button type="button" id="again" class="button secondary" data-i18n="again">Check another</button></div>
 </section>
-<p class="help-entry"><button type="button" class="button secondary" id="help-open" data-i18n="help_open">I need help reporting an incident</button></p>
 <dialog id="complaint-dialog" aria-labelledby="complaint-title">
 <button type="button" class="close-dialog button secondary" id="help-close" data-i18n="close">Close</button>
 <h2 id="complaint-title" data-i18n="complaint_title">Prepare your complaint</h2>
