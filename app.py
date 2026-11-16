@@ -4,7 +4,6 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
-from detector.engine import analyze
 from detector.assets import checkpoint
 from detector.video import VideoError
 
@@ -20,6 +19,15 @@ async def lifespan(app):
 app = FastAPI(title='PhysioCheck — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
+
+@app.middleware('http')
+async def privacy_headers(request, call_next):
+    response = await call_next(request)
+    response.headers['Cache-Control'] = 'no-store'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['Referrer-Policy'] = 'no-referrer'
+    return response
+
 
 @app.get('/')
 def home():
@@ -51,6 +59,7 @@ async def analyze_video(file: UploadFile = File(...)):
                     output.write(chunk)
             if not size:
                 raise HTTPException(400,'The uploaded file is empty.')
+            from detector.engine import analyze
             return await run_in_threadpool(analyze,path)
     except VideoError as exc:
         raise HTTPException(422,str(exc)) from exc
@@ -157,6 +166,7 @@ def readiness():
     from detector.text_assets import REGISTRY_PATH
     import json
     components={
+        'scam':(ROOT/'detector'/'scam_model.json').is_file(),
         'ffmpeg':bool(shutil.which('ffmpeg') and shutil.which('ffprobe')),
         'tesseract':bool(shutil.which('tesseract')),
         'video':(ROOT/'external'/'DeepFakesON-Phys'/'pretrained models'/'DeepFakesON-Phys_CelebDF_V2.h5').is_file(),

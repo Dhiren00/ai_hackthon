@@ -102,7 +102,10 @@ def extract_screenshot(path):
     if not executable:
         raise InputError('tools_missing','Tesseract is missing. Run the documented setup.')
     config=ocr_config()
-    languages=subprocess.run([executable,'--list-langs',*config],capture_output=True,text=True,timeout=10)
+    try:
+        languages=subprocess.run([executable,'--list-langs',*config],capture_output=True,text=True,timeout=10)
+    except subprocess.TimeoutExpired as exc:
+        raise InputError('timed_out', 'OCR language inspection timed out.') from exc
     available=set(languages.stdout.split())
     required={'eng','hin','tel'}
     if not required.issubset(available):

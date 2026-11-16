@@ -1,0 +1,964 @@
+{
+  "dataset": "60 hand-written synthetic demo cases, 30 attack / 30 genuine",
+  "independence_limit": "Written in the same development session as training data. Not an external blind benchmark. No real-world accuracy claim.",
+  "model_training_sha256": "145f4cff4e38617876b57899ddc89677e492b751617bd7973306d0b8ca04483c",
+  "holdout_sha256": "fa4d5276e1c1244260f124e9c87db95701a32ba078e3eacde2bd95f95cec9231",
+  "threshold": 0.65,
+  "true_positive": 23,
+  "false_positive": 2,
+  "false_negative": 7,
+  "true_negative": 28,
+  "precision": 0.92,
+  "recall": 0.7666666666666667,
+  "false_positive_rate": 0.06666666666666667,
+  "predictions": [
+    {
+      "case": 1,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.692511,
+      "terms": [
+        "this",
+        "now",
+        "me"
+      ],
+      "word_count": 19,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 2,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.617846,
+      "terms": [
+        "this",
+        "account",
+        "the account"
+      ],
+      "word_count": 17,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 3,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.864938,
+      "terms": [
+        "send",
+        "immediately",
+        "wallet"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 4,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.701909,
+      "terms": [
+        "pay",
+        "account",
+        "am"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 5,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.820442,
+      "terms": [
+        "send",
+        "this",
+        "your"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 6,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.696554,
+      "terms": [
+        "send",
+        "needs",
+        "me"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 7,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.453207,
+      "terms": [
+        "security",
+        "so",
+        "so we"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 8,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.831411,
+      "terms": [
+        "this",
+        "account",
+        "login"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 9,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.804132,
+      "terms": [
+        "your",
+        "account",
+        "from"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 10,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.596057,
+      "terms": [
+        "send",
+        "funds",
+        "charge"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 11,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.772056,
+      "terms": [
+        "deposit",
+        "release",
+        "your"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 12,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.525655,
+      "terms": [
+        "transfer",
+        "before",
+        "for"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 13,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.799125,
+      "terms": [
+        "wallet",
+        "from",
+        "your"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 14,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.708796,
+      "terms": [
+        "account",
+        "deposit",
+        "your"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 15,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.671679,
+      "terms": [
+        "send",
+        "this",
+        "wallet"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 16,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.721075,
+      "terms": [
+        "enter",
+        "your",
+        "card"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 17,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.679637,
+      "terms": [
+        "this",
+        "link",
+        "your"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 18,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.734318,
+      "terms": [
+        "now",
+        "account",
+        "from"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 19,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.641806,
+      "terms": [
+        "this",
+        "pay",
+        "don"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 20,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.73524,
+      "terms": [
+        "your",
+        "to",
+        "refund"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 21,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.386884,
+      "terms": [
+        "from",
+        "your",
+        "refund"
+      ],
+      "word_count": 17,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 22,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.71092,
+      "terms": [
+        "to",
+        "pay",
+        "keep"
+      ],
+      "word_count": 17,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 23,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.87026,
+      "terms": [
+        "send",
+        "your",
+        "account"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 24,
+      "label": 1,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.642778,
+      "terms": [
+        "your",
+        "verification",
+        "service"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 25,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.8525,
+      "terms": [
+        "send",
+        "transfer",
+        "am"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 26,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.684343,
+      "terms": [
+        "pay",
+        "deposit",
+        "cannot"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 27,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.778651,
+      "terms": [
+        "this",
+        "transfer",
+        "fee to"
+      ],
+      "word_count": 17,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 28,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.764823,
+      "terms": [
+        "account",
+        "your",
+        "to"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 29,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.811348,
+      "terms": [
+        "your",
+        "pay",
+        "release"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 30,
+      "label": 1,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.709732,
+      "terms": [
+        "send",
+        "from",
+        "your"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 31,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.543994,
+      "terms": [
+        "so",
+        "my",
+        "phone"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 32,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.259407,
+      "terms": [
+        "will"
+      ],
+      "word_count": 10,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 33,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.551957,
+      "terms": [
+        "tell",
+        "your",
+        "to"
+      ],
+      "word_count": 19,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 34,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.169229,
+      "terms": [
+        "paying",
+        "confirm",
+        "before"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 35,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.269814,
+      "terms": [
+        "deposit",
+        "for"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 36,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.452158,
+      "terms": [
+        "security",
+        "card",
+        "to"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 37,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.309658,
+      "terms": [
+        "contact",
+        "your",
+        "code"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 38,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.484617,
+      "terms": [
+        "this",
+        "password",
+        "message"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 39,
+      "label": 0,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.744275,
+      "terms": [
+        "your",
+        "to",
+        "agent"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 40,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.277191,
+      "terms": [
+        "first",
+        "loan",
+        "for"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 41,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.342582,
+      "terms": [
+        "prize",
+        "the prize",
+        "their"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 42,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.416677,
+      "terms": [
+        "to",
+        "me",
+        "interview"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 43,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.256094,
+      "terms": [
+        "onboarding",
+        "email",
+        "will"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 44,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.249065,
+      "terms": [
+        "my",
+        "and",
+        "balance"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 45,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.548273,
+      "terms": [
+        "suspicious",
+        "and",
+        "guaranteed"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 46,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.13782,
+      "terms": [
+        "your",
+        "notice"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 47,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.329272,
+      "terms": [
+        "arrest",
+        "police",
+        "are"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 48,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.649646,
+      "terms": [
+        "arrest",
+        "be",
+        "and"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 49,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.193584,
+      "terms": [],
+      "word_count": 12,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 50,
+      "label": 0,
+      "flagged": true,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "high",
+      "score": 0.724453,
+      "terms": [
+        "to",
+        "account",
+        "to my"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 51,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.324002,
+      "terms": [
+        "to",
+        "me",
+        "won"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 52,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.366091,
+      "terms": [
+        "friend",
+        "my",
+        "my friend"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 53,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.433994,
+      "terms": [
+        "account",
+        "login",
+        "keep"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 54,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.280422,
+      "terms": [
+        "my",
+        "and",
+        "sim"
+      ],
+      "word_count": 13,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 55,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.318048,
+      "terms": [
+        "needs",
+        "my",
+        "us"
+      ],
+      "word_count": 14,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 56,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.532929,
+      "terms": [
+        "deposit",
+        "and",
+        "rental"
+      ],
+      "word_count": 15,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 57,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.181811,
+      "terms": [],
+      "word_count": 12,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 58,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.603765,
+      "terms": [
+        "this",
+        "avoid",
+        "tax"
+      ],
+      "word_count": 12,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 59,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "review",
+      "score": 0.401876,
+      "terms": [
+        "to",
+        "us",
+        "using"
+      ],
+      "word_count": 12,
+      "notice_key": "scam_model_limit"
+    },
+    {
+      "case": 60,
+      "label": 0,
+      "flagged": false,
+      "status": "assessed",
+      "model": "PhysioCheck synthetic impersonation classifier v1",
+      "level": "unknown",
+      "score": 0.233523,
+      "terms": [
+        "we can",
+        "we",
+        "buy"
+      ],
+      "word_count": 16,
+      "notice_key": "scam_model_limit"
+    }
+  ]
+}

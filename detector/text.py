@@ -1,4 +1,5 @@
 """Experimental GPT-2-era text classifier. No remote inference."""
+from .runtime import serial_inference
 from functools import lru_cache
 from threading import Lock
 from .text_assets import files
@@ -22,6 +23,7 @@ def load_text_model():
     tokenizer=RobertaTokenizer(vocab_file=str(folder/'vocab.json'),merges_file=str(folder/'merges.txt'))
     return model.eval(),tokenizer
 
+@serial_inference
 def analyze_text(text):
     import torch
     if not isinstance(text,str) or len(text.split())<50:

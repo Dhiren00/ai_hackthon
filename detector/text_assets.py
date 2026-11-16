@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import urllib.request
-from .assets import ROOT
+from .assets import ROOT, file_sha256
 
 FOLDER=ROOT/'external'/'text_model'
 REGISTRY_PATH=Path(__file__).parent/'text_files.json'
@@ -14,7 +14,7 @@ def files():
         path=FOLDER/name
         if not path.is_file():
             raise FileNotFoundError('Text model missing. Run: python -m detector.text_assets')
-        if hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']:
+        if file_sha256(path)!=entry['sha256']:
             raise ValueError('Text model file checksum mismatch. Re-run text model setup.')
     return FOLDER
 
@@ -23,14 +23,14 @@ def setup():
     FOLDER.mkdir(parents=True,exist_ok=True)
     for name,entry in registry.items():
         path=FOLDER/name
-        if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==entry['sha256']:
+        if path.is_file() and file_sha256(path)==entry['sha256']:
             continue
         temp=FOLDER/(name+'.download')
         try:
             with urllib.request.urlopen(entry['url'],timeout=60) as response,temp.open('wb') as target:
                 while chunk:=response.read(1024*1024):
                     target.write(chunk)
-            if hashlib.sha256(temp.read_bytes()).hexdigest()!=entry['sha256']:
+            if file_sha256(temp)!=entry['sha256']:
                 raise ValueError(f'Checksum mismatch: {name}')
             temp.replace(path)
         finally:

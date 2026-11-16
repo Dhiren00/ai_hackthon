@@ -4,9 +4,10 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import shutil
-from threading import RLock
+from threading import Event, RLock, Thread
 import time
 from uuid import uuid4
+from .scam import assess_message, contains_secret, input_digest
 from .assets import ROOT
 from .ingest import InputError, identify, read_text, text_language, extract_screenshot
 
@@ -14,20 +15,31 @@ SPEC=json.loads((ROOT/'workflow'/'analysis.json').read_text())
 
 
 def text_result(text):
+    if contains_secret(text):
+        raise InputError('secret_detected', 'Remove secret codes and identity numbers before checking.')
+    language = text_language(text)
+    scam = assess_message(text, language)
+    if language != 'en':
+        return {'verdict_key': 'unsupported_language', 'kind': 'text', 'language': language,
+                'notice_key': 'language_limit', 'is_ai': None, 'scam': scam}
+    if len(text.split()) < 50:
+        return {'verdict_key': 'short_assessed', 'kind': 'text', 'language': language,
+                'notice_key': 'short_limit', 'is_ai': None, 'scam': scam}
     from .text import analyze_text
-    language=text_language(text)
-    if language!='en':
-        return {'verdict_key':'unsupported_language','kind':'text','language':language,
-                'notice_key':'language_limit','is_ai':None}
-    if len(text.split())<50:
-        raise InputError('text_short','At least 50 words of English prose are needed.')
-    result=analyze_text(text)
-    result.update(verdict_key='text_ai' if result['is_ai'] else 'text_human',notice_key='text_limit',language=language)
+    try:
+        result = analyze_text(text)
+    except (FileNotFoundError, RuntimeError, ValueError):
+        # Message safety still works if the optional large provenance model fails.
+        result = {'is_ai': None, 'verdict_key': 'provenance_unavailable', 'notice_key': 'provenance_limit'}
+    else:
+        result.update(verdict_key='text_ai' if result['is_ai'] else 'text_human', notice_key='text_limit')
+    result.update(language=language, scam=scam)
     return result
 
 
 def run_flow(path=None,text='',progress=lambda stage:None):
     progress('identify')
+    digest = input_digest(path, text)
     kind=identify(path) if path else 'text'
     extracted=None
     if kind=='screenshot':
@@ -52,6 +64,8 @@ def run_flow(path=None,text='',progress=lambda stage:None):
         result=analyze(path)
         verdict={'more consistent with genuine':'video_human','suspicious manipulation signals':'video_ai','inconclusive':'inconclusive'}[result['assessment']]
         result.update(verdict_key=verdict,notice_key='video_limit')
+    result['input_source'] = 'file_bytes' if path else 'pasted_text'
+    result['input_sha256'] = digest
     result['kind']=kind
     progress('complete')
     return result
@@ -66,6 +80,14 @@ class JobManager:
         self.lock=RLock()
         self.jobs={}
         self.executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='physiocheck')
+        self.closed = Event()
+        self.janitor = Thread(target=self._expire, daemon=True, name='result-expiry')
+        self.janitor.start()
+
+    def _expire(self):
+        while not self.closed.wait(30):
+            with self.lock:
+                self._prune()
 
     def _prune(self):
         now=time.monotonic()
@@ -132,4 +154,6 @@ class JobManager:
             return deepcopy({k:v for k,v in job.items() if not k.startswith('_')}) if job else None
 
     def shutdown(self):
+        self.closed.set()
+        self.janitor.join(timeout=2)
         self.executor.shutdown(wait=True)

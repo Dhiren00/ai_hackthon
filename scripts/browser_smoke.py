@@ -36,7 +36,7 @@ try:
         page=browser.new_page(viewport={'width':1100,'height':900})
         errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
         page.goto('http://127.0.0.1:8765',wait_until='networkidle')
-        assert page.locator('textarea').count()==1
+        assert page.locator('#form textarea').count()==1
         polls={'failures':0}
         def interrupted_poll(route):
             if polls['failures']<2:
@@ -91,6 +91,65 @@ try:
         assert page.locator('#submit').is_enabled()
         page.locator('#remove').click();page.locator('#input').fill(TEXT)
         page.locator('#submit').click();page.locator('#result').wait_for(state='visible',timeout=120000)
+        assert not errors,errors
+        page.locator('#again').click()
+        page.locator('.demo-options summary').click()
+        page.locator('[data-demo="family"]').click()
+        page.locator('#submit').click()
+        page.locator('#result').wait_for(state='visible',timeout=30000)
+        assert 'High risk' in page.locator('#risk-label').inner_text()
+        page.locator('#verification').select_option('denied')
+        assert 'identity mismatch' in page.locator('#verification-note').inner_text()
+        page.locator('#exposure').select_option('money')
+        assert 'Act now' in page.locator('#risk-label').inner_text()
+        page.locator('#plan_bank').check()
+        with page.expect_download() as evidence_download:
+            page.locator('#evidence').click()
+        import json
+        exported=json.loads(Path(evidence_download.value.path()).read_text())
+        assert exported['user_reported']['independent_contact']=='denied'
+        assert exported['user_reported']['completed_steps']==['plan_bank']
+        assert len(exported['input']['sha256'])==64
+        assert exported['input']['source']=='pasted_text'
+        assert exported['complaint_submitted'] is False
+        page.locator('#fingerprint-check summary').click()
+        page.locator('#summary-file').set_input_files({'name':'evidence.json','mimeType':'application/json','buffer':json.dumps(exported).encode()})
+        original=page.locator('#input').input_value().encode()
+        page.locator('#original-file').set_input_files({'name':'original.txt','mimeType':'text/plain','buffer':original})
+        page.locator('#verify-fingerprint').click()
+        page.wait_for_function("document.getElementById('fingerprint-result').textContent.includes('matches')")
+        page.locator('#original-file').set_input_files({'name':'changed.txt','mimeType':'text/plain','buffer':original+b' altered'})
+        page.locator('#verify-fingerprint').click()
+        page.wait_for_function("document.getElementById('fingerprint-result').textContent.includes('differs')")
+        assert 'extracted_text' not in exported
+        page.locator('#language').select_option('te')
+        assert 'ఖాతాలను' in page.locator('#risk-label').inner_text()
+        assert page.locator('#plan_bank').is_checked()
+        page.screenshot(path=str(OUTPUT/'mobile-verification-telugu.png'),full_page=True)
+        page.locator('#language').select_option('en')
+        # Complaint details must remain in the browser even after draft/export.
+        complaint_requests=[]
+        page.on('request',lambda request: complaint_requests.append(request.url) if request.method=='POST' else None)
+        page.locator('#report-open').click()
+        page.locator('#incident').fill('Someone pretended to be my college finance officer and requested a payment.')
+        page.locator('#suspect-contact').fill('fictional-sender.example')
+        page.locator('#complaint button').click()
+        assert 'college finance officer' in page.locator('#draft').input_value()
+        with page.expect_download() as draft_download:
+            page.locator('#save-draft').click()
+        assert 'fictional-sender.example' in Path(draft_download.value.path()).read_text()
+        assert not complaint_requests,complaint_requests
+        page.locator('#draft').fill('My OTP is 123456')
+        page.locator('#save-draft').click()
+        assert page.locator('#complaint-error').is_visible()
+        page.screenshot(path=str(OUTPUT/'mobile-complaint.png'),full_page=True)
+        page.locator('#help-close').click()
+        page.locator('#again').click()
+        assert page.locator('#verification').input_value()=='pending'
+        page.locator('[data-demo="genuine"]').click()
+        page.locator('#submit').click()
+        page.locator('#result').wait_for(state='visible',timeout=30000)
+        assert 'Risk remains unknown' in page.locator('#risk-label').inner_text()
         assert not errors,errors
         browser.close()
         print('Browser checks passed: text, screenshot, voice, languages, mobile layout, error recovery.')

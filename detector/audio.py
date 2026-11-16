@@ -1,4 +1,5 @@
 """Local acoustic anti-spoofing inference, with no speech transcription."""
+from .runtime import serial_inference
 from functools import lru_cache
 import importlib.util
 from pathlib import Path
@@ -86,6 +87,7 @@ def raw_score(samples,name):
         raise RuntimeError('Audio model produced an invalid score.')
     return float(np.mean(scores)),len(scores)
 
+@serial_inference
 def analyze_audio(path):
     samples,limited=decode_audio(path)
     chosen=selection()

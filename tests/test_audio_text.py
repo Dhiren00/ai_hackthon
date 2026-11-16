@@ -52,7 +52,8 @@ def test_text_actual_checkpoint():
 
 def test_home_has_one_unified_input():
     html=client.get('/').text
-    assert html.count('<textarea')==1
+    assert html.split('<form id="form">')[1].split('</form>')[0].count('<textarea')==1
+    assert 'id="complaint-dialog"' in html
     assert 'id="file"' in html
     assert 'id="language"' in html
     assert 'data-mode=' not in html

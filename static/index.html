@@ -8,6 +8,8 @@
 :root{--ink:#192b31;--muted:#617176;--accent:#176757;--line:#dfe7e5;--page:#f7f9f8;--card:#fff}
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,sans-serif;color:var(--ink);background:var(--page)}
 main{max-width:740px;margin:38px auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:60px}.brand{font-weight:750;letter-spacing:-.6px;font-size:23px}select{border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink);font:inherit;font-size:14px;padding:8px;max-width:150px}h1{font-size:clamp(30px,6vw,43px);line-height:1.2;letter-spacing:-1.3px;font-weight:650;margin:0 0 14px}p{margin:0 0 16px}.intro{color:var(--muted);max-width:570px;margin-bottom:28px}.composer,.result,.progress{background:var(--card);border:1px solid var(--line);border-radius:18px}.composer{padding:18px;box-shadow:0 7px 28px #1a3d2b05}.composer.drag{border-color:var(--accent);background:#f0faf6}textarea{display:block;width:100%;min-height:176px;resize:vertical;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;line-height:1.6;padding:6px}textarea:focus-visible{outline:2px solid #9bcfc0;outline-offset:2px;border-radius:8px}textarea:disabled{opacity:.5}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #edf1ef;padding-top:14px}.button{border:0;border-radius:10px;font:inherit;cursor:pointer;padding:11px 18px}.primary{background:var(--accent);color:#fff;font-weight:600}.secondary{background:#eef3f1;color:var(--ink)}button:disabled{opacity:.5;cursor:wait}button:focus-visible,select:focus-visible{outline:3px solid #81b7e2;outline-offset:3px}.attach{display:inline-flex;align-items:center;gap:7px;padding-left:11px}.attach svg{width:19px;height:19px}.hint,.privacy{font-size:13px;color:var(--muted);margin-top:12px}.privacy{text-align:center;margin-top:16px}.file{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f0f5f3;border-radius:9px;padding:12px;margin:12px 0}.file span{overflow-wrap:anywhere;min-width:0}.remove{background:transparent;border:0;color:var(--muted);font-size:23px;cursor:pointer}.error{padding:14px 16px;color:#813c26;background:#fff0e9;border-radius:10px;margin-top:18px}.progress,.result{padding:24px;margin-top:22px}h2{font-size:23px;margin:0 0 12px;line-height:1.3}.steps{list-style:none;margin:16px 0;padding:0;display:flex;flex-wrap:wrap;gap:12px}.steps li{color:var(--muted);font-size:13px}.steps li.active{color:var(--accent);font-weight:650}.steps li.done{color:var(--accent)}.steps li::before{content:'○';margin-right:5px}.steps li.active::before{content:'◉'}.steps li.done::before{content:'✓'}.tag{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px}.notice{font-size:14px;color:#6c5119;background:#fff8e7;border-radius:9px;padding:14px;margin:16px 0}small{color:var(--muted)}details{margin-top:14px;font-size:14px}summary{cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f6;border-radius:8px;padding:14px;font:13px/1.6 ui-monospace,monospace;max-height:320px;overflow:auto}.result-actions{display:flex;gap:10px;margin-top:20px}footer{color:var(--muted);font-size:12px;text-align:center;padding:30px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}html[lang="hi"] h1,html[lang="te"] h1{letter-spacing:0;line-height:1.4}[hidden]{display:none!important}@media(max-width:520px){main{margin-top:22px;padding:0 16px}header{margin-bottom:42px}.composer{padding:14px}.progress,.result{padding:20px}.button{font-size:14px;padding:11px 13px}.intro{font-size:15px}}
+
+h3{font-size:18px;margin:24px 0 12px}.risk-label{font-size:22px;font-weight:650;margin-bottom:8px}meter{width:100%;height:18px;accent-color:var(--accent)}.risk-high{color:#9a351d}.risk-review{color:#725200}.verification{border-top:1px solid var(--line);margin-top:20px}.verification label,dialog label{display:block;font-weight:600;font-size:14px;margin:18px 0 7px}.verification select{max-width:100%;width:100%;white-space:normal;font-size:14px}.verification p{margin-top:14px}.result-actions{flex-wrap:wrap}.result-actions .button{white-space:normal}.demo-options{margin:16px 0}.demo-options small{display:block;margin-top:8px}.help-entry{text-align:center;margin-top:26px}dialog{border:1px solid var(--line);border-radius:18px;padding:24px;max-width:620px;width:calc(100% - 24px);max-height:90dvh;overflow:auto;color:var(--ink)}dialog::backdrop{background:#102c3380}.close-dialog{float:right;margin:0 0 12px 12px}dialog textarea{border:1px solid var(--line);min-height:130px;border-radius:9px;padding:12px}dialog input{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:12px;font:inherit}dialog a{color:var(--accent)}.action-check{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}.action-check input{margin-top:6px}.action-check label{margin:0;font-weight:400}#action-plan{padding-left:22px}#score-caption{margin-top:8px}#verification-note{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -23,6 +25,7 @@ main{max-width:740px;margin:38px auto;padding:0 20px}header{display:flex;align-i
 <div class="toolbar"><button type="button" id="attach" class="button secondary attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 12 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l8-8"/></svg><span data-i18n="attach">Attach file</span></button><button type="submit" id="submit" class="button primary" data-i18n="check">Check input</button></div>
 <input type="file" id="file" accept=".txt,.png,.jpg,.jpeg,.webp,audio/*,video/*" hidden>
 </div>
+<details class="demo-options"><summary data-i18n="try_demo">Try a fictional example</summary><div class="result-actions"><button type="button" class="button secondary" data-demo="family" data-i18n="demo_family">Urgent family request</button><button type="button" class="button secondary" data-demo="college" data-i18n="demo_college">Fake college payment</button><button type="button" class="button secondary" data-demo="genuine" data-i18n="demo_genuine">Genuine reminder</button></div><small data-i18n="demo_note">English synthetic cases for demonstration.</small></details>
 <p class="hint" data-i18n="hint">Drop a file here or paste a screenshot. One item at a time · 50 MB maximum.</p>
 <p class="privacy" data-i18n="privacy">Uploads are deleted after the check. Results expire after 15 minutes.</p>
 </form>
@@ -32,32 +35,63 @@ main{max-width:740px;margin:38px auto;padding:0 20px}header{display:flex;align-i
 <ol class="steps" id="steps"><li data-stage="identify" data-i18n="identify">Identify</li><li data-stage="extract" data-i18n="extract">Read screenshot</li><li data-stage="analyse" data-i18n="analyse">Analyse</li><li data-stage="complete" data-i18n="complete">Finish</li></ol>
 <small id="elapsed"></small><button type="button" id="resume" class="button secondary" data-i18n="resume" hidden>Reconnect</button>
 </section>
-<section class="result" id="result" hidden aria-labelledby="verdict"><p class="tag" id="kind"></p><h2 id="verdict"></h2><meter id="ai-meter" aria-label="AI text model score" min="0" max="1" hidden></meter><span id="ai-label"></span><p id="summary"></p><p class="notice" id="notice"></p>
+<section class="result" id="result" hidden aria-labelledby="verdict"><p class="tag" id="kind"></p><h2 id="verdict"></h2><p id="summary"></p>
+<div id="safety-panel">
+<h3 data-i18n="request_check">Could this request put you at risk?</h3>
+<p id="risk-label" class="risk-label" role="status"></p>
+<meter id="risk-meter" min="0" max="1" low="0.35" high="0.65" optimum="0" aria-label="Message warning score"></meter>
+<p class="hint" id="score-caption"></p><p id="risk-reason"></p>
+<details><summary data-i18n="why_result">How this assessment was made</summary><p id="learned-terms"></p><p class="hint" data-i18n="scam_model_limit">A small English classifier trained on 100 synthetic examples. It can miss scams and flag genuine requests. A low score still needs verification.</p></details>
+<div class="verification">
+<h3 data-i18n="verify_heading">Check who is really asking</h3>
+<p data-i18n="verify_instruction">End the incoming conversation. Call a number you already saved, or open the organisation’s official app yourself.</p>
+<label for="verification" data-i18n="verification_question">What happened when you checked independently?</label>
+<select id="verification"><option value="pending" data-i18n="verify_pending">I haven’t checked yet</option><option value="confirmed" data-i18n="verify_confirmed">The known contact confirmed the request</option><option value="denied" data-i18n="verify_denied">The known contact denied the request</option><option value="unreachable" data-i18n="verify_unreachable">I couldn’t reach the known contact</option></select>
+<label for="exposure" data-i18n="exposure_question">Have you already taken any action?</label>
+<select id="exposure"><option value="none" data-i18n="exposure_none">I haven’t sent money or shared access</option><option value="money" data-i18n="exposure_money">I sent money</option><option value="access" data-i18n="exposure_access">I shared a code, password or remote access</option></select>
+<p id="verification-note"></p>
+<h3 data-i18n="next_steps">What to do now</h3><ol id="action-plan"></ol>
+</div>
+<div class="result-actions"><button id="evidence" type="button" class="button secondary" data-i18n="download_evidence">Download evidence summary</button><button id="report-open" type="button" class="button primary" data-i18n="prepare_complaint">Prepare a complaint</button></div>
+<p class="hint" data-i18n="evidence_hint">The summary records the file fingerprint, model limits and checks you reported. Keep the original file too.</p>
+<details><summary data-i18n="feedback_title">Does this result look wrong?</summary><label for="feedback" data-i18n="feedback_label">Your correction (saved only in your downloaded summary)</label><select id="feedback"><option value="none" data-i18n="feedback_none">No correction</option><option value="false_alarm" data-i18n="feedback_false_alarm">This seems genuine</option><option value="missed_threat" data-i18n="feedback_missed">This seems suspicious</option></select></details>
+</div><p class="notice" id="notice"></p>
 <details id="extracted" hidden><summary data-i18n="extracted">Text read from screenshot</summary><pre id="ocr-text"></pre></details>
 <details><summary data-i18n="details">Analysis details</summary><pre id="raw"></pre></details>
 <div class="result-actions"><button type="button" id="again" class="button secondary" data-i18n="again">Check another</button></div>
 </section>
-<section class="composer" lang="en" aria-label="Scam help">
-<details><summary>Check scam warning signs</summary>
-<p>Select what the sender asked you to do.</p>
-<div id="warning-signs"><label><input type="checkbox"> Share a password, PIN or OTP</label><br>
-<label><input type="checkbox"> Pay a fee to receive a prize or release money</label><br>
-<label><input type="checkbox"> Install remote access software so they can control your device</label></div>
-<p><meter id="risk-meter" min="0" max="3" value="0" aria-label="Selected warning signs"></meter> <output id="risk-label" aria-live="polite">0 of 3 selected. Risk is unknown.</output></p>
+<details id="fingerprint-check" class="composer">
+<summary data-i18n="verify_evidence">Check a saved evidence fingerprint</summary>
+<p class="hint" data-i18n="fingerprint_intro">Choose your downloaded evidence summary and the original input file. Comparison happens in this browser.</p>
+<label for="summary-file" data-i18n="summary_file">Evidence summary (JSON)</label><input id="summary-file" type="file" accept=".json,application/json">
+<label for="original-file" data-i18n="original_file">Original file (or UTF-8 text file for pasted text)</label><input id="original-file" type="file">
+<button id="verify-fingerprint" type="button" class="button secondary" data-i18n="compare_files">Compare fingerprint</button>
+<p id="fingerprint-result" role="status"></p>
+<p class="hint" data-i18n="evidence_integrity">SHA-256 compares file bytes. It cannot establish truth or identity.</p>
 </details>
-<details><summary class="button secondary">Get help filing a cybercrime complaint</summary>
-<p>If money was taken in India, call <a href="tel:1930">1930</a> promptly.</p>
+<p class="help-entry"><button type="button" class="button secondary" id="help-open" data-i18n="help_open">I need help reporting an incident</button></p>
+<dialog id="complaint-dialog" aria-labelledby="complaint-title">
+<button type="button" class="close-dialog button secondary" id="help-close" data-i18n="close">Close</button>
+<h2 id="complaint-title" data-i18n="complaint_title">Prepare your complaint</h2>
+<p data-i18n="complaint_intro">Describe what happened. Review the draft, then submit it yourself on the official portal.</p>
+<p class="notice"><span data-i18n="urgent_help">If money was taken in India, call</span> <a href="tel:1930">1930</a>. <span data-i18n="bank_help">Also contact your bank through its official app or saved helpline.</span></p>
 <form id="complaint" autocomplete="off">
-<p><label>What happened? Describe it in your own words.<textarea name="incident" required maxlength="3000"></textarea></label></p>
-<p><label>When did it happen? <input type="date" name="date"></label></p>
-<p><label>Suspect’s phone number, handle or website (if known) <input name="contact" maxlength="250"></label></p>
-<p><label>Amount lost and transaction reference (if applicable) <input name="payment" maxlength="250"></label></p>
-<p>Keep screenshots and receipts ready. Leave out passwords, PINs and OTPs. These details stay in this tab.</p>
-<button class="button secondary">Prepare my complaint</button></form>
-<div id="handoff" hidden><label>Review and edit your complaint<textarea id="draft" rows="6"></textarea></label>
-<button id="copy" class="button secondary" type="button">Copy complaint</button><output id="copied" aria-live="polite"></output>
-<p>Open the official portal, sign in, paste your description, attach evidence and submit. Save the acknowledgement number.</p>
-<a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer">Open India’s cybercrime reporting portal ↗</a></div></details></section>
+<label for="incident" data-i18n="incident_label">What happened?</label><textarea id="incident" name="incident" required maxlength="3000"></textarea>
+<label for="incident-date" data-i18n="date_label">When did it happen? (optional)</label><input type="date" id="incident-date" name="date">
+<label for="suspect-contact" data-i18n="contact_label">Suspect phone, handle or website (optional)</label><input id="suspect-contact" name="contact" maxlength="250">
+<label for="payment" data-i18n="payment_label">Amount lost and transaction reference (optional)</label><input id="payment" name="payment" maxlength="250">
+<p class="hint" data-i18n="complaint_privacy">These details stay in this tab. Leave out passwords, OTPs, PINs, full card and identity numbers.</p>
+<p id="complaint-error" class="error" role="alert" hidden></p>
+<button class="button primary" data-i18n="prepare">Prepare my complaint</button>
+</form>
+<div id="handoff" hidden>
+<label for="draft" data-i18n="review_draft">Review and edit your complaint</label><textarea id="draft" rows="7"></textarea>
+<div class="result-actions"><button id="copy" class="button secondary" type="button" data-i18n="copy">Copy complaint</button><button id="save-draft" class="button secondary" type="button" data-i18n="save_draft">Download draft</button></div>
+<output id="copied" aria-live="polite"></output>
+<ol><li data-i18n="portal_step1">Open the official portal and sign in.</li><li data-i18n="portal_step2">Paste your description, add transaction details and attach original evidence.</li><li data-i18n="portal_step3">Review, submit and save the acknowledgement number.</li></ol>
+<a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" data-i18n="portal_open">Open India’s official cybercrime portal ↗</a>
+</div>
+</dialog>
 <footer data-i18n="footer">Experimental assessments, not proof of authenticity.</footer>
 </main>
 <script>
@@ -78,31 +112,11 @@ function renderLanguage(){
 }
 function renderStage(stage,history){lastStage=stage;$('status').textContent=t(stage);document.querySelectorAll('[data-stage]').forEach(node=>{node.className=history.includes(node.dataset.stage)?'done':'';if(node.dataset.stage===stage)node.className='active';});}
 function showResult(result){
- const score=result.model_ai_score;
- $('ai-meter').hidden=!Number.isFinite(score);
- $('ai-label').textContent=Number.isFinite(score)?Math.round(score*100)+'% · AI text model score':'';
- if(Number.isFinite(score))$('ai-meter').value=score;
  lastResult=result;$('kind').textContent=t(result.kind);$('verdict').textContent=t(result.verdict_key);$('notice').textContent=t(result.notice_key);
  $('summary').textContent=result.analysis_limit_reached?t('limited'):t('assessment_done');
+ renderSafety(result);
  $('raw').textContent=JSON.stringify(result,null,2);$('extracted').hidden=!result.extracted_text;$('ocr-text').textContent=result.extracted_text||'';$('result').hidden=false;
 }
-$('warning-signs').onchange=()=>{
- const count=$('warning-signs').querySelectorAll(':checked').length;
- $('risk-meter').value=count;
- $('risk-label').textContent=count?count+' of 3 selected. High risk. Pause and verify independently.':'0 of 3 selected. Risk is unknown.';
-};
-$('complaint').oninput=()=>{$('handoff').hidden=true;$('copied').textContent='';};
-$('complaint').onsubmit=event=>{
- event.preventDefault();
- const data=new FormData(event.currentTarget);
- const fields=[['incident','What happened'],['date','Incident date'],['contact','Suspect contact'],['payment','Transaction details']];
- $('draft').value=fields.filter(([key])=>data.get(key).trim()).map(([key,label])=>label+': '+data.get(key).trim()).join('\n');
- $('handoff').hidden=false;$('draft').focus();
-};
-$('copy').onclick=async()=>{
- try{await navigator.clipboard.writeText($('draft').value);$('copied').textContent=' Copied.';}
- catch{$('draft').select();$('copied').textContent=' Copy the selected text.';}
-};
 function stop(){clearInterval(timer);timer=null;setBusy(false);}
 async function poll(){
  let failures=0;$('resume').hidden=true;setBusy(true);
@@ -120,7 +134,7 @@ async function poll(){
 $('form').addEventListener('submit',async event=>{
  event.preventDefault();if(busy)return;
  const text=$('input').value.trim();if(!text&&!selectedFile){error('choose_one');return;}
- lastError=null;lastResult=null;$('result').hidden=true;$('error').hidden=true;$('resume').hidden=true;$('progress').hidden=false;currentJob=null;setBusy(true);renderStage('queued',[]);started=Date.now();
+ resetSafety();lastError=null;lastResult=null;$('result').hidden=true;$('error').hidden=true;$('resume').hidden=true;$('progress').hidden=false;currentJob=null;setBusy(true);renderStage('queued',[]);started=Date.now();
  clearInterval(timer);timer=setInterval(()=>{$('elapsed').textContent=Math.floor((Date.now()-started)/1000)+' '+t('seconds');},1000);
  const body=new FormData();if(selectedFile)body.append('file',selectedFile);else body.append('text',text);
  try{
@@ -134,9 +148,10 @@ $('input').addEventListener('paste',event=>{const files=[...(event.clipboardData
 for(const name of ['dragenter','dragover'])$('dropzone').addEventListener(name,event=>{event.preventDefault();if(!busy)$('dropzone').classList.add('drag');});
 $('dropzone').addEventListener('dragleave',()=>$('dropzone').classList.remove('drag'));
 $('dropzone').addEventListener('drop',event=>{event.preventDefault();$('dropzone').classList.remove('drag');if(busy)return;const files=[...event.dataTransfer.files];if(files.length!==1)error('one_file');else attachFile(files[0]);});
-$('again').addEventListener('click',()=>{lastResult=null;currentJob=null;lastError=null;removeFile();$('input').value='';$('result').hidden=true;$('error').hidden=true;$('progress').hidden=true;$('input').focus();});
+$('again').addEventListener('click',()=>{resetSafety();lastResult=null;currentJob=null;lastError=null;removeFile();$('input').value='';$('result').hidden=true;$('error').hidden=true;$('progress').hidden=true;$('input').focus();});
 $('resume').addEventListener('click',()=>{lastError=null;$('error').hidden=true;poll();});
 $('language').addEventListener('change',()=>{locale=$('language').value;try{localStorage.setItem('physiocheck-language',locale);}catch{}renderLanguage();});
 (async()=>{try{translations=await(await fetch('/static/i18n.json')).json();try{locale=localStorage.getItem('physiocheck-language')||'en';}catch{}if(!translations[locale])locale='en';$('language').value=locale;renderLanguage();}catch{$('error').textContent='Language files could not load. Refresh the page.';$('error').hidden=false;}})();
 </script>
+<script src="/static/safety.js"></script>
 </body></html>

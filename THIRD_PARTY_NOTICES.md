@@ -14,3 +14,7 @@ The new application integration and benchmark code is GPL-3.0 licensed. Retain t
 - Text smoke evaluation uses the first ten lines each of `webtext.test.jsonl` and `xl-1542M.test.jsonl` from the GPT-2 output dataset release. Text is not redistributed in this repository. Scores and source row indices are recorded. This is an in-domain sanity test only.
 
 - **Tesseract OCR / tessdata_fast** — Apache-2.0, https://github.com/tesseract-ocr/tessdata_fast. The OCR executable is installed separately; pinned English/Hindi/Telugu language packs are fetched into ignored `external/tessdata`. Revision and SHA-256 hashes are in `detector/ocr_files.json`. No OCR model files are redistributed here.
+
+## Project-trained message model
+
+`detector/scam_model.json` is trained by this project on the fictional messages in `data/scam_train.tsv`. New model/data/training code use the repository's GPL-3.0 licence. Training uses scikit-learn (BSD-3-Clause) and NumPy (BSD-3-Clause) under their respective licences. No third-party message weights or private victim data were used. The disclosed synthetic holdout was written separately but in the same development session. Runtime inference is implemented in standard Python.

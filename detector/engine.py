@@ -2,6 +2,7 @@ import os
 os.environ.setdefault('TF_CPP_MIN_LOG_LEVEL','2')
 os.environ.setdefault('TF_NUM_INTRAOP_THREADS','2')
 os.environ.setdefault('TF_NUM_INTEROP_THREADS','2')
+from .runtime import serial_inference
 from functools import lru_cache
 from threading import Lock
 import numpy as np
@@ -39,6 +40,7 @@ def portable_model(original):
     portable.set_weights(original.get_weights())
     return portable
 
+@serial_inference
 def analyze(path, name='CelebDF_V2'):
     crops, indices, fps, coverage, truncated = extract_faces(path)
     motion, raw, frame_indices = preprocess(crops,indices)
