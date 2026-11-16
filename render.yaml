@@ -15,6 +15,9 @@ services:
     healthCheckPath: /api/health
     maxShutdownDelaySeconds: 120
     envVars:
+      # Keep OCR and scam screening within the free instance memory budget.
+      - key: SHIELD_TEXT_PROVENANCE
+        value: "0"
       - key: PORT
         value: "10000"
       - key: OMP_NUM_THREADS

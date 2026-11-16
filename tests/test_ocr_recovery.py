@@ -54,7 +54,7 @@ def test_valid_small_upload_recovers_from_first_ocr_timeout(monkeypatch):
     with TestClient(app) as client:
         submitted = client.post('/api/jobs', files={'file': ('phone.png', data, 'image/png')})
         assert submitted.status_code == 202
-        assert submitted.headers['x-shield-release'] == 'ocr-retry-v2'
+        assert submitted.headers['x-shield-release'] == 'screenshot-recovery-v3'
         job = completed(client, submitted.json()['id'])
     assert job['status'] == 'completed', job
     assert job['result']['extracted_text'] == MESSAGE
@@ -64,6 +64,29 @@ def test_valid_small_upload_recovers_from_first_ocr_timeout(monkeypatch):
     assert attempts[1][0][0] * attempts[1][0][1] <= 600_000
     assert [attempt[2] for attempt in attempts] == ['11', '6']
     assert all(attempt[1] == 'L' for attempt in attempts)
+
+
+def test_long_screenshot_keeps_ocr_and_scam_results_without_provenance(monkeypatch):
+    from detector import text
+
+    passage = ' '.join([MESSAGE] * 5)
+    monkeypatch.setenv('SHIELD_TEXT_PROVENANCE', '0')
+
+    def unexpected_model_load():
+        pytest.fail('OCR-only deployment must not load the authorship model')
+
+    monkeypatch.setattr(text, 'load_text_model', unexpected_model_load)
+    mock_ocr(monkeypatch, lambda *args, **kwargs:
+             SimpleNamespace(returncode=0, stdout=passage, stderr=''))
+    with TestClient(app) as client:
+        submitted = client.post('/api/jobs', files={'file': ('phone.png', image_bytes())})
+        assert submitted.status_code == 202
+        job = completed(client, submitted.json()['id'])
+    assert job['status'] == 'completed', job
+    assert job['result']['extracted_text'] == passage
+    assert job['result']['scam']['score'] is not None
+    assert job['result']['is_ai'] is None
+    assert job['result']['verdict_key'] == 'provenance_unavailable'
 
 
 def test_both_attempts_fail_honestly_then_queue_recovers(monkeypatch):

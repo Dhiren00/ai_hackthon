@@ -8,7 +8,7 @@ A single input for text, screenshots, audio and video, with a local English mess
 - The verification/recovery flow keeps model output separate from checks reported by the user. A simple report can be downloaded without a technical evidence-verification workflow.
 - Complaint descriptions stay in the browser, with copy/download and a link to the official reporting portal. Actual official submission is a separate user action.
 - The lightweight message model is included. Reproduce it with `pip install -r requirements-training.txt`, `python scripts/train_scam.py`, then `python scripts/benchmark_scam.py`. No additional inference package is required.
-- Full media model setup and limitations are below. Full-model inference within Render Free's 512 MB remains unverified.
+- The Render Free blueprint sets `SHIELD_TEXT_PROVENANCE=0`. This keeps screenshot OCR and scam screening available without loading the experimental authorship model. If the service was configured manually, add the same variable under Environment and redeploy. Set it to `1` on a host with sufficient memory to enable authorship checks. Full-media inference within Render Free's 512 MB remains unverified.
 
 # S.H.I.E.L.D. — One input for text, screenshots, voice and video
 
@@ -41,9 +41,9 @@ Open **http://127.0.0.1:8000**. A public deployment must run the Python backend 
 
 ## Easy design changes
 
-Screenshot processing release `ocr-retry-v2` bounds the OCR pixel count, uses a single OCR thread, caches language availability and retries a timed-out extraction once at lower resolution. The 50 MB upload limit is separate from image dimensions and server processing capacity. Errors now identify OCR startup, OCR extraction or media inspection instead of blaming every timeout on upload size.
+Screenshot processing release `screenshot-recovery-v3` bounds the OCR pixel count, uses a single OCR thread, caches language availability and retries a timed-out extraction once at lower resolution. The 50 MB upload limit is separate from image dimensions and server processing capacity. Errors now identify OCR startup, OCR extraction or media inspection instead of blaming every timeout on upload size.
 
-After deployment, `GET /api/health` includes `"release": "ocr-retry-v2"`; responses also include `X-SHIELD-Release: ocr-retry-v2`. Check this marker before retesting a Render service. It identifies deployed code, not model readiness or a promise that every input completes on every server. Workflow logs include failed stage and error code without recording submitted text or filenames.
+After deployment, `GET /api/health` includes `"release": "screenshot-recovery-v3"`; responses also include `X-SHIELD-Release: screenshot-recovery-v3`. Check this marker before retesting a Render service. It identifies deployed code, not model readiness or a promise that every input completes on every server. Workflow logs include failed stage and error code without recording submitted text or filenames.
 
 The page is one readable file: **`static/index.html`**. Change the colours in `:root` and the HTML layout in that file. Edit `static/i18n.json` for English/Hindi/Telugu interface labels and result messages. No frontend build tools are required. `app.py` serves the page and exposes:
 

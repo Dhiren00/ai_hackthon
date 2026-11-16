@@ -8,7 +8,7 @@
     "audio": ["identify", "analyse", "complete"],
     "video": ["identify", "analyse", "complete"]
   },
-  "retry": {"poll_network_errors": 3, "inference": 0},
+  "retry": {"poll_network_errors": 12, "inference": 0},
   "limits": {"upload_bytes": 52428800, "text_characters": 20000, "pending_jobs": 4, "finished_job_ttl_seconds": 900},
   "notes": "Local deterministic workflow, not an n8n export. Failed inference is surfaced, never replaced with a fabricated verdict. GitHub Actions verifies routes and models on every push."
 }

@@ -21,7 +21,7 @@ async def lifespan(app):
 app = FastAPI(title='S.H.I.E.L.D. — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
-RELEASE = 'ocr-retry-v2'
+RELEASE = 'screenshot-recovery-v3'
 
 @app.middleware('http')
 async def privacy_headers(request, call_next):

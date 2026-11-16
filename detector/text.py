@@ -1,6 +1,7 @@
 """Experimental GPT-2-era text classifier. No remote inference."""
 from .runtime import serial_inference
 from functools import lru_cache
+import os
 from threading import Lock
 from .text_assets import files
 
@@ -25,6 +26,8 @@ def load_text_model():
 
 @serial_inference
 def analyze_text(text):
+    if os.environ.get('SHIELD_TEXT_PROVENANCE', '1') == '0':
+        raise RuntimeError('Text authorship analysis is disabled on this server.')
     import torch
     if not isinstance(text,str) or len(text.split())<50:
         raise TextError('Paste at least 50 words of English prose for an experimental assessment.')
