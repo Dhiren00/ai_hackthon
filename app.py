@@ -21,7 +21,7 @@ async def lifespan(app):
 app = FastAPI(title='S.H.I.E.L.D. — Unified media assessment',lifespan=lifespan)
 app.mount('/static',StaticFiles(directory=Path(__file__).parent/'static'),name='static')
 MAX_BYTES = 50 * 1024 * 1024
-RELEASE = 'screenshot-recovery-v3'
+RELEASE = 'screenshot-safe-default-v4'
 
 @app.middleware('http')
 async def privacy_headers(request, call_next):
@@ -167,6 +167,7 @@ def readiness():
     import shutil
     from detector.assets import ROOT
     from detector.audio_assets import selection
+    from detector.text import text_provenance_enabled
     from detector.text_assets import REGISTRY_PATH
     import json
     components={
@@ -179,4 +180,5 @@ def readiness():
         'ocr_packs':all((ROOT/'external'/'tessdata'/(lang+'.traineddata')).is_file() for lang in ['eng','hin','tel']),
     }
     return {'status':'files_present' if all(components.values()) else 'setup_required','components':components,'release':RELEASE,
+            'text_provenance_enabled':text_provenance_enabled(),
             'note':'File presence check only; inference is verified by tests.'}

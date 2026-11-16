@@ -27,14 +27,15 @@ def text_result(text):
     if len(text.split()) < 50:
         return {'verdict_key': 'short_assessed', 'kind': 'text', 'language': language,
                 'notice_key': 'short_limit', 'is_ai': None, 'scam': scam}
-    from .text import analyze_text
+    result = {'is_ai': None, 'verdict_key': 'provenance_unavailable', 'notice_key': 'provenance_limit'}
     try:
-        result = analyze_text(text)
-    except (FileNotFoundError, RuntimeError, ValueError):
-        # Message safety still works if the optional large provenance model fails.
-        result = {'is_ai': None, 'verdict_key': 'provenance_unavailable', 'notice_key': 'provenance_limit'}
-    else:
-        result.update(verdict_key='text_ai' if result['is_ai'] else 'text_human', notice_key='text_limit')
+        from .text import analyze_text, text_provenance_enabled
+        if text_provenance_enabled():
+            result = analyze_text(text)
+            result.update(verdict_key='text_ai' if result['is_ai'] else 'text_human', notice_key='text_limit')
+    except (ImportError, FileNotFoundError, RuntimeError, ValueError):
+        # The optional authorship model must not block message safety results.
+        pass
     result.update(language=language, scam=scam)
     return result
 

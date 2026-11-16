@@ -54,7 +54,7 @@ def test_valid_small_upload_recovers_from_first_ocr_timeout(monkeypatch):
     with TestClient(app) as client:
         submitted = client.post('/api/jobs', files={'file': ('phone.png', data, 'image/png')})
         assert submitted.status_code == 202
-        assert submitted.headers['x-shield-release'] == 'screenshot-recovery-v3'
+        assert submitted.headers['x-shield-release'] == 'screenshot-safe-default-v4'
         job = completed(client, submitted.json()['id'])
     assert job['status'] == 'completed', job
     assert job['result']['extracted_text'] == MESSAGE
@@ -66,16 +66,21 @@ def test_valid_small_upload_recovers_from_first_ocr_timeout(monkeypatch):
     assert all(attempt[1] == 'L' for attempt in attempts)
 
 
-def test_long_screenshot_keeps_ocr_and_scam_results_without_provenance(monkeypatch):
+@pytest.mark.parametrize(('on_render', 'setting'), [('true', None), (None, '0')])
+def test_long_screenshot_keeps_ocr_and_scam_results_without_provenance(monkeypatch, on_render, setting):
     from detector import text
 
+    for name, value in [('RENDER', on_render), ('SHIELD_TEXT_PROVENANCE', setting)]:
+        if value is None:
+            monkeypatch.delenv(name, raising=False)
+        else:
+            monkeypatch.setenv(name, value)
     passage = ' '.join([MESSAGE] * 5)
-    monkeypatch.setenv('SHIELD_TEXT_PROVENANCE', '0')
 
-    def unexpected_model_load():
-        pytest.fail('OCR-only deployment must not load the authorship model')
+    def unexpected_inference(_):
+        pytest.fail('Screenshot assessment must bypass the authorship inference lock')
 
-    monkeypatch.setattr(text, 'load_text_model', unexpected_model_load)
+    monkeypatch.setattr(text, 'analyze_text', unexpected_inference)
     mock_ocr(monkeypatch, lambda *args, **kwargs:
              SimpleNamespace(returncode=0, stdout=passage, stderr=''))
     with TestClient(app) as client:
@@ -87,6 +92,18 @@ def test_long_screenshot_keeps_ocr_and_scam_results_without_provenance(monkeypat
     assert job['result']['scam']['score'] is not None
     assert job['result']['is_ai'] is None
     assert job['result']['verdict_key'] == 'provenance_unavailable'
+
+
+def test_text_provenance_defaults_and_explicit_override(monkeypatch):
+    from detector.text import text_provenance_enabled
+
+    monkeypatch.delenv('SHIELD_TEXT_PROVENANCE', raising=False)
+    monkeypatch.delenv('RENDER', raising=False)
+    assert text_provenance_enabled()
+    monkeypatch.setenv('RENDER', 'true')
+    assert not text_provenance_enabled()
+    monkeypatch.setenv('SHIELD_TEXT_PROVENANCE', '1')
+    assert text_provenance_enabled()
 
 
 def test_both_attempts_fail_honestly_then_queue_recovers(monkeypatch):

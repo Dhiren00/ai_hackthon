@@ -24,9 +24,15 @@ def load_text_model():
     tokenizer=RobertaTokenizer(vocab_file=str(folder/'vocab.json'),merges_file=str(folder/'merges.txt'))
     return model.eval(),tokenizer
 
+def text_provenance_enabled():
+    """Keep the large, optional model off on Render unless explicitly enabled."""
+    default = '0' if os.environ.get('RENDER') == 'true' else '1'
+    return os.environ.get('SHIELD_TEXT_PROVENANCE', default) == '1'
+
+
 @serial_inference
 def analyze_text(text):
-    if os.environ.get('SHIELD_TEXT_PROVENANCE', '1') == '0':
+    if not text_provenance_enabled():
         raise RuntimeError('Text authorship analysis is disabled on this server.')
     import torch
     if not isinstance(text,str) or len(text.split())<50:
