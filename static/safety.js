@@ -121,7 +121,7 @@ function evidenceSummary() {
 $('verification').addEventListener('change', () => { if (lastResult) renderSafety(lastResult); });
 $('exposure').addEventListener('change', () => { if (lastResult) renderSafety(lastResult); });
 $('evidence').addEventListener('click', () => {
-  if (lastResult) downloadLocal('mana-kavacham-evidence.json', JSON.stringify(evidenceSummary(), null, 2), 'application/json');
+  if (lastResult) downloadLocal('shield-evidence.json', JSON.stringify(evidenceSummary(), null, 2), 'application/json');
 });
 
 function openComplaint() {
