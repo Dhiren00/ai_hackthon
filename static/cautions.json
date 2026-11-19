@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T10:29:57.653440+00:00",
+  "updated_at": "2026-11-19T10:37:33.926304+00:00",
   "max_age_days": 365,
   "languages": {
     "en": {
@@ -11,12 +11,12 @@
       "using_previous": false,
       "articles": [
         {
-          "title": "186 Fake AI Domains Redirect Users to ClickFix Lures, Browser Malware, and Search Hijackers",
-          "url": "https://thehackernews.com/2026/11/186-fake-ai-domains-redirect-users-to.html",
-          "publisher": "The Hacker News",
+          "title": "From Deepfakes to Helpdesk Impersonation: Why Stronger Verification Matters",
+          "url": "https://www.bleepingcomputer.com/news/security/from-deepfakes-to-helpdesk-impersonation-why-stronger-verification-matters/",
+          "publisher": "BleepingComputer",
           "language": "en",
-          "published_at": "2026-11-12T15:15:40+00:00",
-          "summary": "Cybersecurity researchers have found that lookalike domains masquerading as artificial intelligence (AI) tools are being used to serve ClickFix-style lures, browser-hijacking…"
+          "published_at": "2026-11-18T15:00:10+00:00",
+          "summary": "Attackers are using deepfakes, helpdesk impersonation, and fake IT support requests to deceive employees and gain unauthorized access to corporate systems."
         },
         {
           "title": "FBI Says North Korean Hackers Stole Over $400 Million in Crypto Using Deepfake Video Calls",
@@ -25,6 +25,14 @@
           "language": "en",
           "published_at": "2026-11-13T14:28:58+00:00",
           "summary": "Federal Bureau of Investigation (FBI) has established that threat actors tied to the Democratic People's Republic of Korea (DPRK aka North Korea) have stolen more than $400…"
+        },
+        {
+          "title": "Coinbase blocks $4.7 million in transfers to Elon Musk deepfake scam",
+          "url": "https://www.bleepingcomputer.com/news/security/coinbase-blocks-47-million-in-transfers-to-elon-musk-deepfake-scam/",
+          "publisher": "BleepingComputer",
+          "language": "en",
+          "published_at": "2026-11-18T20:49:32+00:00",
+          "summary": "Coinbase says it blocked $4.7 million in cryptocurrency transfers to scammers promoting a fake giveaway using an AI-generated deepfake of Elon Musk during a Tesla livestream…"
         },
         {
           "title": "Trigram Campaign Impersonates About 50 AI and Blockchain Brands to Target Devs with Infostealers",
@@ -111,22 +119,6 @@
           "language": "te",
           "published_at": "2026-10-21T07:00:00+00:00",
           "summary": "విదేశాల్లో ముఠాగా ఏర్పడి ఏఐ సాయంతో కెనడా బ్యాంకులను మోసం చేసిన భారత్- పాకిస్థానీలు!"
-        },
-        {
-          "title": "Anitha Chowdary: నటి అనితా చౌదరికి బురిడీ.. లక్షల్లో కొట్టేశారు..",
-          "url": "https://tv9telugu.com/telangana/tollywood-actress-anitha-chowdary-loses-rs-4-14-lakh-in-fake-flight-ticket-booking-scam-1961352.html",
-          "publisher": "TV9 Telugu",
-          "language": "te",
-          "published_at": "2026-11-18T08:12:30+00:00",
-          "summary": "ఆన్‌లైన్‌లో విమాన టికెట్ల కోసం వెతుకుతున్న ఆమెను నకిలీ ట్రావెల్ సంస్థ ప్రతినిధి పేరుతో ఓ వ్యక్తి సంప్రదించాడు."
-        },
-        {
-          "title": "ప్రేమలో బ్రేకప్.. మాజీ ప్రియుడికి ఊహించని షాక్ ఇచ్చిన యువతి.. బెడిసికొట్టిన ప్లాన్!",
-          "url": "https://tv9telugu.com/telangana/hyderabad-shocker-woman-uses-chatgpt-to-create-fake-she-teams-notice-to-intimidate-ex-boyfriend-1961345.html",
-          "publisher": "TV9 Telugu",
-          "language": "te",
-          "published_at": "2026-11-18T07:58:37+00:00",
-          "summary": "షీ టీమ్స్ పోలీసుల పేరుతో నకిలీ నోటీసును తయారు చేసి వాట్సాప్‌లో పంపించింది."
         }
       ]
     }
