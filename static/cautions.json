@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19T10:37:33.926304+00:00",
+  "updated_at": "2026-11-20T10:17:31.773544+00:00",
   "max_age_days": 365,
   "languages": {
     "en": {
@@ -10,14 +10,6 @@
       "sources_unavailable": [],
       "using_previous": false,
       "articles": [
-        {
-          "title": "From Deepfakes to Helpdesk Impersonation: Why Stronger Verification Matters",
-          "url": "https://www.bleepingcomputer.com/news/security/from-deepfakes-to-helpdesk-impersonation-why-stronger-verification-matters/",
-          "publisher": "BleepingComputer",
-          "language": "en",
-          "published_at": "2026-11-18T15:00:10+00:00",
-          "summary": "Attackers are using deepfakes, helpdesk impersonation, and fake IT support requests to deceive employees and gain unauthorized access to corporate systems."
-        },
         {
           "title": "FBI Says North Korean Hackers Stole Over $400 Million in Crypto Using Deepfake Video Calls",
           "url": "https://thehackernews.com/2026/11/fbi-says-north-korean-hackers-stole.html",
@@ -61,6 +53,14 @@
           "summary": "Rewari News: एआई से आवाज की नकल कर ठगी कर रहे साइबर अपराधी, सतर्क रहें लोग Amar Ujala"
         },
         {
+          "title": "एक्सप्लेनर: क्या फोन पर सुनाई देने वाली अपनों की आवाज भी हो सकती है फर्जी, एआई से हो रही इस ठगी से कैसे बचें? - Amar Ujala",
+          "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQbjI1emJEWTNNMC0wNVI1NGtiakN6bE5kTkd4djJSUS0xY3U0Vi0ybGo3aWM2V1kyWFk1cXhyS0FWdDlHTGE0dTZxUzZIM3Q4bWhVeVE4S0M4cFhhOXlySU1vS2tiSGxlTTV3TFVvTm5lYlNONTZBMlFNZjJxUllCV0RPTG9vdkZPYzVPc1V1YjFQeW5hQ0lQZW5VeUh5TVBCMVNyc29EUG5zbHFnMWpnTkc3NVJ0NGRoWjBoa29KUE1XaFJZczFCRUFzMmpHUEVEdDRncktOMmFCZ3ZPNVRB0gHkAUFVX3lxTE9GeVlvY0l3dmRoRTY2Si1WeWJWRWtHN2RnWmZ5QzFJOGozMGx4ZWpmOHJTZkU1MUs0dkk1TnBjZ2paZGZlMDFPTTFpclROZ1BzVFZqOHVCdWFWdXM1cjlLOXd2Sk1tcXVFVkxhYjJ6dmtpSjlTY1Fmbk9ZTW80Z29oNkdJZjIwQ1Yxb2tKbWdzWTA1dmpKY1luTEs3eWlBUkRFelhVdXBobjRuQkFNNFZVMWpHaktrS0tYd2x4UXU2aUNOQll3TEo3SGI5QVZuWm1rZnJzSHV4bS02QjFDeHRucTZIWg?oc=5",
+          "publisher": "Amar Ujala",
+          "language": "hi",
+          "published_at": "2026-10-07T07:00:00+00:00",
+          "summary": "एक्सप्लेनर: क्या फोन पर सुनाई देने वाली अपनों की आवाज भी हो सकती है फर्जी, एआई से हो रही इस ठगी से कैसे बचें?"
+        },
+        {
           "title": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका - Amar Ujala",
           "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOS3NkNS1mc2N6RkZxdmFyYkNrdjAyTXZDNVYzaE5LcldJTzc2MEFFQzhkNGR4UWZaMU1UWDB3cDVLb1lNTmhMbDZtZS01cXRfTUc3ZjVlV0VTcENaelBrRzBpdjBpRDJLVnpPVUl3d3VjSVJmOTh0b1hvSDhadUNKbmhXRnpiNV94dVo4QlMzUjRQbzBPb2lpb3A0T0lQZlBBSUtyQ1hRVGJTSmpCQkJLeUFnVGJxa0xDYXcyag?oc=5",
           "publisher": "Amar Ujala",
@@ -91,14 +91,6 @@
           "language": "hi",
           "published_at": "2026-07-06T07:00:00+00:00",
           "summary": "Deepfake Scam: अब कॉल नहीं, AI से हो रही नई साइबर ठगी, जानें डीप फेक स्कैम पहचानने का आसान तरीका ABP News"
-        },
-        {
-          "title": "7 राज्यों में दिल्ली पुलिस का बड़ा ऐक्शन, 50 करोड़ के डिजिटल फ्रॉड में शामिल 10 जालसाज दबोचे",
-          "url": "https://www.livehindustan.com/ncr/delhi-police-nabs-10-scammers-in-digital-fraud-crackdown-201765866129339.html",
-          "publisher": "Live Hindustan — Cyber Crime",
-          "language": "hi",
-          "published_at": "2025-12-16T06:40:04+00:00",
-          "summary": "दिल्ली पुलिस ने डिजिटल धोखाधड़ी मामले में अंतर्राज्यीय स्तर पर बड़ी कार्रवाई की है।"
         }
       ]
     },
