@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T12:48:23.355747+00:00",
+  "updated_at": "2026-11-25T11:34:30.242426+00:00",
   "max_age_days": 365,
   "languages": {
     "en": {
@@ -22,28 +22,13 @@
     },
     "hi": {
       "sources_checked": [
-        "Google News — हिन्दी",
         "Live Hindustan — Cyber Crime"
       ],
-      "sources_unavailable": [],
+      "sources_unavailable": [
+        "Google News — हिन्दी"
+      ],
       "using_previous": false,
       "articles": [
-        {
-          "title": "Fake AI Calls: एआई आवाज की नकल वाले फर्जी कॉल कैसे पहचानें? कभी नहीं होगी ठगी - ABP News",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMjhFR090ZC02a25XSlM3Tm1ZNTFtV0NVNTZHWmo5dnNNZ05jNzQ2MHk3eF9XTTh0QjluS0M3VVZFOHo0TTc1QVFGOGcwY2lxcWw0WkZGS2RHd3JxUG45T2haTUxRTWd3aEN4UjVZaW1OblZXcjNhNGFSWEYyUmx3OW5SWWlmYTJORFVoT1FKN3psNU4wMVhlSnIyWkpEbk1aaVFIdUV3bzJ2djdwalcyNHFjUdIBuAFBVV95cUxOa3VwQmJJYnBHc0ZqNFItUF9tMXlBaE92NURoX1pqNENEYTdGMnhkQ0hrRVIzSDZ3VC1oMVVyQUx5NGR4WkIyYnRBeHhnUTZ6bW5aQ3VsVUlyb3dnOVEzUlFlcmVpRzJxbWpCdlpVUkdvdTV6a0JtbDRHTjc5a0tvMDR2X2tOODFqM2ZfWUpRY3RjMkVsRzVNR1prTUY4N0V4UEY1WmV3THJFeGFnazk2X1A2bjJGbjJl?oc=5",
-          "publisher": "ABP News",
-          "language": "hi",
-          "published_at": "2026-11-23T03:11:14+00:00",
-          "summary": "Fake AI Calls: एआई आवाज की नकल वाले फर्जी कॉल कैसे पहचानें?"
-        },
-        {
-          "title": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका - Amar Ujala",
-          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOS3NkNS1mc2N6RkZxdmFyYkNrdjAyTXZDNVYzaE5LcldJTzc2MEFFQzhkNGR4UWZaMU1UWDB3cDVLb1lNTmhMbDZtZS01cXRfTUc3ZjVlV0VTcENaelBrRzBpdjBpRDJLVnpPVUl3d3VjSVJmOTh0b1hvSDhadUNKbmhXRnpiNV94dVo4QlMzUjRQbzBPb2lpb3A0T0lQZlBBSUtyQ1hRVGJTSmpCQkJLeUFnVGJxa0xDYXcyag?oc=5",
-          "publisher": "Amar Ujala",
-          "language": "hi",
-          "published_at": "2026-10-11T07:00:00+00:00",
-          "summary": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका Amar Ujala"
-        },
         {
           "title": "बीमा लोकपाल और IRDAI अफसर बन ठगने वाले गैंग का खुलासा, दिल्ली में पति-पत्नी और साली समेत 4 दबोचे",
           "url": "https://www.livehindustan.com/ncr/insurance-ombudsman-and-irdai-fake-officers-gang-busted-delhi-police-arrest-four-people-husband-wife-and-sisterinlaw-201765251991716.html",
@@ -61,32 +46,49 @@
           "summary": "डिजिटल सपोर्ट और एआई के यूज ने पुलिस को साइबर अपराध से निपटने के लिए और मजबूती दी है।"
         },
         {
-          "title": "Deepfake Scam: अब कॉल नहीं, AI से हो रही नई साइबर ठगी, जानें डीप फेक स्कैम पहचानने का आसान तरीका - ABP News",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPNEdvWVZFNkZLWjVwTU5fQVRFWmxEeWgyel94U0k2cFpJN0l2RmJPUnRtR3NGVUM3WWFTUmZ3bGVkeGhTTlpXVmVrY2FxSjJweUd4SXhtcFhOa2w3NmVtTlhOYjM4aE5Odl9uV2FBLXd5U3U4OGNNQS1qT0thc1Jpcmd3V2JELVVSczhDZTd6c2trYTJRbTctempuakVLY1FwX056UUhYb1dXQlotalJlQ0RnR1rSAboBQVVfeXFMTmlhV1o3YWNFb0JsZDRnLTN4eXZ6Z0p0OFRiVjZybTUxVWF0UEhrOG1lSENIb1JqMEp3eUR1MnFXS20yYTB4cXZuT3dITHk1a3I4WUlsT2tLc3FjWExxV1lBQWEyZGZ2bTRNMi1TbUJiSUlmNy1YZ25Gc1c2LWwwMW1nVFlxeWt4NldBbXpXNFRhak5HeTNkNGw5Y1VYOHFsdHNFWGQ3TXMtdllyVVdfclktTFBqcjlsaXF3?oc=5",
-          "publisher": "ABP News",
-          "language": "hi",
-          "published_at": "2026-07-06T07:00:00+00:00",
-          "summary": "Deepfake Scam: अब कॉल नहीं, AI से हो रही नई साइबर ठगी, जानें डीप फेक स्कैम पहचानने का आसान तरीका ABP News"
-        },
-        {
           "title": "7 राज्यों में दिल्ली पुलिस का बड़ा ऐक्शन, 50 करोड़ के डिजिटल फ्रॉड में शामिल 10 जालसाज दबोचे",
           "url": "https://www.livehindustan.com/ncr/delhi-police-nabs-10-scammers-in-digital-fraud-crackdown-201765866129339.html",
           "publisher": "Live Hindustan — Cyber Crime",
           "language": "hi",
           "published_at": "2025-12-16T06:40:04+00:00",
           "summary": "दिल्ली पुलिस ने डिजिटल धोखाधड़ी मामले में अंतर्राज्यीय स्तर पर बड़ी कार्रवाई की है।"
+        },
+        {
+          "title": "चंद मिनटों के अंदर फ्रीज होगी साइबर फ्रॉड की रकम, दिल्ली पुलिस लेगी D4C की मदद",
+          "url": "https://www.livehindustan.com/ncr/delhi-police-d4c-cyber-crime-fund-freezing-how-it-will-work-201789259061215.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2026-09-13T00:44:33+00:00",
+          "summary": "इसकी मदद ने केवल साइबर अपराधियों के सिंडिकेट को ध्वस्त करने में मदद मिलेगी, बल्कि ठगी गई रकम को भी महज चंद मिनटों में फ्रीज किया जा सकेगा।"
+        },
+        {
+          "title": "दिल्ली में 10 हजार की ठगी से 70 करोड़ के म्यूल अकाउंट सिंडिकेट का पर्दाफाश; बैंक मैनेजर समेत 10 गिरफ्तार",
+          "url": "https://www.livehindustan.com/ncr/delhi-police-unearthes-big-mule-account-syndicate-suryoday-bank-manager-arrested-indusind-bank-scam-70-crore-cyber-fraud-201785227288584.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2026-07-28T10:28:46+00:00",
+          "summary": "दिल्ली पुलिस की साइबर टीम ने पिछले 3-4 सालों से देश-विदेश में साइबर फ्रॉड करने वालों को कॉर्पोरेट करंट बैंक अकाउंट सप्लाई करने वाले एक बड़े गिरोह का खुलासा किया है।"
+        },
+        {
+          "title": "दिल्ली में बैंक अफसर चला रहा था साइबर फ्रॉड गैंग, मास्टरमाइंड सहित 3 दबोचे",
+          "url": "https://www.livehindustan.com/ncr/bank-officer-ran-cyber-fraud-gang-in-delhi-3-arrested-including-mastermind-201784252418531.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2026-07-17T02:12:01+00:00",
+          "summary": "दिल्ली पुलिस ने साइबर फ्रॉड गैंग चला रहे एक मास्टरमाइंड समेत 3 लोगों को गिरफ्तार किया है।"
         }
       ]
     },
     "te": {
       "sources_checked": [
-        "Google News — తెలుగు",
         "TV9 Telugu",
         "ABP Desam",
         "Sakshi"
       ],
-      "sources_unavailable": [],
-      "using_previous": false,
+      "sources_unavailable": [
+        "Google News — తెలుగు"
+      ],
+      "using_previous": true,
       "articles": [
         {
           "title": "విదేశాల్లో ముఠాగా ఏర్పడి ఏఐ సాయంతో కెనడా బ్యాంకులను మోసం చేసిన భారత్- పాకిస్థానీలు! - Samayam Telugu",
