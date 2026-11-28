@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T11:12:11.984124+00:00",
+  "updated_at": "2026-11-28T10:44:00.222789+00:00",
   "max_age_days": 365,
   "languages": {
     "en": {
@@ -45,14 +45,6 @@
           "summary": "एआई वॉइस स्कैम अलर्ट: कैसे अपनों की आवाज में बात कर हो रही ठगी?"
         },
         {
-          "title": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका - Amar Ujala",
-          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOS3NkNS1mc2N6RkZxdmFyYkNrdjAyTXZDNVYzaE5LcldJTzc2MEFFQzhkNGR4UWZaMU1UWDB3cDVLb1lNTmhMbDZtZS01cXRfTUc3ZjVlV0VTcENaelBrRzBpdjBpRDJLVnpPVUl3d3VjSVJmOTh0b1hvSDhadUNKbmhXRnpiNV94dVo4QlMzUjRQbzBPb2lpb3A0T0lQZlBBSUtyQ1hRVGJTSmpCQkJLeUFnVGJxa0xDYXcyag?oc=5",
-          "publisher": "Amar Ujala",
-          "language": "hi",
-          "published_at": "2026-10-11T07:00:00+00:00",
-          "summary": "रक्षम हैकथॉन 2026: एआई से साइबर ठगी और वॉइस क्लोनिंग रोकेंगे छात्र, आईआईटी दिल्ली-अमेजॉन दे रहे युवाओं को मौका Amar Ujala"
-        },
-        {
           "title": "ठगी का सबसे खतरनाक तरीका: एआई से बनाया आपका 'जुड़वां', बायोमेट्रिक्स को दी मात, उठाए लाखों के लोन - NDTV India",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxON3l5MHlsS21yNHBEbGFMRTRHQ3k3dkZuM2ktN3R1ZnRUdzJsRWJKTnNjRkR1V1dfTnlkOS03N0tuRk1uQlFhcHZwX3lGY0UtM19mZkdKSzFEY3FKVzVpZUFpMHdoYjE5SUg5c1NtOWxCVXpaaXV4YkFKQTdXendVaXpLLXlveHI1RElwOEw0TXBiazBURXBkbEJHa0tiRkdzb3FUZmlRVS1sRmgtTHNieUVB?oc=5",
           "publisher": "NDTV India",
@@ -75,6 +67,14 @@
           "language": "hi",
           "published_at": "2026-06-29T01:36:17+00:00",
           "summary": "डिजिटल सपोर्ट और एआई के यूज ने पुलिस को साइबर अपराध से निपटने के लिए और मजबूती दी है।"
+        },
+        {
+          "title": "7 राज्यों में दिल्ली पुलिस का बड़ा ऐक्शन, 50 करोड़ के डिजिटल फ्रॉड में शामिल 10 जालसाज दबोचे",
+          "url": "https://www.livehindustan.com/ncr/delhi-police-nabs-10-scammers-in-digital-fraud-crackdown-201765866129339.html",
+          "publisher": "Live Hindustan — Cyber Crime",
+          "language": "hi",
+          "published_at": "2025-12-16T06:40:04+00:00",
+          "summary": "दिल्ली पुलिस ने डिजिटल धोखाधड़ी मामले में अंतर्राज्यीय स्तर पर बड़ी कार्रवाई की है।"
         }
       ]
     },
@@ -82,11 +82,12 @@
       "sources_checked": [
         "Google News — తెలుగు",
         "TV9 Telugu",
-        "ABP Desam",
+        "ABP Desam"
+      ],
+      "sources_unavailable": [
         "Sakshi"
       ],
-      "sources_unavailable": [],
-      "using_previous": false,
+      "using_previous": true,
       "articles": [
         {
           "title": "విదేశాల్లో ముఠాగా ఏర్పడి ఏఐ సాయంతో కెనడా బ్యాంకులను మోసం చేసిన భారత్- పాకిస్థానీలు! - Samayam Telugu",
